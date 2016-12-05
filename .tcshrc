@@ -1,0 +1,11 @@
+
+
+### set ###
+#set prompt = "%B%n:%~%#%b "
+#set prompt = "[\!] `whoami`@`hostname` >> "
+set prompt = "\n%B%{\033[34m%}%d %D.%w.%Y %P\n%{\033[31m%}[%n@%m][%~]\n%{\033[30m%}%b$ "
+
+
+### aliases ###
+if ( -f ~/.aliases ) source ~/.aliases
+endif
