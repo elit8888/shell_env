@@ -1,10 +1,25 @@
 set nu
 set autoindent
+set showcmd		"the same as set sc
 set relativenumber
+set splitbelow
+set splitright
+
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+set background=dark
+set backspace=indent,eol,start		"the same as set backspace=2, type :help 'backspace' for details
+set tabstop=4
 set scrolloff=3
 set laststatus=2
-set background=dark
-set tabstop=4
 set shiftwidth=4
 
 " Show the cursor position all the time (at right below)
@@ -26,7 +41,7 @@ endif
 
 " Print the tab and whitespace with '|' & '-'
 set list
-set lcs=tab:\|\ ,nbsp:%,trail:-
+set listchars=tab:\|\ ,nbsp:%,trail:-
 "highlight LeaderTab guifg=#666666
 "match LeaderTab /^\t/
 
@@ -36,19 +51,11 @@ set path+=**
 " Display all matching files when we tab complete
 set wildmenu
 
-" Back to last status
-"if has("autocmd")
-"	autocmd BufRead *.txt set tw=78
-"	autocmd BufReadPost *
-"	\ if line("'\"") > 0 && line ("'\"") <= line("$") |
-"	\   exe "normal g'\"" |
-"	\ endif
-"endif
-
-
-"filetype indent on
-"filetype plugin on
-syntax on
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
+	syntax on
+endif
 
 set t_Co=256
 
@@ -98,4 +105,4 @@ if has("autocmd")
 
 else
   set autoindent		" always set autoindenting on
-endif " has("autocmd")
+endif	" has("autocmd")
