@@ -17,10 +17,10 @@ nnoremap <C-l> <C-w>l
 
 set background=dark
 set backspace=indent,eol,start		"the same as set backspace=2, type :help 'backspace' for details
-set tabstop=4
+set tabstop=4	"number of spaces of a tab
+set shiftwidth=4	"spaces of a indent
 set scrolloff=3
 set laststatus=2
-set shiftwidth=4
 
 " Show the cursor position all the time (at right below)
 set ruler
