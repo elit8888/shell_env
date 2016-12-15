@@ -6,3 +6,4 @@
 source $HOME/shell_env/vim/hotkeys.vimrc
 source $HOME/shell_env/vim/setting.vimrc
 " =End=
+

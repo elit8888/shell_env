@@ -1,19 +1,21 @@
 set nu
 set autoindent
-set showcmd		"the same as set sc
+set showcmd		"Display incomplete commands, the same as set sc
 set relativenumber
 set splitbelow
 set splitright
+set ruler		" Show the cursor position all the time (at right below)
+set hlsearch	" Highlight search result
+set incsearch	" Do incremental searching
+
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
 
-" Quicker window movement
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
+" Uncomment below two lines to show the lines that exceed 81 columns
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" match OverLength /\%81v.\+/
 
 set background=dark
 set backspace=indent,eol,start		"the same as set backspace=2, type :help 'backspace' for details
@@ -22,17 +24,6 @@ set shiftwidth=4	"spaces of a indent
 set scrolloff=3
 set laststatus=2
 
-" Show the cursor position all the time (at right below)
-set ruler
-
-" Highlight search result
-set hlsearch
-
-" Do incremental searching
-set incsearch
-
-" Display incomplete commands
-set showcmd
 
 " Enable mouse to control
 if has('mouse')
@@ -51,7 +42,7 @@ set path+=**
 " Display all matching files when we tab complete
 set wildmenu
 
-" Switch syntax highlighting on, when the terminal has colors
+" Switch syntax highlighting on when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
 	syntax on
