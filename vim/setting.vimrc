@@ -13,9 +13,13 @@ set incsearch	" Do incremental searching
 set splitbelow
 set splitright
 
-" Uncomment below two lines to show the lines that exceed 81 columns
-" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-" match OverLength /\%81v.\+/
+" Show the lines at line 80
+if exists('+colorcolumn')
+	set colorcolumn=80
+else
+	au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
+
 
 set background=dark
 set backspace=indent,eol,start		"the same as set backspace=2, type :help 'backspace' for details
