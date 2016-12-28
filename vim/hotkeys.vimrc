@@ -1,7 +1,7 @@
 " Create the 'tags' file (need to install ctags first)
 command! MakeTags !ctags -R .
 
-
+let @i = "i#include <iostream>using namespace std;int main(){}€klgg"
 
 
 " Below are mapping keys
@@ -16,7 +16,6 @@ nnoremap <F5> <Esc>:w<CR>:!g++ % -o /tmp/a.out<CR>
 nnoremap <F11> <Esc>:w<CR>:!g++ % -o /tmp/a.out && /tmp/a.out<CR>
 inoremap {<CR> {<CR>}<Esc>ko
 inoremap (<Space> (<Space><Space>)hi
-imap intmain<CR> int<Space>main<CR>{<CR>
 
 " Below are some examples of the mapping (from vim wikia)
 " The ':map' command creates a key map that works in normal, visual, select
