@@ -12,6 +12,8 @@ set nowrap
 
 " Comment below line to hide the cursor line
 set cursorline
+" type ":help clipboard" for more info
+set clipboard=unnamed
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
