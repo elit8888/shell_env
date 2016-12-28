@@ -8,6 +8,8 @@ set ruler		" Show the cursor position all the time (at right below)
 set hlsearch	" Highlight search result
 set incsearch	" Do incremental searching
 
+" type ":help clipboard" for more info
+set clipboard=unnamed
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
