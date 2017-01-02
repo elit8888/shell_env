@@ -8,6 +8,10 @@ set ruler		" Show the cursor position all the time (at right below)
 set hlsearch	" Highlight search result
 set incsearch	" Do incremental searching
 
+set nowrap
+
+" Comment below line to hide the cursor line
+set cursorline
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
@@ -28,6 +32,12 @@ set shiftwidth=4	"spaces of a indent
 set scrolloff=3
 set laststatus=2
 
+" Test mouse option
+if has("mouse_sgr")
+	set ttymouse=sgr
+else
+	set ttymouse=xterm2
+end
 
 " Enable mouse to control
 if has('mouse')
