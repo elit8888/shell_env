@@ -7,7 +7,6 @@ set splitright
 set ruler		" Show the cursor position all the time (at right below)
 set hlsearch	" Highlight search result
 set incsearch	" Do incremental searching
-
 set nowrap
 
 " Comment below line to hide the cursor line
@@ -27,6 +26,9 @@ else
 	au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
 
 set background=dark
 set backspace=indent,eol,start		"the same as set backspace=2, type :help 'backspace' for details
