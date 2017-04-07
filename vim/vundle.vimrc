@@ -34,6 +34,10 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-scripts/cscope_macros.vim'
 Plugin 'vim-scripts/autoload_cscope.vim'
 
+" folding
+Plugin 'tmhedberg/SimpyFold'
+
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
