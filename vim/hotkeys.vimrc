@@ -14,6 +14,7 @@ nnoremap <C-l> <C-w>l
 
 nnoremap <F5> <Esc>:w<CR>:!g++ % -o /tmp/a.out<CR>
 nnoremap <F11> <Esc>:w<CR>:!g++ % -o /tmp/a.out && /tmp/a.out<CR>
+nnoremap <F6> <Esc>:w<CR>:!python3 %<CR>
 inoremap {<CR> {<CR>}<Esc>ko
 inoremap (<Space> (<Space><Space>)hi
 
