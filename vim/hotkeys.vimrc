@@ -18,6 +18,10 @@ nnoremap <F6> <Esc>:w<CR>:!python3 %<CR>
 inoremap {<CR> {<CR>}<Esc>ko
 inoremap (<Space> (<Space><Space>)hi
 
+" Leader key
+nnoremap <leader>a <C-]>  " Because git Bash not working on Windows
+
+
 " Enable docstring for folded code
 let g:SimpylFold_docstring_preview=1
 
