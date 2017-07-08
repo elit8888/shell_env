@@ -1,3 +1,8 @@
+" Set statusline style
+source $HOME/shell_env/vim/statusline.vimrc
+
+source $HOME/shell_env/vim/plugin/syntastic.config.vimrc
+
 set nu
 set autoindent
 set showcmd		"Display incomplete commands, the same as set sc
@@ -8,8 +13,6 @@ set ruler		" Show the cursor position all the time (at right below)
 set hlsearch	" Highlight search result
 set incsearch	" Do incremental searching
 set nowrap
-
-" Comment below line to hide the cursor line
 set cursorline
 
 " type ":help clipboard" for more info
