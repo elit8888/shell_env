@@ -55,4 +55,10 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-scripts/cscope_macros.vim'
 Plug 'vim-scripts/autoload_cscope.vim'
 
+" Combine with tmux
+Plug 'benmills/vimux'
+
+" Syntax checking
+Plug 'vim-syntastic/syntastic'
+
 call plug#end()

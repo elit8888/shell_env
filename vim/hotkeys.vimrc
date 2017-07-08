@@ -1,9 +1,6 @@
 " Create the 'tags' file (need to install ctags first)
 command! MakeTags !ctags -R .
 
-let @i = "i#include <iostream>using namespace std;int main(){}€klgg"
-
-
 " Below are mapping keys
 
 " Quicker window movement
@@ -19,7 +16,12 @@ inoremap {<CR> {<CR>}<Esc>ko
 inoremap (<Space> (<Space><Space>)hi
 
 " Leader key
-nnoremap <leader>a <C-]>  " Because git Bash not working on Windows
+
+" because git bash not working on windows
+nnoremap <leader>a <C-]>
+nnoremap <leader>rb :Call VimuxRunCommand("python3 " . bufname("%"))<CR>
+nnoremap <leader>vx :VimuxInterruptRunner<CR>
+nnoremap <leader>vq :VimuxCloseRunner<CR>
 
 
 " Enable docstring for folded code
