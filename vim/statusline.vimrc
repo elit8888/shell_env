@@ -3,7 +3,7 @@
 " type help statusline for mor information
 
 
-set statusline=%F         "full filename
+set statusline=%F\        "full filename
 "set statusline+=\ [%{strlen(&fenc)?&fenc:'none'},   "file encoding
 "set statusline+=%{&ff}]   "file encoding
 set statusline+=%h        "help file flag
