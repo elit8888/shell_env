@@ -84,9 +84,38 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export PATH="/home/elit/anaconda3/bin:$PATH"
+# Only use on nvidia-docker
+alias nvdocker="sudo nvidia-docker"
+alias dockervim="sudo nvidia-docker run -idt --rm \
+          --name vim \
+          -v $HOME/Documents/my_docker/DeepLearning:/data elit-tensorflow:vim"
+alias dockeripython3="sudo nvidia-docker run -idt --rm \
+          -e DISPLAY=$DISPLAY \
+          -v /tmp/.X11-unix:/tmp/.X11-unix \
+          --name ipython3 elit-tensorflow:ipython3"
+alias dockernotebook="sudo nvidia-docker run -idt \
+          -p 8888:8888 \
+          -p 6006:6006 \
+          -p 8889:8889 \
+          -v $HOME/Documents/my_docker/DeepLearning:/notebooks/data \
+          --name jupyter_notebook elit-tensorflow:notebook"
+
+alias remotedockervim="sudo nvidia-docker run -idt --rm \
+          --net=host \
+          -e DISPLAY=$(echo $DISPLAY | sed 's/^[^:]*:/:/g') \
+          -v $HOME/.Xauthority:/root/.Xauthority \
+          -v /tmp/.X11-unix:/tmp/.X11-unix \
+          --name vim_remote \
+          -v $HOME/Documents/my_docker/DeepLearning:/data elit-tensorflow:vim"
+alias remotedockeripython3="sudo nvidia-docker run -idt --rm \
+          --net=host \
+          -e DISPLAY=$(echo $DISPLAY | sed 's/^[^:]*:/:/g') \
+          -v $HOME/.Xauthority:/root/.Xauthority \
+          -v /tmp/.X11-unix:/tmp/.X11-unix \
+          --name ipython3_remote elit-tensorflow:ipython3"
 
 # ignore some commands in history
 export HISTIGNORE="pwd:ls"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/shell_env/zsh/aliases.zsh ] && source ~/shell_env/zsh/aliases.zsh
