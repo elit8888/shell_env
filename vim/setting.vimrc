@@ -14,6 +14,8 @@ set hlsearch	" Highlight search result
 set incsearch	" Do incremental searching
 set nowrap
 set cursorline
+highlight cursorline cterm=none ctermfg=none ctermbg=238
+
 " type ":help clipboard" for more info
 set clipboard=unnamed
 
