@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/elit/.oh-my-zsh
+export ZSH=/home/elit/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -92,6 +92,7 @@ alias dockervim="sudo nvidia-docker run -idt --rm \
 alias dockeripython3="sudo nvidia-docker run -idt --rm \
           -e DISPLAY=$DISPLAY \
           -v /tmp/.X11-unix:/tmp/.X11-unix \
+          -v $HOME/Documents/my_docker/DeepLearning:/data \
           --name ipython3 elit-tensorflow:ipython3"
 alias dockernotebook="sudo nvidia-docker run -idt \
           -p 8888:8888 \
@@ -112,10 +113,13 @@ alias remotedockeripython3="sudo nvidia-docker run -idt --rm \
           -e DISPLAY=$(echo $DISPLAY | sed 's/^[^:]*:/:/g') \
           -v $HOME/.Xauthority:/root/.Xauthority \
           -v /tmp/.X11-unix:/tmp/.X11-unix \
-          --name ipython3_remote elit-tensorflow:ipython3"
+          -v $HOME/Documents/my_docker/DeepLearning:/data \
+          --name ipython3_remote \
+          elit-tensorflow:ipython3"
 
 # ignore some commands in history
 export HISTIGNORE="pwd:ls"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/shell_env/zsh/aliases.zsh ] && source ~/shell_env/zsh/aliases.zsh
+[ -f ~/shell_env/zsh/settings.zsh ] && source ~/shell_env/zsh/settings.zsh
