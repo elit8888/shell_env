@@ -27,7 +27,8 @@ vimode() {
     bindkey '^e' vi-end-of-line
     bindkey '^u' kill-whole-line
 }
-vimode
+#vimode
+bindkey -e
 
 export ENV_PATH=$HOME/.env
 export PATH=/usr/local/bin:/usr/local/sbin:$ENV_PATH/bin:$PATH
