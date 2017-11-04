@@ -2,7 +2,7 @@
 source $HOME/shell_env/vim/statusline.vimrc
 
 " Uncomment below to use plugin config
-"source $HOME/shell_env/vim/plugin/syntastic.config.vimrc
+source $HOME/shell_env/vim/plugin/syntastic.config.vimrc
 
 set nu
 set relativenumber
