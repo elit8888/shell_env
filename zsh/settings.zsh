@@ -2,7 +2,7 @@
 HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
-bindkey -e
+bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename "$HOME/.zshrc"
@@ -27,7 +27,8 @@ vimode() {
     bindkey '^e' vi-end-of-line
     bindkey '^u' kill-whole-line
 }
-vimode
+#vimode
+bindkey -e
 
 export ENV_PATH=$HOME/.env
 export PATH=/usr/local/bin:/usr/local/sbin:$ENV_PATH/bin:$PATH
