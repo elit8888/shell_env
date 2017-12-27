@@ -1,7 +1,13 @@
 " Create the 'tags' file (need to install ctags first)
 command! MakeTags !ctags -R .
 
-" Below are mapping keys
+"******************************
+"*  Below are mapping keys    *
+"******************************
+
+" Move vertically by visual line
+nnoremap j gj
+nnoremap k gk
 
 " Quicker window movement
 nnoremap <C-j> <C-w>j
@@ -9,11 +15,13 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
+" For compile mapping, but not always work
 nnoremap <F5> <Esc>:w<CR>:!g++ % -o /tmp/a.out<CR>
 nnoremap <F11> <Esc>:w<CR>:!g++ % -o /tmp/a.out && /tmp/a.out<CR>
 nnoremap <F6> <Esc>:w<CR>:!python3 %<CR>
+
 inoremap {<CR> {<CR>}<Esc>ko
-inoremap (<Space> (<Space><Space>)hi
+inoremap jk <Esc>
 
 " Leader key
 
