@@ -3,7 +3,7 @@ source $HOME/shell_env/vim/statusline.vimrc
 
 source $HOME/shell_env/vim/plugin/syntastic.config.vimrc
 
-set nu
+set number
 set autoindent
 set showcmd		"Display incomplete commands, the same as set sc
 set relativenumber
@@ -62,7 +62,7 @@ set listchars=tab:\|\ ,nbsp:%,trail:-
 " Provides tab-completion for all file-related tasks
 set path+=**
 
-" Display all matching files when we tab complete
+" Display all matching files when we tab complete the command
 set wildmenu
 
 " Switch syntax highlighting on when the terminal has colors
