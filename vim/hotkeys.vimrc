@@ -2,7 +2,7 @@
 command! MakeTags !ctags -R .
 
 "******************************
-"*  Below are mapping keys    *
+" Below are mapping keys
 "******************************
 
 " Move vertically by visual line
@@ -23,7 +23,9 @@ nnoremap <F6> <Esc>:w<CR>:!python3 %<CR>
 inoremap {<CR> {<CR>}<Esc>ko
 inoremap jk <Esc>
 
+"******************************
 " Leader key
+"******************************
 
 " because git bash not working on windows
 nnoremap <leader>a <C-]>
