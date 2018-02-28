@@ -1,11 +1,10 @@
 # Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
+HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-
-# Use `unset export HISTIGNORE` to unset
-export HISTIGNORE="pwd:ls:ls -l:ls -al:date:"
-export HISTCONTROL=ignoredups
+HISTORY_IGNORE="(pwd|ls|ls -l|ls -al|date|cd|pwd|exit)"
+setopt HIST_IGNORE_DUPS  # Don't record an entry that was just recorded
+setopt HIST_SAVE_NO_DUPS # Don't write duplicate entries in the history file
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
