@@ -9,17 +9,17 @@ if [ ! -f $ANTIGEN ]; then
 fi
 source $ANTIGEN
 
-antigen use oh-my-zsh
+#antigen use oh-my-zsh
 # Plugins
-antigen bundle git
-antigen bundle pip
+#antigen bundle git
+#antigen bundle pip
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-completions
+#antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 # Theme
 #
 #antigen theme robbyrussell
-antigen theme bira
+#antigen theme bira
 
 # Tell antigen that I'm done.
 antigen apply
