@@ -1,0 +1,18 @@
+[user]
+	email = elit8888@gmail.com
+	name = Elit
+[core]
+	editor = vim
+	excludesfile = /home/elit/shell_env/git/.gitignore_global
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[alias]
+	d = diff
+	dc = diff --cached
+	dt = difftool
+	dtc = difftool --cached
+	##########
+	l = log --oneline
+	lg = log --oneline --graph --decorate

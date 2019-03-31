@@ -1,9 +1,13 @@
 # Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
+HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-bindkey -v
+HISTORY_IGNORE="(pwd|ls|ls -l|ls -al|date|cd|pwd|exit)"
+setopt HIST_IGNORE_DUPS  # Don't record an entry that was just recorded
+setopt HIST_SAVE_NO_DUPS # Don't write duplicate entries in the history file
+bindkey -e
 # End of lines configured by zsh-newuser-install
+
 # The following lines were added by compinstall
 zstyle :compinstall filename "$HOME/.zshrc"
 autoload -Uz compinit
@@ -27,8 +31,18 @@ vimode() {
     bindkey '^e' vi-end-of-line
     bindkey '^u' kill-whole-line
 }
+<<<<<<< HEAD
 #vimode
 bindkey -e
+=======
+>>>>>>> 8f05536606307a05e81874efa23933132c148f6d
 
 export ENV_PATH=$HOME/.env
 export PATH=/usr/local/bin:/usr/local/sbin:$ENV_PATH/bin:$PATH
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+    export EDITOR='vim'
+else
+    export EDITOR='mvim'
+fi
