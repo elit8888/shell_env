@@ -1,10 +1,7 @@
 # Source config files
-ZSH_CONFIG_PATH=~/shell_env/zsh
-if [ -d ${ZSH_CONFIG_PATH} ]; then
-	for cfg_file in ${ZSH_CONFIG_PATH}/*.zsh; do
-		source ${cfg_file}
-	done
-fi
+source ~/shell_env/zsh/aliases.zsh
+source ~/shell_env/zsh/antigen_config.zsh
+source ~/shell_envzsh/settings.zsh
 
 FZF=~/.fzf.zsh
 if [ -f $FZF ]; then
