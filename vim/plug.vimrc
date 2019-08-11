@@ -61,4 +61,10 @@ Plug 'benmills/vimux'
 " Syntax checking
 Plug 'vim-syntastic/syntastic'
 
+" Auto-Completion
+Plug 'Valloric/YouCompleteMe'
+
+Plug 'nightsense/office'
+Plug 'yuttie/inkstained-vim'
+
 call plug#end()
