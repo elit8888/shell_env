@@ -15,7 +15,9 @@ Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 " Using a non-master branch

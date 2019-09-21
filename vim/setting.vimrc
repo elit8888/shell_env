@@ -3,13 +3,12 @@ source $HOME/shell_env/vim/statusline.vimrc
 
 " Uncomment below to use plugin config
 source $HOME/shell_env/vim/plugin/syntastic.config.vimrc
+source $HOME/shell_env/vim/plugin/ycm.config.vimrc
+source $HOME/shell_env/vim/plugin/nerdtree.vimrc
 
 set number
-set autoindent
-set showcmd		"Display incomplete commands, the same as set sc
 set relativenumber
-set autoindent
-set showcmd     "Display incomplete commands, the same as set sc
+set showcmd     " Display incomplete commands, the same as set sc
 set ruler       " Show the cursor position all the time (at right below)
 set hlsearch    " Highlight search result
 set incsearch   " Do incremental searching
@@ -36,9 +35,9 @@ set foldmethod=indent
 set foldlevel=99
 
 set background=dark
-set backspace=indent,eol,start      "the same as set backspace=2, type :help 'backspace' for details
-set tabstop=4   "number of spaces of a tab
-set shiftwidth=4    "spaces of a indent
+set backspace=indent,eol,start      " the same as set backspace=2, type :help 'backspace' for details
+set tabstop=4   " Number of spaces of a tab
+set shiftwidth=4    " Spaces of a indent
 set scrolloff=3
 set laststatus=2
 
@@ -82,8 +81,6 @@ if !exists(":DiffOrig")
           \ | wincmd p | diffthis
 endif
 
-" :b
-
 " Type command below to read from an example vimrc
 ":r $VIMRUNTIME/vimrc_example.vim
 
@@ -104,7 +101,7 @@ if has("autocmd")
   au!
 
   " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+  "autocmd FileType text setlocal textwidth=78
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler

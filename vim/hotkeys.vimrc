@@ -22,6 +22,7 @@ nnoremap <F6> <Esc>:w<CR>:!python3 %<CR>
 
 inoremap {<CR> {<CR>}<Esc>ko
 inoremap jk <Esc>
+inoremap jl <Esc>:w<CR>
 
 "******************************
 " Leader key

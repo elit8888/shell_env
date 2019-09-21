@@ -1,4 +1,4 @@
-# shell_env
+# shell environment
 
 ---
 
