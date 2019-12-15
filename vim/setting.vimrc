@@ -5,6 +5,7 @@ source $HOME/shell_env/vim/statusline.vimrc
 source $HOME/shell_env/vim/plugin/syntastic.config.vimrc
 source $HOME/shell_env/vim/plugin/ycm.config.vimrc
 source $HOME/shell_env/vim/plugin/nerdtree.vimrc
+source $HOME/shell_env/vim/plugin/ultisnips.vimrc
 
 set number
 set relativenumber
@@ -35,7 +36,7 @@ set foldmethod=indent
 set foldlevel=99
 
 set background=dark
-set backspace=indent,eol,start      " the same as set backspace=2, type :help 'backspace' for details
+set backspace=indent,eol,start " Same as set backspace=2, type ':help backspace'
 set tabstop=4   " Number of spaces of a tab
 set shiftwidth=4    " Spaces of a indent
 set scrolloff=3
