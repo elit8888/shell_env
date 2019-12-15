@@ -118,3 +118,6 @@ if has("autocmd")
 else
   set autoindent        " always set autoindenting on
 endif   " has("autocmd")
+
+" Set syntax style
+au BufNewFile,BufRead Jenkinsfile setf groovy
