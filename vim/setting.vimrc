@@ -56,7 +56,12 @@ endif
 
 " Print the tab and whitespace with '|' & '-'
 set list
-set listchars=tab:\|\ ,nbsp:%,trail:-
+if has('gui_running')
+  set listchars=tab:▶\ ,trail:·,extends:\#,nbsp:.
+else
+  " set listchars=tab:\|\ ,nbsp:%,trail:-
+  set listchars=tab:▸\ ,nbsp:%,trail:-
+endif
 "highlight LeaderTab guifg=#666666
 "match LeaderTab /^\t/
 
@@ -121,4 +126,4 @@ else
 endif   " has("autocmd")
 
 " Set syntax style
-au BufNewFile,BufRead Jenkinsfile setf groovy
+au BufNewFile,BufRead *Jenkinsfile setf groovy
