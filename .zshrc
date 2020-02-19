@@ -14,6 +14,10 @@ ZSH_THEME="bira"
 plugins=(
   git
   pip
+  python
+  docker
+  vagrant
+  extract
 )
 export ZSH="$ANTIBODY_HOME"/https-COLON--SLASH--SLASH-github.com-SLASH-robbyrussell-SLASH-oh-my-zsh
 DISABLE_AUTO_UPDATE="true"
