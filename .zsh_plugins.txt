@@ -1,0 +1,7 @@
+robbyrussell/oh-my-zsh
+djui/alias-tips
+mafredri/zsh-async
+Tarrasch/zsh-bd
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-completions
+zsh-users/zsh-syntax-highlighting
