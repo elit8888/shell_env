@@ -17,6 +17,7 @@ let g:syntastic_warning_symbol = '>'
 let g:syntastic_mode_map = { "mode": "active", "passive_filetypes": ["rst"] }
 
 " py checkers
-let g:syntastic_python_checkers = ['flake8']
+" let g:syntastic_python_python_exec = 'python3'
+let g:syntastic_python_checkers = ['flake8', 'mypy']
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_python_flake8_args = "--ignore E501"
