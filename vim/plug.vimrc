@@ -64,10 +64,14 @@ Plug 'benmills/vimux'
 " Syntax checking
 Plug 'vim-syntastic/syntastic'
 
+" Quick locate character
+Plug 'easymotion/vim-easymotion'
+
 " Auto-Completion
 Plug 'Valloric/YouCompleteMe'
 
 Plug 'nightsense/office'
 Plug 'yuttie/inkstained-vim'
+
 
 call plug#end()
