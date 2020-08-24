@@ -5,6 +5,8 @@ command! MakeTags !ctags -R .
 " Below are mapping keys
 "******************************
 
+nnoremap zso :source ~/.vimrc<CR>
+
 " Move vertically by visual line
 nnoremap j gj
 nnoremap k gk
@@ -34,6 +36,12 @@ nnoremap <leader>rb :Call VimuxRunCommand("python3 " . bufname("%"))<CR>
 nnoremap <leader>vx :VimuxInterruptRunner<CR>
 nnoremap <leader>vq :VimuxCloseRunner<CR>
 
+
+" Reduce time of creating testcase for Python
+inoremap <F1> <Esc>mby?def test<CR>`bp/def <CR>O<Esc>?def test_<CR>f_la<Esc>
+nnoremap <F1> mby?def test<CR>`bp/def <CR>O<Esc>?def test_<CR>f_la<Esc>
+inoremap <A-.> self.
+nnoremap <A-.> iself.
 
 " Enable docstring for folded code
 let g:SimpylFold_docstring_preview=1
