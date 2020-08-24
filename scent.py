@@ -2,7 +2,7 @@ import os
 from sniffer.api import file_validator
 from sniffer.api import runnable
 
-watch_paths = ['.', 'tests/']
+watch_paths = ['.']
 
 
 @file_validator
@@ -13,8 +13,8 @@ def py_files(filename):
 
 @runnable
 def execute_tests(*args):
-    test_dir = 'tests'
-    cmd = 'python3 -B -m unittest discover {}'.format(test_dir)
+    test_dir = '.'
+    cmd = 'python3 -B -m unittest discover -p "*_test.py" {}'.format(test_dir)
     ret = os.system(cmd)
     print('Return code: {ret}'.format(ret=ret))
     return ret == 0
