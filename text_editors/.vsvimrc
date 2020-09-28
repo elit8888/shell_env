@@ -1,0 +1,22 @@
+" This rc file is used for Visual Studio
+" You need to install vsvim for Visual Studio
+" And copy this file to Home Directory
+
+" Key mapping
+" Adjust the path if needed
+nmap zso :source C:\Users\vagrant\.vsvimrc<CR>
+nmap zn :vsc Edit.GoToNextIssueinFile<CR>
+nmap zb :vsc Build.BuildSelection<CR>
+nmap zrr :vsc Refactor.Rename<CR>
+imap zb <Esc>:vsc Build.BuildSelection<CR>
+
+" set some options
+set number
+set relativenumber
+set incsearch
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
