@@ -16,6 +16,8 @@ plugins=(
   pip
   python
   docker
+  docker-compose
+  kubectl
   vagrant
   extract
 )
@@ -32,3 +34,5 @@ FZF=~/.fzf.zsh
 if [ -f $FZF ]; then
 	source $FZF
 fi
+
+source <(kubectl completion zsh)
