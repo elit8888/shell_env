@@ -23,9 +23,9 @@ brew cask install dropbox
 brew cask install microsoft-edge
 
 # Docker stuff
-brew cask install docker
+brew install docker
 brew install docker-compose
 
 # Company stuff
-brew cask install zoomus
+brew cask install zoom
 brew cask install microsoft-outlook
