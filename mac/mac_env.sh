@@ -14,13 +14,13 @@ brew install macvim
 brew install tmux
 brew install python mono go nodejs
 
-brew cask install sublime-text
-brew cask install visual-studio-code
-brew cask install keycastr
-brew cask install rectangle
-brew cask install obsidian
-brew cask install dropbox
-brew cask install microsoft-edge
+brew install --cask sublime-text
+brew install --cask visual-studio-code
+brew install --cask keycastr
+brew install --cask rectangle
+brew install --cask obsidian
+brew install --cask dropbox
+brew install --cask microsoft-edge
 
 # Docker stuff
 brew install docker
