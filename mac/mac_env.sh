@@ -27,5 +27,5 @@ brew install docker
 brew install docker-compose
 
 # Company stuff
-brew cask install zoom
-brew cask install microsoft-outlook
+brew install --cask zoom
+brew install --cask microsoft-outlook
