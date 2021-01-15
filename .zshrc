@@ -31,23 +31,46 @@ zinit light-mode for \
 
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-setopt promptsubst autocd
 
-# Use ohmyzsh plugins
-zinit snippet OMZL::git.zsh
+# Check `zshoptions manpge`
+setopt ALWAYS_TO_END
+setopt PROMPT_SUBST
+setopt AUTO_CD
+setopt HIST_VERIFY
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
 
-zinit ice atload"unalias grv"
-zinit snippet OMZP::git
-zinit snippet OMZP::pip
-zinit snippet OMZP::python
-zinit ice as"completion"
-zinit snippet OMZP::docker/_docker
-zinit snippet OMZP::docker-compose
-zinit snippet OMZP::kubectl
-zinit snippet OMZP::vagrant
-zinit snippet OMZP::extract
-zinit snippet OMZP::command-not-found
-zinit snippet OMZP::colored-man-pages
+# Use ohmyzsh libraries and plugins
+zinit wait lucid for \
+    OMZL::git.zsh \
+    OMZL::completion.zsh \
+    OMZL::clipboard.zsh \
+    OMZL::directories.zsh \
+    OMZL::theme-and-appearance.zsh
+zinit wait lucid for \
+    OMZP::pip \
+    OMZP::python \
+    OMZP::docker-compose \
+    OMZP::kubectl \
+    OMZP::vagrant \
+    OMZP::extract \
+    OMZP::command-not-found \
+    OMZP::colored-man-pages
+
+# This should be loaded separated to avoid conflict with fzf
+zinit snippet OMZL::key-bindings.zsh
+
+zinit wait lucid for \
+    atload"unalias grv" OMZP::git \
+    as"completion"      OMZP::docker/_docker
+
+zinit light djui/alias-tips
+
+zinit ice from"gh-r" as"program"
+zinit light junegunn/fzf-bin
+
+
 
 # From document example minimal setup
 zinit wait lucid light-mode for \
@@ -58,18 +81,9 @@ zinit wait lucid light-mode for \
   blockf atpull'zinit creinstall -q .' \
       zsh-users/zsh-completions
 
-zinit light djui/alias-tips
-
-zinit ice from"gh-r" as"program"
-zinit light junegunn/fzf-bin
-
-
-FZF=~/.fzf.zsh
-if [ -f $FZF ]; then
-	source $FZF
-fi
-
 source ~/shell_env/zsh/aliases.zsh
+
+[[ ! -f ~/.fzf.zsh ]] || source ~/.fzf.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
