@@ -33,9 +33,6 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 
 # Check `zshoptions manpge`
-setopt ALWAYS_TO_END
-setopt PROMPT_SUBST
-setopt AUTO_CD
 setopt HIST_VERIFY
 setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_DUPS
@@ -69,7 +66,6 @@ zinit light djui/alias-tips
 
 zinit ice from"gh-r" as"program"
 zinit light junegunn/fzf-bin
-
 
 
 # From document example minimal setup
