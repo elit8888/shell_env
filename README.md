@@ -31,7 +31,7 @@ And then restart zsh, it will start installing the required files and plugins
 at first startup.
 
 May copy `zsh/p10k.default.zsh` or `zsh/p10k.darwin.zsh` to `~/.p10k.zsh` so
-that p10k won't go to configure shell.
+that p10k won't go to interactive configure shell.
 
 For more detail, please see their repo.
 
