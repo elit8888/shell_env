@@ -49,3 +49,8 @@ then press `prefix` + <kbd>I</kbd>.
 
 For more detail, please see their repo.
 
+### Mac
+
+Currently Mac only contains the script for `brew` to install.
+However it may not be executed directly, as some may not be supported for M1
+natively.
