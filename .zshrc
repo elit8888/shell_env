@@ -29,6 +29,7 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
+# Add powerlevel10k, instructed by repo
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 
