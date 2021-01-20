@@ -24,11 +24,11 @@ set clipboard=unnamed
 set splitbelow
 set splitright
 
-" Show the lines at line 80
+" Show the lines at line 88
 if exists('+colorcolumn')
-    set colorcolumn=80
+    set colorcolumn=88
 else
-    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>88v.\+', -1)
 endif
 
 " Enable folding
