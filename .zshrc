@@ -45,6 +45,7 @@ zinit wait lucid for \
     OMZL::completion.zsh \
     OMZL::clipboard.zsh \
     OMZL::directories.zsh \
+    OMZL::history.zsh \
     OMZL::theme-and-appearance.zsh
 zinit wait lucid for \
     OMZP::pip \
@@ -83,4 +84,11 @@ source ~/shell_env/zsh/aliases.zsh
 [[ ! -f ~/.fzf.zsh ]] || source ~/.fzf.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# For tmux, use different setting for better display
+if [[ -v TMUX ]] && [[ -f ~/.p10k.tmux.zsh ]]; then
+    zsh_p10k_file=~/.p10k.tmux.zsh
+else
+    zsh_p10k_file=~/.p10k.zsh
+fi
+[[ ! -f ${zsh_p10k_file} ]] || source ${zsh_p10k_file}
+
