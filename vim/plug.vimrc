@@ -70,6 +70,10 @@ Plug 'easymotion/vim-easymotion'
 " Auto-Completion
 Plug 'Valloric/YouCompleteMe'
 
+Plug 'wesleyche/SrcExpl'
+Plug 'vim-scripts/taglist.vim'
+Plug 'wesleyche/Trinity'
+
 Plug 'nightsense/office'
 Plug 'yuttie/inkstained-vim'
 

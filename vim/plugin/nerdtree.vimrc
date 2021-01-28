@@ -1,5 +1,6 @@
 " Automatically close NerdTree when open a file
 let NERDTreeQuitOnOpen = 1
+let NERDTreeWinPos = "right"
 
 map <C-n> :NERDTreeToggle<CR>
 map <C-m> :NERDTreeFind<CR>

@@ -6,6 +6,10 @@ source $HOME/shell_env/vim/plugin/syntastic.config.vimrc
 source $HOME/shell_env/vim/plugin/ycm.config.vimrc
 source $HOME/shell_env/vim/plugin/nerdtree.vimrc
 source $HOME/shell_env/vim/plugin/ultisnips.vimrc
+source $HOME/shell_env/vim/plugin/taglist.vimrc
+source $HOME/shell_env/vim/plugin/srcexpl.vimrc
+source $HOME/shell_env/vim/plugin/trinity.vimrc
+
 
 set number
 set relativenumber
