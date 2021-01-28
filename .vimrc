@@ -9,11 +9,14 @@
 " Reference:
 " https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source ~/.vimrc
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $HOME/.vimrc
 endif
 source $HOME/shell_env/vim/plug.vimrc
+let g:UltiSnipsNoPythonWarning = 1
 source $HOME/shell_env/vim/hotkeys.vimrc
 source $HOME/shell_env/vim/setting.vimrc
 " =End=
 
+set tags=./tags,./TAGS,tags;~,TAGS;~

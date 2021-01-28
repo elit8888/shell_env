@@ -23,6 +23,23 @@ python3 install.py --clang-completer
 
 For more detail, please see their repo.
 
+#### C / C++ Trace Code
+
+Need to install ctags & cscope
+
+``` bash
+sudo apt install exuberant-ctags cscope
+```
+
+Then go to the project root, type the following commands to generate tags:
+
+``` bash
+ctags -R
+cscope -Rbqk
+# You may also need to put the file http://cscope.sourceforge.net/cscope_maps.vim
+# into vimpath, like ~/.vim/cscope_maps.vim
+```
+
 
 ### Zsh
 
