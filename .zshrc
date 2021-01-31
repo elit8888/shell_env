@@ -55,6 +55,7 @@ zinit wait lucid for \
     OMZP::vagrant \
     OMZP::extract \
     OMZP::command-not-found \
+    OMZP::pipenv \
     OMZP::colored-man-pages
 
 # This should be loaded separated to avoid conflict with fzf
@@ -65,6 +66,8 @@ zinit wait lucid for \
     as"completion"      OMZP::docker/_docker
 
 zinit light djui/alias-tips
+
+zinit load iam4x/zsh-iterm-touchbar
 
 zinit ice from"gh-r" as"program"
 zinit light junegunn/fzf-bin
