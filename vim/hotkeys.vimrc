@@ -6,6 +6,9 @@ command! MakeTags !ctags -R .
 "******************************
 
 nnoremap zso :source ~/.vimrc<CR>
+map zn :cnext<CR>
+map zp :cprevious<CR>
+nnoremap zcl :cclose<CR>
 
 " Move vertically by visual line
 nnoremap j gj
@@ -53,3 +56,4 @@ map <F2> :echo 'Current time is ' . strftime('%c')<CR>
 " The ':map!' command creates a key map that works in insert and command-line
 " mode
 map! <F3> <C-R>=strftime('%c')<CR>
+

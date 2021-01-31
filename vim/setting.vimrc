@@ -9,6 +9,7 @@ source $HOME/shell_env/vim/plugin/ultisnips.vimrc
 source $HOME/shell_env/vim/plugin/taglist.vimrc
 source $HOME/shell_env/vim/plugin/srcexpl.vimrc
 source $HOME/shell_env/vim/plugin/trinity.vimrc
+source $HOME/shell_env/vim/plugin/vim-go.vimrc
 
 
 set number
@@ -19,6 +20,7 @@ set hlsearch    " Highlight search result
 set incsearch   " Do incremental searching
 set nowrap
 set cursorline
+set autowrite
 highlight cursorline cterm=none ctermfg=none ctermbg=238
 
 " type ":help clipboard" for more info
