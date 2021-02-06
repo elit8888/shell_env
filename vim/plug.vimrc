@@ -76,6 +76,8 @@ Plug 'wesleyche/Trinity'
 
 Plug 'AndrewRadev/splitjoin.vim'
 
+Plug 'mileszs/ack.vim'
+
 Plug 'nightsense/office'
 Plug 'yuttie/inkstained-vim'
 Plug 'fatih/molokai'

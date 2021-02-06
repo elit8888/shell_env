@@ -10,6 +10,8 @@ map zn :cnext<CR>
 map zp :cprevious<CR>
 nnoremap zcl :cclose<CR>
 
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
 " Move vertically by visual line
 nnoremap j gj
 nnoremap k gk
@@ -57,3 +59,5 @@ map <F2> :echo 'Current time is ' . strftime('%c')<CR>
 " mode
 map! <F3> <C-R>=strftime('%c')<CR>
 
+nnoremap <C-F> :Ack<space>
+inoremap <C-F> :Ack<space>
