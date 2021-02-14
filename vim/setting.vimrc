@@ -10,6 +10,7 @@ source $HOME/shell_env/vim/plugin/taglist.vimrc
 source $HOME/shell_env/vim/plugin/srcexpl.vimrc
 source $HOME/shell_env/vim/plugin/trinity.vimrc
 source $HOME/shell_env/vim/plugin/vim-go.vimrc
+source $HOME/shell_env/vim/plugin/jedi-vim.vimrc
 
 
 set number

@@ -29,8 +29,16 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " Use `:YcmGenerateConfig` to generate config
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+" Golang support
 Plug 'fatih/vim-go', { 'tag': '*', 'do': ':GoInstallBinaries' }
+
+" Python Support
+"  <leader>g: Goto assignment
+"  <leader>d: Goto definition
+"  <leader>n: Usages
+"  <leader>s: Goto (typing) stub
+"  :Pyimport os: opens the `os` module
+Plug 'davidhalter/jedi-vim'
 
 " Plugin options
 "Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
