@@ -58,6 +58,3 @@ map <F2> :echo 'Current time is ' . strftime('%c')<CR>
 " The ':map!' command creates a key map that works in insert and command-line
 " mode
 map! <F3> <C-R>=strftime('%c')<CR>
-
-nnoremap <C-F> :Ack<space>
-inoremap <C-F> :Ack<space>
