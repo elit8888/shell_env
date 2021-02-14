@@ -4,24 +4,29 @@
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
-
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
-" Any valid git URL is allowed
+" Access GitHub events (user dashboard, user/repo activity) in Vim.
+" check if `:echo has('ruby')` prints 1
+" Example:
+"  GHDashboard! USER
+"  GHActivity! USER
+"  GHActivity! USER/REPO
+" remove `!` for authentication
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+" Workaround for tab completion for snippets
 Plug 'ervandew/supertab'
 
-" On-demand loading
+" Useful file explorer
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+"Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
-" Using a non-master branch
+" Use `:YcmGenerateConfig` to generate config
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
@@ -34,9 +39,7 @@ Plug 'fatih/vim-go', { 'tag': '*', 'do': ':GoInstallBinaries' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Unmanaged plugin (manually installed and updated)
-Plug '~/my-prototype-plugin'
-
-" Initialize plugin system
+"Plug '~/my-prototype-plugin'
 
 
 "
