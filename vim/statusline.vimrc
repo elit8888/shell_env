@@ -12,6 +12,7 @@ set statusline+=%r        "read only flag
 set statusline+=%w        "help buffer flag
 set statusline+=%y        "file type
 set statusline+=%=        "left/right separator
+set statusline+=%{FugitiveStatusline()}\     "git branch
 set statusline+=%l,%c\    "cursor line,cursor column
 set statusline+=%L        "total lines
 set statusline+=\ %P      "percent through file
