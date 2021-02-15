@@ -11,6 +11,7 @@ source $HOME/shell_env/vim/plugin/srcexpl.vimrc
 source $HOME/shell_env/vim/plugin/trinity.vimrc
 source $HOME/shell_env/vim/plugin/vim-go.vimrc
 source $HOME/shell_env/vim/plugin/jedi-vim.vimrc
+source $HOME/shell_env/vim/plugin/easymotion.vimrc
 
 
 set number

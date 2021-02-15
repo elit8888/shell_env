@@ -46,15 +46,6 @@ Plug 'davidhalter/jedi-vim'
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
-" Unmanaged plugin (manually installed and updated)
-"Plug '~/my-prototype-plugin'
-
-
-"
-" Add by myself
-"
-
-
 " side bar
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -64,6 +55,10 @@ Plug 'maciej-ka/ZoomWin'
 
 " navigation
 Plug 'ctrlpvim/ctrlp.vim'
+
+" Run :make asynchronously
+"  Use `:Make`
+Plug 'tpope/vim-dispatch'
 
 " code tracer
 Plug 'vim-scripts/cscope_macros.vim'
@@ -87,10 +82,14 @@ Plug 'wesleyche/Trinity'
 
 Plug 'AndrewRadev/splitjoin.vim'
 
+" Alternate grep tool, use `:Ack <pattern>` to find recursively
 Plug 'mileszs/ack.vim'
 
+" colorschemes
 Plug 'nightsense/office'
 Plug 'yuttie/inkstained-vim'
+
+" colorscheme specifically for Golang
 Plug 'fatih/molokai'
 
 

@@ -1,3 +1,6 @@
+" Key maps that are not related to plugins, for plugin related keybindings,
+" Go to setting.vimrc
+
 " Create the 'tags' file (need to install ctags first)
 command! MakeTags !ctags -R .
 
