@@ -67,7 +67,7 @@ zinit wait lucid for \
 
 zinit light djui/alias-tips
 
-zinit load iam4x/zsh-iterm-touchbar
+# zinit load iam4x/zsh-iterm-touchbar
 
 zinit ice from"gh-r" as"program"
 zinit light junegunn/fzf-bin
