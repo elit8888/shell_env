@@ -71,3 +71,9 @@ For more detail, please see their repo.
 Currently Mac only contains the script for `brew` to install.
 However it may not be executed directly, as some may not be supported for M1
 natively.
+
+### Windows
+
+Currently only settings for Windows Terminal is attached. But I only leave it
+as a reference, I don't think the setting file is portable enough, may need
+futher check.
