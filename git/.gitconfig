@@ -16,3 +16,8 @@
 	##########
 	l = log --oneline
 	lg = log --oneline --graph --decorate
+
+[includeIf "gitdir:~/Work/"]
+	path = ~/Work/.gitconfig
+[includeIf "gitdir:~/work/"]
+	path = ~/work/.gitconfig
