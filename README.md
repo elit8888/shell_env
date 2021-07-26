@@ -11,6 +11,8 @@ Just copy the needed rc files to home directory.
 
 ### Vim
 
+#### YouCompleteMe
+
 If you want to use YouCompleteMe in vim, you need to install it manually.
 Go to `.vim/plugged/YouCompleteMe` and run the following command:
 
@@ -19,6 +21,17 @@ Go to `.vim/plugged/YouCompleteMe` and run the following command:
 sudo apt install -y build-essential cmake pytho3-dev
 # support C++ completion
 python3 install.py --clang-completer
+```
+
+For C / C++, may have a config file for YCM to have customized compile option:
+
+``` python
+# .ycm_extra_conf.py
+
+def Settings(**kwargs):
+  return {
+    "flags": ["-x", "c++", "-std=c++17", "-Wall", "-Wextra", "-Werror"],
+  }
 ```
 
 For more detail, please see their repo.
