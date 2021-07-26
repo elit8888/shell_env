@@ -26,11 +26,15 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
 " For compile mapping, but not always work
-nnoremap <F5> <Esc>:w<CR>:!g++ % -o /tmp/a.out<CR>
-nnoremap <F11> <Esc>:w<CR>:!g++ % -o /tmp/a.out && /tmp/a.out<CR>
-nnoremap <F6> <Esc>:w<CR>:!python3 %<CR>
+" If opening different file type, the command will be overwritten to the
+" latest one
+if has("autocmd")
+  autocmd filetype python nnoremap <F5> <Esc>:w <bar> exec '!python3 '.shellescape('%')<CR>
+  autocmd filetype c nnoremap <F5> <Esc>:w <bar> exec '!gcc '.shellescape('%').' -o /tmp/a.out && /tmp/a.out'<CR>
+  autocmd filetype cpp nnoremap <F5> <Esc>:w <bar> exec '!g++ '.shellescape('%').' -o /tmp/a.out && /tmp/a.out'<CR>
+endif
+nnoremap <F6> <Esc>:w<CR>:!g++ % -o /tmp/a.out<CR>
 
-inoremap {<CR> {<CR>}<Esc>ko
 inoremap jk <Esc>
 inoremap jl <Esc>:w<CR>
 
