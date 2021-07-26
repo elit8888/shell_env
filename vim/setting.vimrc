@@ -103,7 +103,7 @@ endif
 "
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-
+  autocmd BufWritePre *.py if exists(":Black") | execute ':Black'
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
   " 'cindent' is on in C files, etc.
@@ -116,6 +116,7 @@ if has("autocmd")
 
   " For all text files set 'textwidth' to 78 characters.
   "autocmd FileType text setlocal textwidth=78
+  autocmd FileType vim setlocal expandtab softtabstop=2 shiftwidth=2
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
