@@ -76,6 +76,9 @@ Plug 'easymotion/vim-easymotion'
 " Auto-Completion
 Plug 'Valloric/YouCompleteMe'
 
+" Auto Close bracket, paren or quote
+Plug 'tmsvg/pear-tree'
+
 Plug 'wesleyche/SrcExpl'
 Plug 'vim-scripts/taglist.vim'
 Plug 'wesleyche/Trinity'
@@ -92,5 +95,6 @@ Plug 'yuttie/inkstained-vim'
 " colorscheme specifically for Golang
 Plug 'fatih/molokai'
 
+Plug 'psf/black', { 'branch': 'stable' }
 
 call plug#end()
