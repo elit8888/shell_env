@@ -6,6 +6,7 @@ alias vimrc='vim ~/.vimrc'
 alias tmuxrc='vim ~/.tmux.conf'
 alias zshrc='vim ~/.zshrc'
 alias py='python'
+alias py2='docker run -it --rm python:2'
 alias py3='python3'
 alias activate-venv='source venv/bin/activate'
 

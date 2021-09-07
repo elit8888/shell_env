@@ -13,6 +13,20 @@ source $HOME/shell_env/vim/plugin/vim-go.vimrc
 source $HOME/shell_env/vim/plugin/jedi-vim.vimrc
 source $HOME/shell_env/vim/plugin/easymotion.vimrc
 
+" autosave delay, cursorhold trigger, default: 4000ms
+setl updatetime=300
+
+" highlight the word under cursor (CursorMoved is inperformant)
+highlight WordUnderCursor cterm=underline gui=underline
+autocmd CursorHold * call HighlightCursorWord()
+function! HighlightCursorWord()
+    " if hlsearch is active, don't overwrite it!
+    let search = getreg('/')
+    let cword = expand('<cword>')
+    if match(cword, search) == -1
+        exe printf('match WordUnderCursor /\V\<%s\>/', escape(cword, '/\'))
+    endif
+endfunction
 
 set number
 set relativenumber
@@ -117,6 +131,8 @@ if has("autocmd")
   " For all text files set 'textwidth' to 78 characters.
   "autocmd FileType text setlocal textwidth=78
   autocmd FileType vim setlocal expandtab softtabstop=2 shiftwidth=2
+  autocmd FileType json setlocal expandtab softtabstop=2 shiftwidth=2
+  autocmd User Node if &filetype == "javascript" | setlocal expandtab | endif
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler

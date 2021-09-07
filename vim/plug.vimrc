@@ -40,6 +40,12 @@ Plug 'fatih/vim-go', { 'tag': '*', 'do': ':GoInstallBinaries' }
 "  :Pyimport os: opens the `os` module
 Plug 'davidhalter/jedi-vim'
 
+" Node Support
+Plug 'moll/vim-node'
+
+" P4 Support
+Plug 'rightson/vim-p4-syntax'
+
 " Plugin options
 "Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
