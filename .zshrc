@@ -52,6 +52,7 @@ zinit wait lucid for \
     OMZP::python \
     OMZP::docker-compose \
     OMZP::kubectl \
+    OMZP::minikube \
     OMZP::vagrant \
     OMZP::extract \
     OMZP::command-not-found \
@@ -86,11 +87,18 @@ source ~/shell_env/zsh/aliases.zsh
 
 [[ ! -f ~/.fzf.zsh ]] || source ~/.fzf.zsh
 
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH=$PYENV_ROOT/bin:$PATH:/usr/local/go/bin:~/.local/bin
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # For tmux, use different setting for better display
 if [[ -v TMUX ]] && [[ -f ~/.p10k.tmux.zsh ]]; then
-    source ~/.p10k.tmux.zsh
+    zsh_p10k_file=~/.p10k.tmux.zsh
 else
-    source ~/.p10k.zsh
+    zsh_p10k_file=~/.p10k.zsh
 fi
+[[ ! -f ${zsh_p10k_file} ]] || source ${zsh_p10k_file}
 
