@@ -1,5 +1,9 @@
 # README
 
+## Files
+
+* `wt-settings.json` - for Windows terminal, not sure whether it's portable
+
 ## Windows Environment Setup
 
 Install Chocolatey first, then install using `choco` command.
