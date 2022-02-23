@@ -18,4 +18,5 @@ choco install -y `
   microsoft-windows-terminal powertoys `
   ffmpeg youtube-dl `
   virtualbox vagrant
+choco install -y visualstudio2022community
 ```
