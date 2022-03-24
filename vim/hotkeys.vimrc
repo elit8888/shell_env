@@ -35,8 +35,12 @@ if has("autocmd")
 endif
 nnoremap <F6> <Esc>:w<CR>:!g++ % -o /tmp/a.out<CR>
 
+" easy way of back to normal mode
 inoremap jk <Esc>
 inoremap jl <Esc>:w<CR>
+
+" open file in vertical split
+nnoremap <C-W><C-F> <C-W>vgf
 
 "******************************
 " Leader key
