@@ -8,7 +8,7 @@
 
 Install Chocolatey first, then install using `choco` command.
 
-``` powershell
+``` ps1
 choco install -y git --params "/NoGuiHereIntegration"
 choco install -y `
   7zip gh obsidian pdfxchangeeditor python3 `
@@ -18,5 +18,15 @@ choco install -y `
   microsoft-windows-terminal powertoys `
   ffmpeg youtube-dl `
   virtualbox vagrant
+choco install quicklook bottom
 choco install -y visualstudio2022community
+```
+
+## Registry Key
+
+To apply dark theme via registry key:
+
+``` reg
+[Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize]
+"AppsUseLightTheme"=dword:00000000
 ```
