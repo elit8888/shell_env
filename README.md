@@ -79,6 +79,19 @@ then press `prefix` + <kbd>I</kbd>.
 
 For more detail, please see their repo.
 
+## Misc
+
+### Rust Binaries
+
+Some binaries were better (or fancier) than default Linux command, may install
+them via cargo (need install Rust).
+
+* https://github.com/sharkdp/bat
+* https://github.com/sharkdp/fd
+* https://github.com/Peltoche/lsd
+* https://github.com/BurntSushi/ripgrep
+* https://github.com/XAMPPRocky/tokei
+
 ### Mac
 
 Currently Mac only contains the script for `brew` to install.
