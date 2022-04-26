@@ -34,6 +34,8 @@ set showcmd     " Display incomplete commands, the same as set sc
 set ruler       " Show the cursor position all the time (at right below)
 set hlsearch    " Highlight search result
 set incsearch   " Do incremental searching
+set ignorecase  " case insensitive search, use \C to switch to case sensitive
+set smartcase   " switch to case sensitive search if keyword contains Uppercase char
 set nowrap
 set cursorline
 set autowrite
