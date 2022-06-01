@@ -83,7 +83,7 @@ zinit wait lucid light-mode for \
   blockf atpull'zinit creinstall -q .' \
       zsh-users/zsh-completions
 
-source ~/shell_env/zsh/aliases.zsh
+source ~/shell_env/aliases.sh
 
 [[ ! -f ~/.fzf.zsh ]] || source ~/.fzf.zsh
 

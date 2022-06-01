@@ -1,10 +1,10 @@
-#!/bin/zsh
 # create handy aliases
 
 alias al='alias'
 alias vimrc='vim ~/.vimrc'
 alias tmuxrc='vim ~/.tmux.conf'
 alias zshrc='vim ~/.zshrc'
+alias bashrc='vim ~/.bashrc'
 alias lfrc='vim ~/.config/lf/lfrc'
 alias py='python'
 alias py2='docker run -it --rm python:2'

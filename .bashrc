@@ -1,3 +1,14 @@
+alias -='cd -'
+alias .='cd ..'
+alias ..='cd ../..'
+alias ...='cd ../../..'
+alias ....='cd ../../../..'
+alias .....='cd ../../../../..'
+alias ......='cd ../../../../../..'
+alias .......='cd ../../../../../../..'
+alias ........='cd ../../../../../../../..'
+alias .........='cd ../../../../../../../../..'
+
 alias g='git'
 alias ga='git add'
 alias gb='git branch'
@@ -26,3 +37,5 @@ alias gp='git push'
 alias gr='git remote'
 alias gra='git remote add'
 alias gst='git status'
+
+source ~/shell_env/aliases.sh
