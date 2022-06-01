@@ -92,9 +92,12 @@ Plug 'AndrewRadev/splitjoin.vim'
 " Alternate grep tool, use `:Ack <pattern>` to find recursively
 Plug 'mileszs/ack.vim'
 
+Plug 'octol/vim-cpp-enhanced-highlight'
+
 " colorschemes
 Plug 'nightsense/office'
 Plug 'yuttie/inkstained-vim'
+Plug 'tomasiser/vim-code-dark'
 
 " colorscheme specifically for Golang
 Plug 'fatih/molokai'
