@@ -25,6 +25,9 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
+" Requires plugin fzf.vim
+nnoremap <C-p> :Files<CR>
+
 " For compile mapping, but not always work
 " If opening different file type, the command will be overwritten to the
 " latest one

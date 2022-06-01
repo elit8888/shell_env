@@ -51,6 +51,7 @@ Plug 'rightson/vim-p4-syntax'
 
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " side bar
 Plug 'airblade/vim-gitgutter'
@@ -58,9 +59,6 @@ Plug 'tpope/vim-fugitive'
 
 " window
 Plug 'maciej-ka/ZoomWin'
-
-" navigation
-Plug 'ctrlpvim/ctrlp.vim'
 
 " Run :make asynchronously
 "  Use `:Make`
