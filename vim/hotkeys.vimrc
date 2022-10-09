@@ -34,7 +34,7 @@ nnoremap <C-p> :Files<CR>
 if has("autocmd")
   autocmd filetype python nnoremap <F5> <Esc>:w <bar> exec '!python3 '.shellescape('%')<CR>
   autocmd filetype c nnoremap <F5> <Esc>:w <bar> exec '!gcc '.shellescape('%').' -o /tmp/a.out && /tmp/a.out'<CR>
-  autocmd filetype cpp nnoremap <F5> <Esc>:w <bar> exec '!g++ '.shellescape('%').' -o /tmp/a.out && /tmp/a.out'<CR>
+  autocmd filetype cpp nnoremap <F5> <Esc>:w <bar> exec '!g++ -std=c++17 '.shellescape('%').' -o /tmp/a.out && /tmp/a.out'<CR>
 endif
 nnoremap <F6> <Esc>:w<CR>:!g++ % -o /tmp/a.out<CR>
 
