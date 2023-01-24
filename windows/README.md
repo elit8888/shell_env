@@ -16,7 +16,7 @@ choco install -y `
   brave firefox googlechrome `
   notepadplusplus sublimetext4 vscode `
   microsoft-windows-terminal powertoys `
-  ffmpeg youtube-dl `
+  ffmpeg youtube-dl flameshot `
   virtualbox vagrant
 choco install quicklook bottom
 choco install -y visualstudio2022community
