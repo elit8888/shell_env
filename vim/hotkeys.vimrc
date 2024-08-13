@@ -2,7 +2,7 @@
 " Go to setting.vimrc
 
 " Create the 'tags' file (need to install ctags first)
-command! MakeTags !ctags -R .
+" command! MakeTags !ctags -R .
 
 "******************************
 " Below are mapping keys

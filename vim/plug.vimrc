@@ -50,8 +50,8 @@ Plug 'rightson/vim-p4-syntax'
 "Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
 " Plugin outside ~/.vim/plugged with post-update hook
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim'
 
 " side bar
 Plug 'airblade/vim-gitgutter'
@@ -78,13 +78,13 @@ Plug 'vim-syntastic/syntastic'
 Plug 'easymotion/vim-easymotion'
 
 " Auto-Completion
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 
 " Auto Close bracket, paren or quote
 Plug 'tmsvg/pear-tree'
 
 Plug 'wesleyche/SrcExpl'
-Plug 'vim-scripts/taglist.vim'
+" Plug 'vim-scripts/taglist.vim'
 Plug 'wesleyche/Trinity'
 
 Plug 'AndrewRadev/splitjoin.vim'
@@ -103,5 +103,7 @@ Plug 'tomasiser/vim-code-dark'
 Plug 'fatih/molokai'
 
 Plug 'psf/black', { 'branch': 'stable' }
+
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 call plug#end()
