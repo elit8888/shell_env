@@ -4,7 +4,7 @@
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
-Plug 'junegunn/vim-easy-align'
+"Plug 'junegunn/vim-easy-align'
 
 " Access GitHub events (user dashboard, user/repo activity) in Vim.
 " check if `:echo has('ruby')` prints 1
@@ -13,10 +13,10 @@ Plug 'junegunn/vim-easy-align'
 "  GHActivity! USER
 "  GHActivity! USER/REPO
 " remove `!` for authentication
-Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+"Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
 " Multiple Plug commands can be written in a single line using | separators
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 " Workaround for tab completion for snippets
 Plug 'ervandew/supertab'
 
@@ -27,10 +27,10 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 "Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 " Use `:YcmGenerateConfig` to generate config
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+"Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 
 " Golang support
-Plug 'fatih/vim-go', { 'tag': '*', 'do': ':GoInstallBinaries' }
+"Plug 'fatih/vim-go', { 'tag': '*', 'do': ':GoInstallBinaries' }
 
 " Python Support
 "  <leader>g: Goto assignment
@@ -41,10 +41,10 @@ Plug 'fatih/vim-go', { 'tag': '*', 'do': ':GoInstallBinaries' }
 Plug 'davidhalter/jedi-vim'
 
 " Node Support
-Plug 'moll/vim-node'
+"Plug 'moll/vim-node'
 
 " P4 Support
-Plug 'rightson/vim-p4-syntax'
+"Plug 'rightson/vim-p4-syntax'
 
 " Plugin options
 "Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
@@ -54,8 +54,8 @@ Plug 'rightson/vim-p4-syntax'
 "Plug 'junegunn/fzf.vim'
 
 " side bar
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
+"Plug 'airblade/vim-gitgutter'
+"Plug 'tpope/vim-fugitive'
 
 " window
 Plug 'maciej-ka/ZoomWin'
@@ -69,10 +69,10 @@ Plug 'vim-scripts/cscope_macros.vim'
 Plug 'vim-scripts/autoload_cscope.vim'
 
 " Combine with tmux
-Plug 'benmills/vimux'
+"Plug 'benmills/vimux'
 
 " Syntax checking
-Plug 'vim-syntastic/syntastic'
+"Plug 'vim-syntastic/syntastic'
 
 " Quick locate character
 Plug 'easymotion/vim-easymotion'
@@ -95,14 +95,27 @@ Plug 'mileszs/ack.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 
 " colorschemes
-Plug 'nightsense/office'
+"Plug 'nightsense/office'
 Plug 'yuttie/inkstained-vim'
 Plug 'tomasiser/vim-code-dark'
 
 " colorscheme specifically for Golang
 Plug 'fatih/molokai'
+Plug 'bartekprtc/gruv-vsassist.nvim'
+Plug 'BoHomola/vsassist.nvim'
 
-Plug 'psf/black', { 'branch': 'stable' }
+"Plug 'psf/black', { 'branch': 'stable' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'antoinemadec/coc-fzf'
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+Plug 'github/copilot.vim'
+
+Plug 'ojroques/vim-oscyank'
+
+Plug 'wellle/context.vim'
 
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 

@@ -1,17 +1,45 @@
 " Set statusline style
-source $HOME/shell_env/vim/statusline.vimrc
+"source $HOME/shell_env/vim/statusline.vimrc
+
+colorscheme molokai
 
 " Uncomment below to use plugin config
-source $HOME/shell_env/vim/plugin/syntastic.config.vimrc
-" source $HOME/shell_env/vim/plugin/ycm.config.vimrc
+"source $HOME/shell_env/vim/plugin/syntastic.config.vimrc
+"source $HOME/shell_env/vim/plugin/ycm.config.vimrc
 source $HOME/shell_env/vim/plugin/nerdtree.vimrc
-source $HOME/shell_env/vim/plugin/ultisnips.vimrc
-" source $HOME/shell_env/vim/plugin/taglist.vimrc
-source $HOME/shell_env/vim/plugin/srcexpl.vimrc
-source $HOME/shell_env/vim/plugin/trinity.vimrc
-source $HOME/shell_env/vim/plugin/vim-go.vimrc
+"source $HOME/shell_env/vim/plugin/ultisnips.vimrc
+"source $HOME/shell_env/vim/plugin/taglist.vimrc
+"source $HOME/shell_env/vim/plugin/srcexpl.vimrc
+"source $HOME/shell_env/vim/plugin/trinity.vimrc
+"source $HOME/shell_env/vim/plugin/vim-go.vimrc
 source $HOME/shell_env/vim/plugin/jedi-vim.vimrc
 source $HOME/shell_env/vim/plugin/easymotion.vimrc
+augroup EditVim
+   autocmd!
+   "autocmd FileType cpp    source ~/.vim/.vimrc_cpp
+   "autocmd FileType cpp    source $HOME/.vim/.vimrc_coc
+   autocmd FileType cpp    colorscheme gruv-vsassist
+augroup END
+
+"*****************************************************************************************"
+"For vim-lsp
+"*****************************************************************************************"
+" autocmd FileType cpp source ~/.vim/.vimrc_clangd
+"
+" if executable('clangd')
+"     augroup lsp_clangd
+"         autocmd!
+"         autocmd User lsp_setup call lsp#register_server({
+"                     \ 'name': 'clangd',
+"                     \ 'cmd': {server_info->['clangd']},
+"                     \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+"                     \ })
+"         autocmd FileType c setlocal omnifunc=lsp#complete
+"         autocmd FileType cpp setlocal omnifunc=lsp#complete
+"         autocmd FileType objc setlocal omnifunc=lsp#complete
+"         autocmd FileType objcpp setlocal omnifunc=lsp#complete
+"     augroup end
+" endif
 
 " autosave delay, cursorhold trigger, default: 4000ms
 setl updatetime=300
@@ -36,13 +64,14 @@ set hlsearch    " Highlight search result
 set incsearch   " Do incremental searching
 set ignorecase  " case insensitive search, use \C to switch to case sensitive
 set smartcase   " switch to case sensitive search if keyword contains Uppercase char
+set title
 set nowrap
 set cursorline
-set autowrite
-highlight cursorline cterm=none ctermfg=none ctermbg=238
+"set autowrite
+highlight cursorline cterm=none ctermfg=none ctermbg=256
 
 " type ":help clipboard" for more info
-set clipboard=unnamed
+set clipboard=unnamed,unnamedplus
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
@@ -67,11 +96,11 @@ set scrolloff=3
 set laststatus=2
 
 " Test mouse option
-if has("mouse_sgr")
-    set ttymouse=sgr
-else
-    set ttymouse=xterm2
-end
+"if has("mouse_sgr")
+"    set ttymouse=sgr
+"else
+"    set ttymouse=xterm2
+"end
 
 " Enable mouse to control
 if has('mouse')
@@ -132,6 +161,7 @@ if has("autocmd")
 
   " For all text files set 'textwidth' to 78 characters.
   "autocmd FileType text setlocal textwidth=78
+  autocmd FileType cpp setlocal expandtab
   autocmd FileType vim setlocal expandtab softtabstop=2 shiftwidth=2
   autocmd FileType json setlocal expandtab softtabstop=2 shiftwidth=2
   autocmd User Node if &filetype == "javascript" | setlocal expandtab | endif

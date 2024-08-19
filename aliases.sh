@@ -3,6 +3,8 @@
 alias al='alias'
 alias vimrc='vim ~/.vimrc'
 alias tmuxrc='vim ~/.tmux.conf'
+alias bashrc="vim ~/.bashrc.`whoami`"
+alias cshrc="vim ~/.cshrc.`whoami`"
 alias zshrc='vim ~/.zshrc'
 alias bashrc='vim ~/.bashrc'
 alias lfrc='vim ~/.config/lf/lfrc'
