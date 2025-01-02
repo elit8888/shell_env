@@ -85,7 +85,7 @@ else
 endif
 
 " Enable folding
-set foldmethod=syntax
+set foldmethod=indent
 set foldlevel=99
 
 set background=dark
