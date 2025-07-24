@@ -1,13 +1,48 @@
-alias -='cd -'
-alias .='cd ..'
-alias ..='cd ../..'
-alias ...='cd ../../..'
-alias ....='cd ../../../..'
-alias .....='cd ../../../../..'
-alias ......='cd ../../../../../..'
-alias .......='cd ../../../../../../..'
-alias ........='cd ../../../../../../../..'
-alias .........='cd ../../../../../../../../..'
+# cd related utils mimicing zsh
+alias -- -='cd -'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias .......='cd ../../../../../..'
+alias ........='cd ../../../../../../..'
+alias .........='cd ../../../../../../../..'
+alias ..........='cd ../../../../../../../../..'
+
+dedup() {
+  declare -a new=() copy=("${DIRSTACK[@]:1}")
+  declare -A seen
+  local v i
+  seen[$PWD]=1
+  for v in "${copy[@]}"; do
+    if [ -z "${seen[$v]}" ]
+      then new+=("$v")
+           seen[$v]=1
+    fi
+  done
+  dirs -c
+  for ((i=${#new[@]}-1; i>=0; i--))
+  do      builtin pushd -n "${new[i]}" >/dev/null
+  done
+}
+
+pushd() {
+  if [ $# -eq 0 ]; then
+    DIR="${HOME}"
+  else
+    DIR="$1"
+  fi
+
+  builtin pushd "${DIR}" > /dev/null
+  #echo -n "DIRSTACK: "
+  #dirs
+  dedup
+}
+
+d() {
+  dirs -v | head -n 10
+}
  
 alias 1='cd "$(dirs -l +1)"'
 alias 2='cd "$(dirs -l +2)"'
