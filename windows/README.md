@@ -2,17 +2,33 @@
 
 ## Files
 
+* `Microsoft.PowerShell_profile.ps1` - for powershell profile
 * `wt-settings.json` - for Windows terminal, not sure whether it's portable
 
 ## Windows Environment Setup
 
-Install Chocolatey first, then install using `choco` command.
+Install scoop, then install the following:
+
+``` ps1
+scoop bucket add extras
+scoop install `
+  7zip `
+  extras/altsnap `
+  bottom `
+  extras/brave `
+  extras/cursror `
+  extras/googlechrome `
+  neovim `
+  extras/tabby `
+  extras/vscode
+
+```
+
+Install Chocolatey, then install using `choco` command (requires admin) (some to be moved to scoop).
 
 ``` ps1
 choco install -y git --params "/NoGuiHereIntegration"
 choco install -y `
-  7zip `
-  brave `
   cheatengine `
   discord `
   dropbox `
@@ -20,7 +36,6 @@ choco install -y `
   firefox `
   flameshot `
   gh `
-  googlechrome `
   line `
   messenger `
   microsoft-windows-terminal `
@@ -35,12 +50,13 @@ choco install -y `
   telegram `
   vagrant `
   virtualbox `
-  vscode `
   winmerge `
   youtube-dl
-choco install bottom quicklook
+choco install -y quicklook
 choco install -y visualstudio2022community
 ```
+
+Install Cargo, then install `ripgrep`
 
 ## Registry Key
 
