@@ -1,3 +1,5 @@
 # Settings for some Text Editors
 
-* `.vsvimrc`: Visual Studio
+* Cursor
+  * User scope
+    * Under `%APPDATA%/Cursor/User`

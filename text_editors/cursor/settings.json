@@ -1,0 +1,209 @@
+{
+    "git.ignoreLegacyWarning": true,
+    "editor.renderWhitespace": "trailing",
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.hlsearch": true,
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "k"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        },
+        {
+            "before": [
+                "j",
+                "l"
+            ],
+            "after": [
+                "<Esc>"
+            ],
+            "commands": [
+                "workbench.action.files.save"
+            ]
+        }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["g", "r"],
+            "commands": [
+                "references-view.findReferences"
+            ]
+        },
+        {
+            "before": [
+                "\\",
+                "m"
+            ],
+            "commands": [
+                "textmarker.toggleHighlight"
+            ]
+        },
+        {
+            "before": [
+                "<C-w>",
+                "o"
+            ],
+            "commands": [
+                "workbench.action.toggleEditorWidths"
+            ]
+        },
+        {
+            "before": [
+                "z",
+                "n"
+            ],
+            "commands": [
+                "editor.action.marker.next"
+            ]
+        },
+        {
+            "before": [
+                " "
+            ],
+            "after": [
+                "leader",
+                "leader",
+                "s"
+            ]
+        },
+        {
+            "before": [
+                "z",
+                "c",
+                "i"
+            ],
+            "commands": [
+                "inlineChat.start"
+            ]
+        },
+        {
+            "before": ["<C-o>"],
+            "commands": ["workbench.action.navigateBack"]
+        },
+        {
+            "before": ["<C-i>"],
+            "commands": ["workbench.action.navigateForward"]
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "\\",
+                "m"
+            ],
+            "commands": [
+                "textmarker.toggleHighlight",
+                "extension.vim_escape"
+            ]
+        },
+       {
+         "before": ["/", "/"],
+         "commands": [
+            "editor.action.clipboardCopyAction",
+            "extension.vim_escape",
+            "actions.findWithSelection"
+         ]
+       }
+    ],
+    "vim.handleKeys": {
+        "<C-k>": false,
+        "<C-d>": true,
+        "<C-s>": false,
+        "<C-z>": false
+    },
+    "vim.visualModeKeyBindings": [
+        {
+            "before": [
+                "z",
+                "c",
+                "i"
+            ],
+            "commands": [
+                "inlineChat.start"
+            ]
+        }
+    ],
+    "workbench.editor.navigationScope": "editorGroup",
+    "terminal.integrated.allowChords": false,
+    "terminal.integrated.commandsToSkipShell": [
+        "-workbench.action.quickOpen",
+        "-workbench.action.terminal.focusFind",
+        "-workbench.action.terminal.paste",
+        "-workbench.action.togglePanel"
+    ],
+    "files.associations": {
+        "*.make": "makefile",
+        "*.tcc": "cpp"
+    },
+    "editor.lineNumbers": "relative",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.bracketPairColorization.enabled": true,
+    "terminal.integrated.env.windows": {
+        "DISPLAY": "127.0.0.1:0.0"
+    },
+    "editor.insertSpaces": true,
+    "editor.tabSize": 8,
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "debug.allowBreakpointsEverywhere": true,
+    "settingsSync.ignoredExtensions": [
+        "llvm-vs-code-extensions.vscode-clangd"
+    ],
+    "editor.inlayHints.enabled": "onUnlessPressed",
+    "editor.semanticTokenColorCustomizations": {
+        "rules": {
+            "*.readonly": {
+                "fontStyle": "italic"
+            },
+            "parameter.readonly:cpp": {
+                "fontStyle": "italic bold underline"
+            },
+            "namespace": {
+                "bold": true
+            }
+        }
+    },
+    "workbench.colorCustomizations": {
+        "editor.lineHighlightBackground": "#605f5c68",
+        "tab.activeBorderTop": "#ffffff",
+        "editor.selectionHighlightBackground": "#007db3a7",
+        "errorLens.warningForeground": "#83b353",
+        "editorInlayHint.background": "#1e1e1e",
+        "editorInlayHint.foreground": "#999999"
+    },
+    "terminal.integrated.fontSize": 16,
+    "editor.guides.bracketPairs": "active",
+    "editor.stickyScroll.enabled": true,
+    "editor.accessibilitySupport": "off",
+    "vim.statusBarColors.easymotionmode": "",
+    "errorLens.enabledDiagnosticLevels": [
+        "error",
+        "warning",
+        "info",
+        "hint"
+    ],
+    "workbench.editor.pinnedTabsOnSeparateRow": true,
+    "window.zoomLevel": -2,
+    "terminal.integrated.experimentalInlineChat": true,
+    "terminal.integrated.middleClickBehavior": "paste",
+    "problems.autoReveal": false,
+    "diffEditor.ignoreTrimWhitespace": true,
+    "editor.largeFileOptimizations": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "cursor.cpp.disabledLanguages": [
+        "scminput"
+    ],
+    "workbench.colorTheme": "Visual Assist Dark Theme",
+    "cursor.composer.textSizeScale": 1.3,
+    "explorer.confirmDelete": false,
+    "json.schemaDownload.enable": true,
+    "cursor.composer.shouldChimeAfterChatFinishes": true,
+    "editor.wordWrap": "off",
+    "remote.autoForwardPortsSource": "hybrid",
+    "cursor.cpp.enablePartialAccepts": true,
+}
