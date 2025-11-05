@@ -20,8 +20,11 @@ scoop install `
   extras/googlechrome `
   neovim `
   extras/tabby `
-  extras/vscode
+  extras/vscode `
+  extras/window-switcher
 
+scoop bucket add games
+scoop install games/steam
 ```
 
 Install Chocolatey, then install using `choco` command (requires admin) (some to be moved to scoop).
@@ -67,13 +70,6 @@ To apply dark theme via registry key:
 "AppsUseLightTheme"=dword:00000000
 ```
 
-## Manual Installation
+## Setup References
 
-Some packages are not in Chocolatey and Winget, or they are outdated, need to install manually.
-
-* Game Related
-  * Steam
-  * GOG
-  * Battlenet
-* Utilities
-  * AltBacktick
+* May use https://github.com/Raphire/Win11Debloat for cleaning up Windows during initial setup.
