@@ -206,4 +206,5 @@
     "editor.wordWrap": "off",
     "remote.autoForwardPortsSource": "hybrid",
     "cursor.cpp.enablePartialAccepts": true,
+    "workbench.activityBar.orientation": "vertical",
 }
