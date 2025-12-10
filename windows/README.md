@@ -13,19 +13,27 @@ Install scoop, then install the following:
 scoop bucket add extras
 scoop install `
   7zip `
+  extras/antigravity
   extras/altsnap `
   bottom `
   extras/brave `
+  chromedriver `
   extras/cursror `
+  erdtree `
   extras/googlechrome `
   neovim `
+  pipx `
+  ripgrep `
   extras/tabby `
   extras/vscode `
-  extras/window-switcher
+  extras/window-switcher `
+  extras/windsurf
 
 scoop bucket add games
 scoop install games/steam
 ```
+
+Use `scoop cleanup *` to remove old versions.
 
 Install Chocolatey, then install using `choco` command (requires admin) (some to be moved to scoop).
 
@@ -59,7 +67,6 @@ choco install -y quicklook
 choco install -y visualstudio2022community
 ```
 
-Install Cargo, then install `ripgrep`
 
 ## Registry Key
 
