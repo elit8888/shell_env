@@ -13,24 +13,50 @@ Install scoop, then install the following:
 scoop bucket add extras
 scoop install `
   7zip `
-  extras/antigravity
+  extras/altdrag `
+  extras/antigravity `
   extras/altsnap `
   bottom `
   extras/brave `
   chromedriver `
   extras/cursror `
+  extras/discord `
   erdtree `
+  ffmpeg `
+  extras/firefox `
+  fzf `
+  gallery-dl `
+  gh `
+  git `
   extras/googlechrome `
+  lf `
   neovim `
+  nodejs `
+  extras/notepadplusplus `
   pipx `
+  pwsh `
   ripgrep `
+  extras/spotify `
+  extras/sublime-text `
   extras/tabby `
+  extras/telegram `
   extras/vscode `
   extras/window-switcher `
-  extras/windsurf
+  extras/windsurf `
+  extras/winmerge `
+  yt-dlp
 
 scoop bucket add games
 scoop install games/steam
+
+# post action
+reg import "$env:USERPROFILE\scoop\apps\7zip\current\install-context.reg"
+reg import "$env:USERPROFILE\scoop\apps\notepadplusplus\current\install-context.reg"
+reg import "$env:USERPROFILE\scoop\apps\sublime-text\current\install-context.reg"
+reg import "$env:USERPROFILE\scoop\apps\vscode\current\install-context.reg"
+
+# may need to change the content inside to not registering GUI
+reg import "$env:USERPROFILE\scoop\apps\git\current\install-context.reg"
 ```
 
 Use `scoop cleanup *` to remove old versions.
@@ -38,31 +64,17 @@ Use `scoop cleanup *` to remove old versions.
 Install Chocolatey, then install using `choco` command (requires admin) (some to be moved to scoop).
 
 ``` ps1
-choco install -y git --params "/NoGuiHereIntegration"
 choco install -y `
   cheatengine `
-  discord `
   dropbox `
-  ffmpeg `
-  firefox `
   flameshot `
-  gh `
   line `
-  messenger `
   microsoft-windows-terminal `
-  nodejs `
-  notepadplusplus `
   obsidian `
   pdfxchangeeditor `
   powertoys `
   python3 `
-  spotify `
-  sublimetext4 `
-  telegram `
-  vagrant `
-  virtualbox `
-  winmerge `
-  youtube-dl
+  virtualbox
 choco install -y quicklook
 choco install -y visualstudio2022community
 ```
