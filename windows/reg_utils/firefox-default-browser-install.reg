@@ -1,0 +1,49 @@
+Windows Registry Editor Version 5.00
+
+; If installed via Scoop, Firefox won't be showing up in default web app selection list.
+; So using this script to make it visible in settings (Tested on Windowd 10).
+
+; =========================
+; StartMenuInternet entry
+; =========================
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\FirefoxHTML]
+@="Firefox"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\FirefoxHTML\shell\open\command]
+@="\"C:\\Users\\elit8\\scoop\\apps\\firefox\\current\\firefox.exe\" \"%1\""
+
+; =========================
+; Capabilities
+; =========================
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\FirefoxHTML\Capabilities]
+"ApplicationName"="Firefox"
+"ApplicationDescription"="Firefox Web Browser"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\FirefoxHTML\Capabilities\FileAssociations]
+".html"="FirefoxHTML"
+".htm"="FirefoxHTML"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet\FirefoxHTML\Capabilities\URLAssociations]
+"http"="FirefoxHTML"
+"https"="FirefoxHTML"
+
+; =========================
+; RegisteredApplications
+; =========================
+[HKEY_LOCAL_MACHINE\SOFTWARE\RegisteredApplications]
+"Firefox"="Software\\Clients\\StartMenuInternet\\FirefoxHTML\\Capabilities"
+
+; =========================
+; ProgId definition (CRITICAL)
+; =========================
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\FirefoxHTML]
+@="Firefox HTML Document"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\FirefoxHTML\DefaultIcon]
+@="C:\\Users\\elit8\\scoop\\apps\\firefox\\current\\firefox.exe,0"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\FirefoxHTML\shell\open\command]
+@="\"C:\\Users\\elit8\\scoop\\apps\\firefox\\current\\firefox.exe\" \"%1\""
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\FirefoxHTML\URL Protocol]
+@=""
