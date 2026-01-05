@@ -1,24 +1,13 @@
 // Place your key bindings in this file to override the defaults
 [
-    // // Toggle between terminal and editor focus
-    // {
-    //     "key": "ctrl+`",
-    //     "command": "workbench.action.terminal.focus"
-    // },
-    // {
-    //     "key": "ctrl+`",
-    //     "command": "workbench.action.focusActiveEditorGroup",
-    //     "when": "terminalFocus"
-    // },
-
-    // Toggle maximize terminal window
     {
-        "key": "ctrl+shift+m",
-        "command": "workbench.action.toggleMaximizedPanel"
+        "key": "ctrl+e",
+        "command": "-cursor.toggleAgentWindowIDEUnification",
+        "when": "cursor.agentIdeUnification.featureGate && workbenchState != 'empty'"
     },
     {
-        "key": "ctrl+c ctrl+\\",
-        "command": "workbench.action.splitEditorOrthogonal"
+        "key": "ctrl+i",
+        "command": "-composer.startComposerPrompt"
     },
     {
         "key": "ctrl+p",
@@ -26,17 +15,11 @@
         "when": "editorTextFocus && vim.active && vim.use<C-p> && !inDebugRepl || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'SearchInProgressMode'"
     },
     {
-        "key": "ctrl+i",
-        "command": "-composer.startComposerPrompt"
+        "key": "ctrl+shift+m",
+        "command": "workbench.action.toggleMaximizedPanel"
     },
     {
-        "key": "ctrl+e",
-        "command": "-cursor.toggleAgentWindowIDEUnification",
-        "when": "cursor.agentIdeUnification.featureGate && workbenchState != 'empty'"
-    },
-    {
-        "key": "ctrl+k",
-        "command": "-aipopup.action.modal.generate",
-        "when": "editorFocus && !composerBarIsVisible"
+        "key": "ctrl+c ctrl+\\",
+        "command": "workbench.action.splitEditorOrthogonal"
     }
 ]
