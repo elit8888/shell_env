@@ -5,6 +5,7 @@ Set-PSReadlineOption -EditMode Emacs
 New-Alias grep findstr
 New-Alias which Get-Command
 New-Alias vim nvim
+New-Alias realpath Resolve-Path
 
 function ghc {
     gh copilot @args
