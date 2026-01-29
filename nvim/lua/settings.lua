@@ -20,6 +20,11 @@ vim.o.colorcolumn = '88'
 vim.o.updatetime = 300
 vim.o.title = true
 vim.o.listchars = 'tab:▸ ,nbsp:%,trail:-'
+vim.o.mouse = 'a'
+vim.o.wildmenu = true
+vim.o.laststatus = 2
+vim.o.backspace = 'indent,eol,start'
+
 
 
 -- Sync clipboard between OS and Neovim. Schedule the setting after `UiEnter` because it can
@@ -153,6 +158,17 @@ vim.api.nvim_create_autocmd('TermOpen', {
   pattern = '*',
   callback = function()
     vim.cmd('startinsert')
+  end,
+})
+
+
+-- C/C++/JSON specific settings
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'c', 'cpp', 'json' },
+  callback = function()
+    vim.bo.expandtab = true
+    vim.bo.shiftwidth = 4
+    vim.bo.softtabstop = 4
   end,
 })
 

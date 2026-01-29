@@ -70,5 +70,71 @@ return {
   },
 
   "Darazaki/indent-o-matic",
+
+  -- Statusline
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = true,
+  },
+
+  -- Motion (Replacement for Easymotion)
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "<leader> ", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    },
+
+  },
+
+  -- LSP Support
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "saghen/blink.cmp",
+    },
+    config = function()
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
+      require("mason").setup()
+      require("mason-lspconfig").setup({
+        ensure_installed = { "lua_ls", "clangd", "pyright", "gopls" },
+        handlers = {
+          function(server_name)
+            require("lspconfig")[server_name].setup { capabilities = capabilities }
+          end,
+        },
+      })
+    end,
+  },
+
+  -- Autocompletion (Blink.cmp)
+  {
+    "saghen/blink.cmp",
+    lazy = false,
+    dependencies = { "rafamadriz/friendly-snippets" },
+    version = "*",
+    opts = {
+      keymap = { preset = "default" },
+      appearance = {
+        use_nvim_cmp_as_default = true,
+        nerd_font_variant = "mono",
+      },
+      completion = {
+        documentation = { auto_show = true, auto_show_delay_ms = 500 },
+      },
+      fuzzy = { implementation = "prefer_rust_with_warning" },
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer" },
+      },
+    },
+    opts_extend = { "sources.default" }
+  },
+
+
 }
 
