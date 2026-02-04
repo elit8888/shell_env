@@ -39,6 +39,10 @@ return {
       local HEIGHT_RATIO = 0.8
       local WIDTH_RATIO = 0.5
       require("nvim-tree").setup({
+        update_focused_file = {
+          enable = true,
+          update_cwd = true,
+        },
         view = {
           float = {
             enable = true,
