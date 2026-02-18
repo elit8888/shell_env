@@ -75,6 +75,12 @@ return {
 
   "Darazaki/indent-o-matic",
 
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    config = true,
+  },
+
   -- Statusline
   {
     "nvim-lualine/lualine.nvim",
