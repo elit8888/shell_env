@@ -39,8 +39,8 @@ vim.api.nvim_create_autocmd('UIEnter', {
 
 -- [[ Set up keymaps ]] See `:h vim.keymap.set()`, `:h mapping`, `:h keycodes`
 
-vim.keymap.set('n', '<C-t>', function() vim.cmd('ToggleTerm direction=float') end, { desc = "Toggle floating terminal" })
-vim.keymap.set('t', '<Esc><Esc>', '<Cmd>ToggleTerm direction=float<CR>', { desc = "Hide floating terminal" })
+vim.keymap.set('n', '<C-`>', function() vim.cmd('ToggleTerm direction=float') end, { desc = "Toggle floating terminal" })
+vim.keymap.set('t', '<C-`>', '<Cmd>ToggleTerm direction=float<CR>', { desc = "Hide floating terminal" })
 
 -- Use <Esc> to exit terminal mode
 -- vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
