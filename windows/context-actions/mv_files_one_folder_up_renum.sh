@@ -13,7 +13,7 @@ process_dir() {
     for f in "${files[@]}"; do
         [[ -f "$d/$f" ]] || continue
         mv -- "$d/$f" "./$(basename "$d")-$count.${f##*.}"
-        ((count++))
+        count=$((count + 1))
     done
     shopt -u nullglob
 

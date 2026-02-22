@@ -8,7 +8,7 @@ for d in */; do
     mapfile -t files < <(ls -rt)
     for f in "${files[@]}"; do
         mv -- "$f" "../${d%/}-${count}.${f##*.}" || exit 1
-        (( count++ ))
+        count=$((count + 1))
     done
     cd .. && rm -r -- "$d"
 done
