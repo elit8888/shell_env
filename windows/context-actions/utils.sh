@@ -57,6 +57,23 @@ function gif2webm() { _batch_convert gif  gif2webm_; }
 function png2jpg()  { _batch_convert png  png2jpg_;  }
 function webp2jpg() { _batch_convert webp webp2jpg_; }
 
+function rename_large_ext() {
+  local count=0
+  while IFS= read -r -d '' f; do
+    local new="${f%_large}"
+    if [ -e "$new" ]; then
+      echo "SKIP (exists): $new"
+    else
+      mv -- "$f" "$new"
+      echo "Renamed: $f -> $new"
+      (( count++ )) || true
+    fi
+  done < <(find . -type f \( -iname "*.jpg_large" -o -iname "*.png_large" \) -print0)
+
+  echo
+  echo "Done. $count file(s) renamed."
+}
+
 # --- Entry point for scripts ---
 
 function elit_call() {

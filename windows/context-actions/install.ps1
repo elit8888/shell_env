@@ -111,6 +111,11 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\Directory\shell\elit_actions\shell\move_files_up_renum\command]
 @="$(cmd-single 'mv_files_one_folder_up_renum.sh')"
 
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\elit_actions\shell\rename_large_ext]
+@="rename *_large extensions"
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\elit_actions\shell\rename_large_ext\command]
+@="$(cmd-single 'rename_large_ext.sh')"
+
 
 ; === Directory Background (folder background right-click) ===
 [HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\elit_actions]
@@ -151,6 +156,11 @@ Windows Registry Editor Version 5.00
 @="Unzip all files"
 [HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\elit_actions\shell\unzip_all_files\command]
 @="$(cmd-all 'unzip_all_files.sh')"
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\elit_actions\shell\rename_large_ext]
+@="rename *_large extensions"
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\elit_actions\shell\rename_large_ext\command]
+@="$(cmd-all 'rename_large_ext.sh')"
 
 "@
 
