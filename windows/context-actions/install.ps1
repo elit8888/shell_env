@@ -28,10 +28,10 @@ function Find-Mintty {
 
     # Common fallback locations
     foreach ($loc in @(
-        "$env:ProgramFiles\Git\usr\bin\mintty.exe",
-        "$env:LOCALAPPDATA\Programs\Git\usr\bin\mintty.exe",
-        "$env:USERPROFILE\scoop\apps\git\current\usr\bin\mintty.exe"
-    )) {
+            "$env:ProgramFiles\Git\usr\bin\mintty.exe",
+            "$env:LOCALAPPDATA\Programs\Git\usr\bin\mintty.exe",
+            "$env:USERPROFILE\scoop\apps\git\current\usr\bin\mintty.exe"
+        )) {
         if (Test-Path $loc) { return $loc }
     }
 
@@ -51,7 +51,7 @@ function Escape-Reg([string]$s) {
     return $s.Replace('\', '\\').Replace('"', '\"')
 }
 
-$mintty  = Find-Mintty
+$mintty = Find-Mintty
 $bashDir = ConvertTo-BashPath $PSScriptRoot
 Write-Host "mintty : $mintty"
 Write-Host "scripts: $bashDir"

@@ -35,9 +35,7 @@ function _batch_convert() {
   local ext="$1"
   local converter="$2"
 
-  shopt -s nullglob
-  local files=(*."$ext")
-  shopt -u nullglob
+  mapfile -d '' files < <(find . -type f -iname "*.$ext" -print0)
 
   if [ ${#files[@]} -eq 0 ]; then
     echo "No .$ext files found."
