@@ -57,6 +57,32 @@ function gif2webm() { _batch_convert gif  gif2webm_; }
 function png2jpg()  { _batch_convert png  png2jpg_;  }
 function webp2jpg() { _batch_convert webp webp2jpg_; }
 
+function rpgmvp2png_() {
+  local f="$1"
+  local out="${2:-${f%.*}.png}"
+  printf '\x89\x50\x4E\x47\x0D\x0A\x1A\x0A\x00\x00\x00\x0D\x49\x48\x44\x52' > "$out"
+  tail -c +33 "$f" >> "$out"
+}
+
+function rpgmvp2png() {
+  mapfile -d '' files < <(find . -type f \( -iname "*.rpgmvp" -o -iname "*.png_" \) -print0)
+
+  if [ ${#files[@]} -eq 0 ]; then
+    echo "No .rpgmvp or .png_ files found."
+    return 1
+  fi
+
+  for f in "${files[@]}"; do
+    local rel="${f#./}"
+    local out="./png/${rel%.*}.png"
+    mkdir -p "$(dirname "$out")"
+    echo "$f -> $out"
+    if rpgmvp2png_ "$f" "$out" && [ "$ELIT_DELETE_ORIGINAL" = true ]; then
+      rm "$f"
+    fi
+  done
+}
+
 function rename_large_ext() {
   local count=0
   while IFS= read -r -d '' f; do

@@ -96,6 +96,39 @@ Windows Registry Editor Version 5.00
 @="$(cmd-single 'convert_png_2_jpg.sh')"
 
 
+; === WEBP ===
+[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.webp\shell\elit_actions]
+"MUIVerb"="elit_actions"
+"SubCommands"=""
+
+[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.webp\shell\elit_actions\shell\convert_webp_2_jpg]
+@="convert webp to jpg"
+[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.webp\shell\elit_actions\shell\convert_webp_2_jpg\command]
+@="$(cmd-single 'convert_webp_2_jpg.sh')"
+
+
+; === RPGMVP ===
+[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.rpgmvp\shell\elit_actions]
+"MUIVerb"="elit_actions"
+"SubCommands"=""
+
+[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.rpgmvp\shell\elit_actions\shell\convert_rpgmvp_2_png]
+@="convert rpgmvp to png"
+[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.rpgmvp\shell\elit_actions\shell\convert_rpgmvp_2_png\command]
+@="$(cmd-single 'convert_rpgmvp_2_png.sh')"
+
+
+; === PNG_ ===
+[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.png_\shell\elit_actions]
+"MUIVerb"="elit_actions"
+"SubCommands"=""
+
+[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.png_\shell\elit_actions\shell\convert_rpgmvp_2_png]
+@="convert png_ to png"
+[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.png_\shell\elit_actions\shell\convert_rpgmvp_2_png\command]
+@="$(cmd-single 'convert_rpgmvp_2_png.sh')"
+
+
 ; === Directory (folder right-click) ===
 [HKEY_CURRENT_USER\Software\Classes\Directory\shell\elit_actions]
 "MUIVerb"="elit_actions"
@@ -115,6 +148,11 @@ Windows Registry Editor Version 5.00
 @="rename *_large extensions"
 [HKEY_CURRENT_USER\Software\Classes\Directory\shell\elit_actions\shell\rename_large_ext\command]
 @="$(cmd-single 'rename_large_ext.sh')"
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\elit_actions\shell\convert_all_rpgmvp_2_png]
+@="convert all rpgmvp to png"
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\elit_actions\shell\convert_all_rpgmvp_2_png\command]
+@="$(cmd-single 'convert_rpgmvp_2_png.sh')"
 
 
 ; === Directory Background (folder background right-click) ===
@@ -161,6 +199,11 @@ Windows Registry Editor Version 5.00
 @="rename *_large extensions"
 [HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\elit_actions\shell\rename_large_ext\command]
 @="$(cmd-all 'rename_large_ext.sh')"
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\elit_actions\shell\convert_all_rpgmvp_2_png]
+@="convert all rpgmvp to png"
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\elit_actions\shell\convert_all_rpgmvp_2_png\command]
+@="$(cmd-all 'convert_rpgmvp_2_png.sh')"
 
 "@
 

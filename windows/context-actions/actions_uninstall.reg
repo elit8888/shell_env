@@ -6,6 +6,15 @@ Windows Registry Editor Version 5.00
 ; === PNG ===
 [-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.png\shell\elit_actions]
 
+; === WEBP ===
+[-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.webp\shell\elit_actions]
+
+; === RPGMVP ===
+[-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.rpgmvp\shell\elit_actions]
+
+; === PNG_ ===
+[-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.png_\shell\elit_actions]
+
 ; === folder ===
 [-HKEY_CURRENT_USER\Software\Classes\Directory\shell\elit_actions]
 
