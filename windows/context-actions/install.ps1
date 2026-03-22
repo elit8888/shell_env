@@ -129,6 +129,17 @@ Windows Registry Editor Version 5.00
 @="$(cmd-single 'convert_rpgmvp_2_png.sh')"
 
 
+; === ZIP ===
+[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.zip\shell\elit_actions]
+"MUIVerb"="elit_actions"
+"SubCommands"=""
+
+[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.zip\shell\elit_actions\shell\unzip_jp]
+@="unzip (JP/Shift-JIS)"
+[HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.zip\shell\elit_actions\shell\unzip_jp\command]
+@="$(cmd-single 'unzip_jp.sh')"
+
+
 ; === Directory (folder right-click) ===
 [HKEY_CURRENT_USER\Software\Classes\Directory\shell\elit_actions]
 "MUIVerb"="elit_actions"

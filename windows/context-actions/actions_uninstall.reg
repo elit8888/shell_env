@@ -15,6 +15,9 @@ Windows Registry Editor Version 5.00
 ; === PNG_ ===
 [-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.png_\shell\elit_actions]
 
+; === ZIP ===
+[-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.zip\shell\elit_actions]
+
 ; === folder ===
 [-HKEY_CURRENT_USER\Software\Classes\Directory\shell\elit_actions]
 
