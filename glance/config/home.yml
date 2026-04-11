@@ -1,0 +1,112 @@
+- name: Home
+  # Optionally, if you only have a single page you can hide the desktop navigation for a cleaner look
+  # hide-desktop-navigation: true
+  head-widgets:
+    - type: markets
+      hide-header: true
+      markets:
+        - symbol: QQQ
+          name: QQQ
+        - symbol: BTC-USD
+          name: BTC
+        - symbol: NVDA
+          name: NVDA
+        - symbol: MSFT
+          name: MSFT
+        - symbol: MU
+          name: MU
+
+  columns:
+    - size: small
+      widgets:
+        - type: rss
+          limit: 10
+          collapse-after: 3
+          cache: 12h
+          feeds:
+            - url: https://selfh.st/rss/
+              title: selfh.st
+            - url: https://ciechanow.ski/atom.xml
+            - url: https://www.joshwcomeau.com/rss.xml
+              title: Josh Comeau
+            - url: https://samwho.dev/rss.xml
+            - url: https://ishadeed.com/feed.xml
+              title: Ahmad Shadeed
+
+        # - type: twitch-channels
+        #   channels:
+        #     - theprimeagen
+        #     - j_blow
+        #     - giantwaffle
+        #     - cohhcarnage
+        #     - christitustech
+        #     - EJ_SA
+
+    - size: full
+      widgets:
+        - type: group
+          widgets:
+            - type: hacker-news
+            - type: lobsters
+
+        - type: rss
+          title: News
+          style: horizontal-cards
+          feeds:
+            - url: https://feeds.bloomberg.com/markets/news.rss
+              title: Bloomberg
+            - url: https://moxie.foxbusiness.com/google-publisher/markets.xml
+              title: Fox Business
+            - url: https://moxie.foxbusiness.com/google-publisher/technology.xml
+              title: Fox Business
+            - url: https://www.ft.com/technology?format=rss
+              title: Financial Times
+            - url: https://feeds.a.dj.com/rss/RSSMarketsMain.xml
+              title: Wall Street Journal
+
+
+        - type: videos
+          channels:
+            - UCsBjURrPoezykLs9EqgamOA # Fireship
+            - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
+            - UC7r3jk8F9532m2djusbi74w # StudioWrong
+            - UCM4O3CdOSTbTcQtd4t7CU9A # 福狸男孩
+            - UCLlOL70Xx0E8iY65qbgeq2Q # 阿泥妹飯
+            - UC8TtAsZE51ekqffnNASo7DA # 達康.come笑Tube
+            - UCcG2HsNjnAbWOT6E1DRxjGA # 我是RT
+            - UCUyeluBRhGPCW4rPe_UvBZQ # The PrimeTime
+
+        - type: group
+          widgets:
+            - type: reddit
+              subreddit: technology
+              show-thumbnails: true
+            - type: reddit
+              subreddit: wallstreetbets
+              show-thumbnails: true
+            - type: reddit
+              subreddit: ClaudeAI
+              show-thumbnails: true
+
+    - size: small
+      widgets:
+        - type: calendar
+          first-day-of-week: sunday
+
+        - type: weather
+          location: Hsinchu, Taiwan
+          units: metric # alternatively "imperial"
+          hour-format: 24h # alternatively "24h"
+          # Optionally hide the location from being displayed in the widget
+          # hide-location: true
+
+        - type: releases
+          cache: 1d
+          # Without authentication the Github API allows for up to 60 requests per hour. You can create a
+          # read-only token from your Github account settings and use it here to increase the limit.
+          # token: ...
+          repositories:
+            - glanceapp/glance
+            - immich-app/immich
+            - syncthing/syncthing
+            - mikf/gallery-dl
