@@ -8,11 +8,16 @@ process_dir() {
     echo "Processing: $d"
 
     shopt -s nullglob
-    # Sort by modification time (oldest first)
-    mapfile -t files < <(ls -rt -- "$d")
+    mapfile -t files < <(ls -- "$d" | sort)
+    local total=0
+    for f in "${files[@]}"; do
+        [[ -f "$d/$f" ]] && total=$((total + 1))
+    done
+    local pad=${#total}
+
     for f in "${files[@]}"; do
         [[ -f "$d/$f" ]] || continue
-        mv -- "$d/$f" "./$(basename "$d")-$count.${f##*.}"
+        mv -- "$d/$f" "./$(basename "$d")-$(printf "%0${pad}d" $count).${f##*.}"
         count=$((count + 1))
     done
     shopt -u nullglob
