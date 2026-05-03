@@ -216,6 +216,11 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\elit_actions\shell\convert_all_rpgmvp_2_png\command]
 @="$(cmd-all 'convert_rpgmvp_2_png.sh')"
 
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\elit_actions\shell\move_videos_to_subfolder]
+@="move videos to video/ folder"
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\elit_actions\shell\move_videos_to_subfolder\command]
+@="$(cmd-all 'move_videos_to_subfolder.sh')"
+
 "@
 
 $temp = [System.IO.Path]::GetTempFileName() + ".reg"
