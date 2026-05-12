@@ -1,12 +1,11 @@
 # The expected location for this file can be checked via `echo $profile`, or may just `nvim $profile`.
 Set-PSReadlineOption -EditMode Emacs
-# Import-Module 'C:\src\vcpkg\scripts\posh-vcpkg'
+oh-my-posh init pwsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/unicorn.omp.json' | Invoke-Expression
 
 New-Alias grep findstr
 New-Alias which Get-Command
 New-Alias vim nvim
 New-Alias realpath Resolve-Path
 
-function ghc {
-    gh copilot @args
-}
+$Env:EDITOR = "nvim"
+$Env:VISUAL = $Env:EDITOR
