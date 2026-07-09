@@ -34,9 +34,17 @@ Double-click `actions_uninstall.reg`.
 | `convert_gif_2_webm.sh` | GIF → WebM (VP9) |
 | `convert_png_2_jpg.sh` | PNG → JPG |
 | `convert_webp_2_jpg.sh` | WebP → JPG |
+| `convert_jpeg_2_jpg.sh` | JPEG → JPG |
 
 Single file: right-click the file to convert it.
 Batch: right-click folder background to convert all matching files in that folder.
+
+### Image scaling (single `.jpg` / folder background)
+
+Nested submenu **scale image** (single file) / **scale all jpg** (folder background)
+with factors `1`, `1.5`, `2`, `3`, `4`, and `more...`. Choosing `more...` opens a
+console prompt to enter a custom factor. Output is written to a `by<factor>/` subfolder
+(e.g. `by2/`), downscaling via `ffmpeg -vf scale=iw/f:ih/f`.
 
 ### Directory management (folder right-click / folder background right-click)
 

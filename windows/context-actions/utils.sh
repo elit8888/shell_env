@@ -29,6 +29,11 @@ function webp2jpg_() {
   ffmpeg -y -v error -i "$f" "${f%.*}.jpg"
 }
 
+function jpeg2jpg_() {
+  local f="$1"
+  ffmpeg -y -v error -i "$f" "${f%.*}.jpg"
+}
+
 # --- Generic batch converter ---
 
 function _batch_convert() {
@@ -56,6 +61,7 @@ function gif2mp4()  { _batch_convert gif  gif2mp4_;  }
 function gif2webm() { _batch_convert gif  gif2webm_; }
 function png2jpg()  { _batch_convert png  png2jpg_;  }
 function webp2jpg() { _batch_convert webp webp2jpg_; }
+function jpeg2jpg() { _batch_convert jpeg jpeg2jpg_; }
 
 function rpgmvp2png_() {
   local f="$1"
@@ -81,6 +87,52 @@ function rpgmvp2png() {
       rm "$f"
     fi
   done
+}
+
+function scale_() {
+  local fac="$1"
+  local f="$2"
+  local dir base
+  dir="$(dirname "$f")"
+  base="$(basename "$f")"
+  mkdir -p "$dir/by${fac}"
+  ffmpeg -y -v error -i "$f" -vf "scale=iw/${fac}:ih/${fac}" "$dir/by${fac}/$base"
+}
+
+function scale_all() {
+  local fac="${1:-1}"
+  mkdir -p "by${fac}"
+  local found=false
+  for f in *.jpg; do
+    [ -e "$f" ] || continue
+    found=true
+    echo "$f"
+    ffmpeg -y -v error -i "$f" -vf "scale=iw/${fac}:ih/${fac}" "by${fac}/$f"
+  done
+  [ "$found" = true ] || echo "No .jpg files found."
+}
+
+# Entry point for the scale action: <factor|more> [file]
+function elit_scale() {
+  local fac="$1"
+  local file="$2"
+
+  if [ "$fac" = "more" ]; then
+    read -p "Enter scale factor (e.g. 2.5): " fac
+  fi
+
+  if [ -z "$fac" ]; then
+    echo "No scale factor given."
+  elif [ -n "$file" ]; then
+    echo "Scaling single by $fac - $file"
+    scale_ "$fac" "$file"
+  else
+    echo "Scaling all by $fac"
+    scale_all "$fac"
+  fi
+
+  echo
+  read -p "Press Enter to close..."
 }
 
 function rename_large_ext() {
