@@ -1,3 +1,4 @@
 *.zwc
 *.tmp
 *.swp
+__pycache__/

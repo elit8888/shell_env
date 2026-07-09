@@ -1,0 +1,64 @@
+{
+  "file_types": {
+    ".gif": [
+      { "label": "convert gif to mp4",  "bash": "source $D/utils.sh; elit_call gif2mp4_ gif2mp4" },
+      { "label": "convert gif to webm", "bash": "source $D/utils.sh; elit_call gif2webm_ gif2webm" }
+    ],
+    ".png": [
+      { "label": "convert png to jpg", "bash": "source $D/utils.sh; elit_call png2jpg_ png2jpg" }
+    ],
+    ".webp": [
+      { "label": "convert webp to jpg", "bash": "source $D/utils.sh; elit_call webp2jpg_ webp2jpg" }
+    ],
+    ".jpeg": [
+      { "label": "convert jpeg to jpg", "bash": "source $D/utils.sh; elit_call jpeg2jpg_ jpeg2jpg" }
+    ],
+    ".jpg": [
+      { "label": "scale image", "children": [
+        { "label": "by 1",    "bash": "source $D/utils.sh; elit_scale 1" },
+        { "label": "by 1.5",  "bash": "source $D/utils.sh; elit_scale 1.5" },
+        { "label": "by 2",    "bash": "source $D/utils.sh; elit_scale 2" },
+        { "label": "by 3",    "bash": "source $D/utils.sh; elit_scale 3" },
+        { "label": "by 4",    "bash": "source $D/utils.sh; elit_scale 4" },
+        { "label": "more...", "bash": "source $D/utils.sh; elit_scale more" }
+      ] }
+    ],
+    ".rpgmvp": [
+      { "label": "convert rpgmvp to png", "bash": "source $D/utils.sh; elit_call rpgmvp2png_ rpgmvp2png" }
+    ],
+    ".png_": [
+      { "label": "convert png_ to png", "bash": "source $D/utils.sh; elit_call rpgmvp2png_ rpgmvp2png" }
+    ],
+    ".zip": [
+      { "label": "unzip (JP/Shift-JIS)", "script": "unzip_jp.sh" }
+    ],
+    "Directory": [
+      { "label": "move files one folder up",          "script": "mv_files_one_folder_up.sh" },
+      { "label": "move files one folder up renumber", "script": "mv_files_one_folder_up_renum.sh" },
+      { "label": "rename *_large extensions",         "script": "rename_large_ext.sh" },
+      { "label": "convert all rpgmvp to png",         "bash": "source $D/utils.sh; elit_call rpgmvp2png_ rpgmvp2png" }
+    ],
+    "Directory\\Background": [
+      { "label": "convert all webp to jpg",               "bash": "source $D/utils.sh; elit_call webp2jpg_ webp2jpg" },
+      { "label": "convert all png to jpg",                "bash": "source $D/utils.sh; elit_call png2jpg_ png2jpg" },
+      { "label": "convert all jpeg to jpg",               "bash": "source $D/utils.sh; elit_call jpeg2jpg_ jpeg2jpg" },
+      { "label": "convert all gif to mp4",                "bash": "source $D/utils.sh; elit_call gif2mp4_ gif2mp4" },
+      { "label": "rename files with special chars",       "script": "rename_special_chars.sh" },
+      { "label": "move all files one folder up",          "script": "mv_files_one_folder_up.sh" },
+      { "label": "move all files one folder up renumber", "script": "mv_files_one_folder_up_renum.sh" },
+      { "label": "unzip all files",                       "script": "unzip_all_files.sh" },
+      { "label": "unzip all files (JP/Shift-JIS)",         "script": "unzip_all_files_jp.sh" },
+      { "label": "rename *_large extensions",             "script": "rename_large_ext.sh" },
+      { "label": "convert all rpgmvp to png",             "bash": "source $D/utils.sh; elit_call rpgmvp2png_ rpgmvp2png" },
+      { "label": "move videos to video/ folder",          "script": "move_videos_to_subfolder.sh" },
+      { "label": "scale all jpg", "children": [
+        { "label": "by 1",    "bash": "source $D/utils.sh; elit_scale 1" },
+        { "label": "by 1.5",  "bash": "source $D/utils.sh; elit_scale 1.5" },
+        { "label": "by 2",    "bash": "source $D/utils.sh; elit_scale 2" },
+        { "label": "by 3",    "bash": "source $D/utils.sh; elit_scale 3" },
+        { "label": "by 4",    "bash": "source $D/utils.sh; elit_scale 4" },
+        { "label": "more...", "bash": "source $D/utils.sh; elit_scale more" }
+      ] }
+    ]
+  }
+}
