@@ -5,13 +5,13 @@
       { "label": "convert gif to webm", "bash": "source $D/utils.sh; elit_call gif2webm_ gif2webm" }
     ],
     ".png": [
-      { "label": "convert png to jpg", "bash": "source $D/utils.sh; elit_call png2jpg_ png2jpg" }
+      { "label": "convert to jpg", "bash": "source $D/utils.sh; elit_call img2jpg_ img2jpg" }
     ],
     ".webp": [
-      { "label": "convert webp to jpg", "bash": "source $D/utils.sh; elit_call webp2jpg_ webp2jpg" }
+      { "label": "convert to jpg", "bash": "source $D/utils.sh; elit_call img2jpg_ img2jpg" }
     ],
     ".jpeg": [
-      { "label": "convert jpeg to jpg", "bash": "source $D/utils.sh; elit_call jpeg2jpg_ jpeg2jpg" }
+      { "label": "convert to jpg", "bash": "source $D/utils.sh; elit_call img2jpg_ img2jpg" }
     ],
     ".jpg": [
       { "label": "scale image", "children": [
@@ -39,9 +39,7 @@
       { "label": "convert all rpgmvp to png",         "bash": "source $D/utils.sh; elit_call rpgmvp2png_ rpgmvp2png" }
     ],
     "Directory\\Background": [
-      { "label": "convert all webp to jpg",               "bash": "source $D/utils.sh; elit_call webp2jpg_ webp2jpg" },
-      { "label": "convert all png to jpg",                "bash": "source $D/utils.sh; elit_call png2jpg_ png2jpg" },
-      { "label": "convert all jpeg to jpg",               "bash": "source $D/utils.sh; elit_call jpeg2jpg_ jpeg2jpg" },
+      { "label": "convert all png/webp/jpeg to jpg",      "bash": "source $D/utils.sh; elit_call img2jpg_ img2jpg" },
       { "label": "convert all gif to mp4",                "bash": "source $D/utils.sh; elit_call gif2mp4_ gif2mp4" },
       { "label": "rename files with special chars",       "script": "rename_special_chars.sh" },
       { "label": "move all files one folder up",          "script": "mv_files_one_folder_up.sh" },

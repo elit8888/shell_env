@@ -19,31 +19,32 @@ function gif2webm_() {
     -c:v libvpx-vp9 -b:v 0 -crf 32 -pix_fmt yuv420p "${f%.*}.webm"
 }
 
-function png2jpg_() {
-  local f="$1"
-  ffmpeg -y -v error -i "$f" "${f%.*}.jpg"
-}
-
-function webp2jpg_() {
-  local f="$1"
-  ffmpeg -y -v error -i "$f" "${f%.*}.jpg"
-}
-
-function jpeg2jpg_() {
+# png / webp / jpeg -> jpg
+function img2jpg_() {
   local f="$1"
   ffmpeg -y -v error -i "$f" "${f%.*}.jpg"
 }
 
 # --- Generic batch converter ---
 
+# Usage: _batch_convert <converter> <ext>...
 function _batch_convert() {
-  local ext="$1"
-  local converter="$2"
+  local converter="$1"
+  shift
 
-  mapfile -d '' files < <(find . -type f -iname "*.$ext" -print0)
+  local expr=() ext
+  for ext in "$@"; do
+    [ ${#expr[@]} -gt 0 ] && expr+=(-o)
+    expr+=(-iname "*.$ext")
+  done
+
+  local files=()
+  mapfile -d '' files < <(find . -type f \( "${expr[@]}" \) -print0)
 
   if [ ${#files[@]} -eq 0 ]; then
-    echo "No .$ext files found."
+    local exts=("${@/#/.}")
+    local IFS=/
+    echo "No ${exts[*]} files found."
     return 1
   fi
 
@@ -57,11 +58,9 @@ function _batch_convert() {
 
 # --- Batch wrappers ---
 
-function gif2mp4()  { _batch_convert gif  gif2mp4_;  }
-function gif2webm() { _batch_convert gif  gif2webm_; }
-function png2jpg()  { _batch_convert png  png2jpg_;  }
-function webp2jpg() { _batch_convert webp webp2jpg_; }
-function jpeg2jpg() { _batch_convert jpeg jpeg2jpg_; }
+function gif2mp4()  { _batch_convert gif2mp4_  gif; }
+function gif2webm() { _batch_convert gif2webm_ gif; }
+function img2jpg()  { _batch_convert img2jpg_  png webp jpeg; }
 
 function rpgmvp2png_() {
   local f="$1"
