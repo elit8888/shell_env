@@ -135,6 +135,68 @@ function elit_scale() {
   read -p "Press Enter to close..."
 }
 
+# 遞迴解壓當前資料夾下所有 zip / rar，各自解到同名資料夾。
+# zip 走 unzip_jp.py（UTF-8 / cp932 檔名偵測、加密檔問密碼），rar 走 7z。
+# 一旦有檔案解壓失敗就停下來，讓使用者看得到是哪個檔案出問題。
+function unzip_all_recursive() {
+  local here
+  here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+  local files=()
+  mapfile -d '' files < <(find . -type f \( -iname "*.zip" -o -iname "*.rar" \) -print0 | sort -z)
+
+  if [ ${#files[@]} -eq 0 ]; then
+    echo "No .zip or .rar files found."
+    return 0
+  fi
+
+  local count=0 f out
+  for f in "${files[@]}"; do
+    # 多分卷 rar 只解第一卷，其餘由 7z 自動接續
+    if [[ "$f" =~ \.[Pp][Aa][Rr][Tt]([0-9]+)\.[Rr][Aa][Rr]$ ]] \
+       && [ "$((10#${BASH_REMATCH[1]}))" -ne 1 ]; then
+      echo "SKIP (multi-volume part): $f"
+      continue
+    fi
+
+    out="${f%.*}"
+    [[ "$out" =~ ^(.*)\.[Pp][Aa][Rr][Tt][0-9]+$ ]] && out="${BASH_REMATCH[1]}"
+
+    echo "Extracting: $f -> $out/"
+    local rc=0
+    case "${f,,}" in
+      *.zip)
+        if ! command -v python3 > /dev/null 2>&1; then
+          echo "ERROR: python3 not found in PATH (needed for zip)."
+          return 1
+        fi
+        python3 "$here/unzip_jp.py" "$f" "$out" || rc=$?
+        ;;
+      *.rar)
+        if ! command -v 7z > /dev/null 2>&1; then
+          echo "ERROR: 7z not found in PATH (needed for rar)."
+          return 1
+        fi
+        7z x -y -o"$out" "$f" || rc=$?
+        ;;
+    esac
+
+    if [ "$rc" -ne 0 ]; then
+      echo
+      echo "ERROR: failed to extract: $f"
+      echo "Stopped. $count archive(s) extracted before the failure."
+      return 1
+    fi
+
+    [ "$ELIT_DELETE_ORIGINAL" = true ] && rm -- "$f"
+    (( count++ )) || true
+  done
+
+  echo
+  echo "Done. $count archive(s) extracted."
+  return 0
+}
+
 function rename_large_ext() {
   local count=0
   while IFS= read -r -d '' f; do
