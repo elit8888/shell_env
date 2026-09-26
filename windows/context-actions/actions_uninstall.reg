@@ -1,32 +1,41 @@
 Windows Registry Editor Version 5.00
 
-; === GIF ===
+; === .gif ===
 [-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.gif\shell\elit_actions]
+[-HKEY_CURRENT_USER\Software\Classes\elit_actions.gif]
 
-; === PNG ===
+; === .png ===
 [-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.png\shell\elit_actions]
+[-HKEY_CURRENT_USER\Software\Classes\elit_actions.png]
 
-; === WEBP ===
+; === .webp ===
 [-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.webp\shell\elit_actions]
+[-HKEY_CURRENT_USER\Software\Classes\elit_actions.webp]
 
-; === JPEG ===
+; === .jpeg ===
 [-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.jpeg\shell\elit_actions]
+[-HKEY_CURRENT_USER\Software\Classes\elit_actions.jpeg]
 
-; === JPG ===
+; === .jpg ===
 [-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.jpg\shell\elit_actions]
+[-HKEY_CURRENT_USER\Software\Classes\elit_actions.jpg]
 
-; === RPGMVP ===
+; === .rpgmvp ===
 [-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.rpgmvp\shell\elit_actions]
+[-HKEY_CURRENT_USER\Software\Classes\elit_actions.rpgmvp]
 
-; === PNG_ ===
+; === .png_ ===
 [-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.png_\shell\elit_actions]
+[-HKEY_CURRENT_USER\Software\Classes\elit_actions.png_]
 
-; === ZIP ===
+; === .zip ===
 [-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.zip\shell\elit_actions]
+[-HKEY_CURRENT_USER\Software\Classes\elit_actions.zip]
 
-; === folder ===
+; === Directory ===
 [-HKEY_CURRENT_USER\Software\Classes\Directory\shell\elit_actions]
+[-HKEY_CURRENT_USER\Software\Classes\elit_actions.directory]
 
-; === Directory Background ===
+; === Directory\Background ===
 [-HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\elit_actions]
-
+[-HKEY_CURRENT_USER\Software\Classes\elit_actions.directory_background]

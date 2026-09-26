@@ -61,6 +61,21 @@ def reg_base(file_type: str) -> str:
     raise ValueError(f"Unknown file_type: {file_type!r}")
 
 
+def store_key(file_type: str) -> str:
+    """HKCR-relative key holding the verbs for a file type.
+
+    The verbs live outside the shell\\elit_actions key because SubCommands-style
+    cascading menus are capped at 16 items by the shell; ExtendedSubCommandsKey
+    has no such cap.
+    """
+    ident = file_type.replace(".", "").replace("\\", "_").lower()
+    return f"elit_actions.{ident}"
+
+
+def store_base(store: str) -> str:
+    return rf"HKEY_CURRENT_USER\Software\Classes\{store}"
+
+
 def is_single(file_type: str) -> bool:
     return file_type != "Directory\\Background"
 
@@ -75,45 +90,91 @@ def build_command(action: dict, mintty: str, bash_dir: str, single: bool) -> str
     return escape_reg(raw)
 
 
-def emit_actions(lines: list, base: str, entries: list, mintty: str, bash_dir: str, single: bool) -> None:
+def emit_actions(lines: list, store: str, entries: list, mintty: str, bash_dir: str, single: bool) -> None:
+    base = store_base(store)
     for action in entries:
-        node = f"{base}\\shell\\{make_id(action['label'])}"
+        action_id = make_id(action["label"])
+        node = f"{base}\\shell\\{action_id}"
         if "children" in action:
+            # Nested store lives under the parent store so one delete cleans it up.
+            sub = f"{store}\\sub\\{action_id}"
             lines += [
                 f"[{node}]",
                 f'"MUIVerb"="{escape_reg(action["label"])}"',
-                '"SubCommands"=""',
+                f'"ExtendedSubCommandsKey"="{escape_reg(sub)}"',
                 "",
             ]
-            emit_actions(lines, node, action["children"], mintty, bash_dir, single)
+            emit_actions(lines, sub, action["children"], mintty, bash_dir, single)
         else:
             cmd = build_command(action, mintty, bash_dir, single)
             lines += [
                 f"[{node}]",
-                f'@="{escape_reg(action["label"])}"',
+                f'"MUIVerb"="{escape_reg(action["label"])}"',
                 f"[{node}\\command]",
                 f'@="{cmd}"',
                 "",
             ]
 
 
+# The shell renders at most this many commands per cascading menu; the rest are
+# silently dropped (they sort last, so the tail of the menu just disappears).
+MENU_ITEM_LIMIT = 16
+
+
+def count_leaves(entries: list) -> int:
+    return sum(
+        count_leaves(a["children"]) if "children" in a else 1
+        for a in entries
+    )
+
+
+def check_limits(data: dict) -> None:
+    for file_type, entries in data["file_types"].items():
+        n = count_leaves(entries)
+        if n > MENU_ITEM_LIMIT:
+            raise SystemExit(
+                f"ERROR: {file_type} has {n} commands, over the shell's "
+                f"{MENU_ITEM_LIMIT}-item cascading menu limit. "
+                f"The last {n - MENU_ITEM_LIMIT} would never show up. "
+                f"Trim actions.json."
+            )
+        print(f"{file_type}: {n}/{MENU_ITEM_LIMIT} commands")
+
+
 def generate_reg(mintty: str, bash_dir: str, data: dict) -> str:
     lines = ["Windows Registry Editor Version 5.00", ""]
 
-    for file_type, entries in data["file_types"].items():
-        base = reg_base(file_type)
-        single = is_single(file_type)
+    # Wipe first: reg import merges, so stale values (e.g. SubCommands) would survive.
+    lines += ["; === clean up previous install ==="]
+    for file_type in data["file_types"]:
+        lines.append(f"[-{reg_base(file_type)}]")
+        lines.append(f"[-{store_base(store_key(file_type))}]")
+    lines.append("")
 
+    for file_type, entries in data["file_types"].items():
+        store = store_key(file_type)
         lines += [
             f"; === {file_type} ===",
-            f"[{base}]",
+            f"[{reg_base(file_type)}]",
             '"MUIVerb"="elit_actions"',
-            '"SubCommands"=""',
+            f'"ExtendedSubCommandsKey"="{escape_reg(store)}"',
             "",
         ]
 
-        emit_actions(lines, base, entries, mintty, bash_dir, single)
+        emit_actions(lines, store, entries, mintty, bash_dir, is_single(file_type))
 
+    return "\r\n".join(lines)
+
+
+def generate_uninstall_reg(data: dict) -> str:
+    lines = ["Windows Registry Editor Version 5.00", ""]
+    for file_type in data["file_types"]:
+        lines += [
+            f"; === {file_type} ===",
+            f"[-{reg_base(file_type)}]",
+            f"[-{store_base(store_key(file_type))}]",
+            "",
+        ]
     return "\r\n".join(lines)
 
 
@@ -129,7 +190,14 @@ def main() -> None:
     with open(os.path.join(script_dir, "actions.json"), encoding="utf-8") as f:
         data = json.load(f)
 
+    check_limits(data)
+    print()
+
     reg_content = generate_reg(mintty, bash_dir, data)
+
+    # Keep the uninstall file in sync with whatever we just registered.
+    with open(os.path.join(script_dir, "actions_uninstall.reg"), "w", encoding="ascii", newline="") as f:
+        f.write(generate_uninstall_reg(data))
 
     fd, tmp = tempfile.mkstemp(suffix=".reg")
     try:

@@ -12,13 +12,21 @@ All tools must be available in PATH.
 
 ## Install
 
-Run in PowerShell:
-
 ```powershell
-.\install.ps1
+python install.py
 ```
 
-Auto-detects `mintty.exe` (supports Scoop, standalone installer, winget) and uses the current folder as the scripts path. **No admin rights required** (writes to `HKEY_CURRENT_USER`).
+Reads `actions.json`, auto-detects `mintty.exe` (supports Scoop, standalone installer, winget) and uses
+the current folder as the scripts path. **No admin rights required** (writes to `HKEY_CURRENT_USER`).
+Each run wipes the previous registration first and regenerates `actions_uninstall.reg` to match.
+
+Menus are registered via `ExtendedSubCommandsKey`, not `SubCommands`: the latter silently drops
+everything past 16 items in a cascading menu.
+
+Explorer caches context menus — restart it to see changes:
+`taskkill /f /im explorer.exe && start explorer.exe`.
+
+(`install.ps1` is the legacy hardcoded installer, superseded by `install.py` + `actions.json`.)
 
 ## Uninstall
 
@@ -41,9 +49,9 @@ Batch: right-click folder background to convert all matching files in that folde
 
 ### Image scaling (single `.jpg` / folder background)
 
-Nested submenu **scale image** (single file) / **scale all jpg** (folder background)
-with factors `1`, `1.5`, `2`, `3`, `4`, and `more...`. Choosing `more...` opens a
-console prompt to enter a custom factor. Output is written to a `by<factor>/` subfolder
+Nested submenu **scale image** (single file, factors `1`, `1.5`, `2`, `3`, `4`, `more...`) /
+**scale all jpg** (folder background, `2` and `more...` only — that menu is near the 16-item
+cap, see Install). Choosing `more...` opens a console prompt to enter a custom factor. Output is written to a `by<factor>/` subfolder
 (e.g. `by2/`), downscaling via `ffmpeg -vf scale=iw/f:ih/f`.
 
 ### Directory management (folder right-click / folder background right-click)

@@ -52,11 +52,7 @@
       { "label": "convert all rpgmvp to png",             "bash": "source $D/utils.sh; elit_call rpgmvp2png_ rpgmvp2png" },
       { "label": "move videos to video/ folder",          "script": "move_videos_to_subfolder.sh" },
       { "label": "scale all jpg", "children": [
-        { "label": "by 1",    "bash": "source $D/utils.sh; elit_scale 1" },
-        { "label": "by 1.5",  "bash": "source $D/utils.sh; elit_scale 1.5" },
         { "label": "by 2",    "bash": "source $D/utils.sh; elit_scale 2" },
-        { "label": "by 3",    "bash": "source $D/utils.sh; elit_scale 3" },
-        { "label": "by 4",    "bash": "source $D/utils.sh; elit_scale 4" },
         { "label": "more...", "bash": "source $D/utils.sh; elit_scale more" }
       ] }
     ]
