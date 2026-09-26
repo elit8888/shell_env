@@ -16,6 +16,11 @@ process_dir() {
     local pad=${#total}
 
     for f in "${files[@]}"; do
+        # Subfolders move up under their own name; only files are renumbered.
+        if [[ -d "$d/$f" ]]; then
+            mv -- "$d/$f" "./$(basename "$d")-$f"
+            continue
+        fi
         [[ -f "$d/$f" ]] || continue
         mv -- "$d/$f" "./$(basename "$d")-$(printf "%0${pad}d" $count).${f##*.}"
         count=$((count + 1))

@@ -59,7 +59,7 @@ cap, see Install). Choosing `more...` opens a console prompt to enter a custom f
 | Script | Description |
 |--------|-------------|
 | `mv_files_one_folder_up.sh` | Move files from a subfolder up one level, prefixing filenames with the folder name |
-| `mv_files_one_folder_up_renum.sh` | Same, but renumbers files by modification time |
+| `mv_files_one_folder_up_renum.sh` | Same, but files are renumbered (`<folder>-<n>.<ext>`, name order, zero-padded); subfolders keep their own name |
 | `mv_all_files_one_folder_up.sh` | Apply the above to all subfolders |
 | `mv_all_files_one_folder_up_renum.sh` | Same, with renumbering |
 
