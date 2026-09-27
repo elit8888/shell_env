@@ -51,6 +51,7 @@
       { "label": "convert all rpgmvp to png",             "bash": "source $D/utils.sh; elit_call rpgmvp2png_ rpgmvp2png" },
       { "label": "move videos to video/ folder",          "script": "move_videos_to_subfolder.sh" },
       { "label": "translate jp to zh",                    "script": "rpgmv_trans.sh" },
+      { "label": "render rpg interactive map",            "script": "rpgview_render.sh" },
       { "label": "scale all jpg", "children": [
         { "label": "by 2",    "bash": "source $D/utils.sh; elit_scale 2" },
         { "label": "more...", "bash": "source $D/utils.sh; elit_scale more" }
