@@ -35,6 +35,17 @@ def open_zip(zip_path: str) -> zipfile.ZipFile:
     )
 
 
+def long_path(path: str) -> str:
+    r"""Windows 未啟用 LongPathsEnabled 時，超過 MAX_PATH (260) 的路徑會失敗；
+    轉成絕對路徑並加上 \\?\ 前綴改走延伸長度路徑。非 Windows 只回傳絕對路徑。"""
+    path = os.path.abspath(path)
+    if os.name != "nt" or path.startswith("\\\\?\\"):
+        return path
+    if path.startswith("\\\\"):  # UNC：\\server\share -> \\?\UNC\server\share
+        return "\\\\?\\UNC\\" + path[2:]
+    return "\\\\?\\" + path
+
+
 def extract(zip_path: str, output_dir: str | None = None, password: str | None = None) -> None:
     zip_path = os.path.abspath(zip_path)
 
@@ -45,6 +56,8 @@ def extract(zip_path: str, output_dir: str | None = None, password: str | None =
     if output_dir is None:
         output_dir = os.path.splitext(zip_path)[0]
 
+    display_dir = output_dir
+    output_dir = long_path(output_dir)
     os.makedirs(output_dir, exist_ok=True)
 
     with open_zip(zip_path) as z:
@@ -58,10 +71,11 @@ def extract(zip_path: str, output_dir: str | None = None, password: str | None =
 
         pwd_bytes = password.encode("utf-8") if password else None
 
-        print(f"共 {total} 個項目，解壓至：{output_dir}\n")
+        print(f"共 {total} 個項目，解壓至：{display_dir}\n")
 
         for i, info in enumerate(entries, 1):
-            target = os.path.join(output_dir, info.filename)
+            # \\?\ 路徑不會自動轉換 "/"，須拆開後以系統分隔符組合
+            target = os.path.join(output_dir, *info.filename.split("/"))
 
             if info.filename.endswith("/"):
                 os.makedirs(target, exist_ok=True)

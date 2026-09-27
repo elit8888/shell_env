@@ -171,6 +171,26 @@ assert_eq "returns 0 on cp932 zip" "0" "$rc"
 assert_contains "fell back to cp932 decoding" "cp932" "$out"
 assert_file_exists "Shift-JIS member extracted with correct name" "$T6/nested/jp/テスト.txt"
 
+# --- Test 7: extracted paths longer than Windows MAX_PATH (260) ---
+echo ""
+echo "=== Test 7: long paths (> MAX_PATH) ==="
+T7="$TMPDIR/t7"
+mkdir -p "$T7"
+LONG_MEMBER="$(printf 'a%.0s' {1..120})/$(printf 'b%.0s' {1..120})/long.txt"
+python3 - "$T7/long.zip" "$LONG_MEMBER" <<'PY'
+import sys, zipfile
+with zipfile.ZipFile(sys.argv[1], "w") as z:
+    z.writestr(sys.argv[2], "hello")
+PY
+
+pushd "$T7" > /dev/null
+out="$(unzip_all_recursive 2>&1)"
+rc=$?
+popd > /dev/null
+
+assert_eq "returns 0 on long-path zip" "0" "$rc"
+assert_file_exists "long-path member extracted" "$T7/long/$LONG_MEMBER"
+
 # --- Summary ---
 echo ""
 echo "================================"
