@@ -68,6 +68,7 @@ cap, see Install). Choosing `more...` opens a console prompt to enter a custom f
 | `rename_special_chars.sh` | Recursively replace special characters in filenames (spaces, brackets, punctuation, etc.) with `-` |
 | `unzip_all_files.sh` | Extract all `.zip` files in the current directory, each into its own folder, then delete the archives |
 | `unzip_all_recursive.sh` | Recursively extract every `.zip`/`.rar` under the current directory, each into a folder named after the archive, deleting the archive on success. `.zip` goes through `unzip_jp.py` (UTF-8/cp932 filename detection, prompts for the password on encrypted entries), `.rar` through 7z; trailing multi-volume `.partN.rar` are skipped. Stops at the first failure and prints the offending path; the console always waits for Enter |
+| `rpgmv_trans.sh` | **translate jp to zh**: runs `bun D:/Documents/unreal/tools/rpgmv-trans/src/cli.ts run <current folder>` (Windows path via `pwd -W`) to translate an RPG Maker MV/MZ game; requires `bun` in PATH |
 
 ### Shared utilities
 
