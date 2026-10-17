@@ -81,12 +81,16 @@ def is_single(file_type: str) -> bool:
 
 
 def build_command(action: dict, mintty: str, bash_dir: str, single: bool) -> str:
-    arg = " '%1'" if single else ""
+    # Pass the path as bash's $1 rather than splicing it into the -c string,
+    # so quotes or $ in the path are never parsed as shell syntax.
+    arg = ' \\"$1\\"' if single else ""
     if "bash" in action:
         inner = f"D={bash_dir}; {action['bash']}{arg}"
     else:
         inner = f"{bash_dir}/{action['script']}{arg}"
     raw = f'"{mintty}" --exec "/usr/bin/bash" -lc "{inner}"'
+    if single:
+        raw += ' _ "%1"'
     return escape_reg(raw)
 
 

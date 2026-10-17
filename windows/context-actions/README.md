@@ -26,6 +26,10 @@ everything past 16 items in a cascading menu.
 Explorer caches context menus — restart it to see changes:
 `taskkill /f /im explorer.exe && start explorer.exe`.
 
+The selected path is passed to bash as `$1` (`bash -lc '... "$1"' _ "%1"`), never spliced into the
+command string, so paths containing `'`, `$` or backticks work.
+Test the generated commands with `uv run --no-project --with pytest pytest test_install.py`.
+
 (`install.ps1` is the legacy hardcoded installer, superseded by `install.py` + `actions.json`.)
 
 ## Uninstall

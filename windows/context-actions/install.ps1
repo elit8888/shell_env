@@ -58,7 +58,8 @@ Write-Host "scripts: $bashDir"
 Write-Host ""
 
 function cmd-single([string]$sh) {
-    $raw = "`"$mintty`" --exec `"/usr/bin/bash`" -lc `"$bashDir/$sh '%1'`""
+    # Pass the path as bash's $1 so quotes or $ in it are never parsed as shell syntax.
+    $raw = "`"$mintty`" --exec `"/usr/bin/bash`" -lc `"$bashDir/$sh \`"`$1\`"`" _ `"%1`""
     return Escape-Reg $raw
 }
 function cmd-all([string]$sh) {
