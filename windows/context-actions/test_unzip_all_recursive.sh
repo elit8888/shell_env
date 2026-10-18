@@ -230,6 +230,25 @@ assert_file_exists "volumes extracted to base-name folder" "$T9/sub/vol/big.bin"
 assert_file_missing "first volume deleted" "$T9/sub/vol.7z.001"
 assert_file_missing "trailing volume deleted" "$T9/sub/vol.7z.003"
 
+# --- Test 10: archive_rm deletes every multi-volume rar part, nothing else ---
+echo ""
+echo "=== Test 10: multi-volume rar cleanup ==="
+T10="$TMPDIR/t10"
+mkdir -p "$T10/sub"
+for n in part01 part02 PART10; do printf 'x' > "$T10/sub/movie.$n.rar"; done
+printf 'x' > "$T10/sub/movie.part1x.rar"
+printf 'x' > "$T10/sub/other.part02.rar"
+
+pushd "$T10" > /dev/null
+archive_rm "./sub/movie.part01.rar"
+popd > /dev/null
+
+assert_file_missing "first part deleted"    "$T10/sub/movie.part01.rar"
+assert_file_missing "second part deleted"   "$T10/sub/movie.part02.rar"
+assert_file_missing "upper-case part deleted" "$T10/sub/movie.PART10.rar"
+assert_file_exists  "non-volume name kept"  "$T10/sub/movie.part1x.rar"
+assert_file_exists  "other archive kept"    "$T10/sub/other.part02.rar"
+
 # --- Summary ---
 echo ""
 echo "================================"

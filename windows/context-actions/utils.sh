@@ -141,11 +141,17 @@ function archive_out_dir() {
   echo "$out"
 }
 
-# 刪除壓縮檔；分卷 7z（x.7z.001）連同所有分卷（x.7z.NNN）一起刪
+# 刪除壓縮檔；分卷 7z（x.7z.001）連同所有 x.7z.NNN、分卷 rar（x.partN.rar）連同所有 x.partN.rar 一起刪
 function archive_rm() {
   local f="$1"
+  local vol_re='^\.[Pp][Aa][Rr][Tt][0-9]+\.[Rr][Aa][Rr]$'
   if [[ "${f,,}" == *.7z.001 ]]; then
     rm -- "${f%.*}".[0-9][0-9][0-9]
+  elif [[ "$f" =~ ^(.*)\.[Pp][Aa][Rr][Tt][0-9]+\.[Rr][Aa][Rr]$ ]]; then
+    local base="${BASH_REMATCH[1]}" v
+    for v in "$base".[Pp][Aa][Rr][Tt]*.[Rr][Aa][Rr]; do
+      if [[ "${v:${#base}}" =~ $vol_re ]]; then rm -- "$v"; fi
+    done
   else
     rm -- "$f"
   fi
