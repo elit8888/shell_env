@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Tests for unzip_all_recursive (recursive zip/rar extraction)
+# Tests for unzip_all_recursive (recursive zip/rar/7z extraction)
 set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -121,7 +121,7 @@ rc=$?
 popd > /dev/null
 
 assert_eq "returns 0 when nothing to do" "0" "$rc"
-assert_contains "reports nothing found" "No .zip or .rar files found." "$out"
+assert_contains "reports nothing found" "No .zip, .rar or .7z files found." "$out"
 
 # --- Test 4: keep originals when ELIT_DELETE_ORIGINAL=false ---
 echo ""
@@ -190,6 +190,45 @@ popd > /dev/null
 
 assert_eq "returns 0 on long-path zip" "0" "$rc"
 assert_file_exists "long-path member extracted" "$T7/long/$LONG_MEMBER"
+
+# --- Test 8: 7z archives are extracted via 7z ---
+echo ""
+echo "=== Test 8: 7z archives ==="
+T8="$TMPDIR/t8"
+mkdir -p "$T8/sub"
+stage="$(mktemp -d)"
+printf 'hello' > "$stage/seven.txt"
+7z a -t7z "$T8/sub/seven.7z" "$stage/seven.txt" > /dev/null
+rm -rf "$stage"
+
+pushd "$T8" > /dev/null
+out="$(unzip_all_recursive 2>&1)"
+rc=$?
+popd > /dev/null
+
+assert_eq "returns 0 on 7z" "0" "$rc"
+assert_file_exists "7z member extracted" "$T8/sub/seven/seven.txt"
+assert_file_missing "7z original deleted" "$T8/sub/seven.7z"
+
+# --- Test 9: multi-volume 7z extracted once, every part deleted ---
+echo ""
+echo "=== Test 9: multi-volume 7z ==="
+T9="$TMPDIR/t9"
+mkdir -p "$T9/sub"
+stage="$(mktemp -d)"
+head -c 300000 /dev/urandom > "$stage/big.bin"
+7z a -t7z -v100k "$T9/sub/vol.7z" "$stage/big.bin" > /dev/null
+rm -rf "$stage"
+
+pushd "$T9" > /dev/null
+out="$(unzip_all_recursive 2>&1)"
+rc=$?
+popd > /dev/null
+
+assert_eq "returns 0 on 7z volumes" "0" "$rc"
+assert_file_exists "volumes extracted to base-name folder" "$T9/sub/vol/big.bin"
+assert_file_missing "first volume deleted" "$T9/sub/vol.7z.001"
+assert_file_missing "trailing volume deleted" "$T9/sub/vol.7z.003"
 
 # --- Summary ---
 echo ""

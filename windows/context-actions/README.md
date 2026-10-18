@@ -6,7 +6,7 @@ Windows context menu utilities — bash scripts integrated into the Windows shel
 
 - [Git for Windows](https://gitforwindows.org/) (provides `bash` and `mintty`)
 - [FFmpeg](https://ffmpeg.org/) (required by all convert scripts)
-- [7-Zip](https://www.7-zip.org/) (required by `unzip_all_files.sh`)
+- [7-Zip](https://www.7-zip.org/) (required by `unzip_7z.sh`, `unzip_all_files.sh`, and `.rar`/`.7z` in `unzip_all_recursive.sh`)
 
 All tools must be available in PATH.
 
@@ -70,8 +70,9 @@ cap, see Install). Choosing `more...` opens a console prompt to enter a custom f
 | Script | Description |
 |--------|-------------|
 | `rename_special_chars.sh` | Recursively replace special characters in filenames (spaces, brackets, punctuation, etc.) with `-` |
-| `unzip_all_files.sh` | Extract all `.zip` files in the current directory, each into its own folder, then delete the archives |
-| `unzip_all_recursive.sh` | Recursively extract every `.zip`/`.rar` under the current directory, each into a folder named after the archive, deleting the archive on success. `.zip` goes through `unzip_jp.py` (UTF-8/cp932 filename detection, prompts for the password on encrypted entries), `.rar` through 7z; trailing multi-volume `.partN.rar` are skipped. Stops at the first failure and prints the offending path; the console always waits for Enter |
+| `unzip_7z.sh` | **unzip** on a single `.7z`, or **unzip (7z multi-volume)** on `x.7z.001` (7z picks up the remaining volumes): extract into a same-name folder (`x/` for volumes), originals kept. A `.001` that is not `.7z.001` is rejected |
+| `unzip_all_files.sh` | Extract all `.zip`/`.7z`/`.7z.001` files in the current directory, each into its own folder, then delete the archives (all volumes for multi-volume 7z) |
+| `unzip_all_recursive.sh` | Recursively extract every `.zip`/`.rar`/`.7z`/`.7z.001` under the current directory, each into a folder named after the archive, deleting the archive on success. `.zip` goes through `unzip_jp.py` (UTF-8/cp932 filename detection, prompts for the password on encrypted entries), `.rar`/`.7z` through 7z (multi-volume 7z deletes every `.7z.NNN` on success); trailing multi-volume `.partN.rar` are skipped. Stops at the first failure and prints the offending path; the console always waits for Enter |
 | `rpgmv_trans.sh` | **translate jp to zh**: runs `bun D:/Documents/unreal/tools/rpgmv-trans/src/cli.ts run <current folder>` (Windows path via `pwd -W`) to translate an RPG Maker MV/MZ game; requires `bun` in PATH |
 | `rpgview_render.sh` | **render rpg interactive map**: runs `uv run --project D:/Projects/rpg-view python D:/Projects/rpg-view/render_interactive.py <current folder>` to generate the interactive map viewer HTML; requires `uv` in PATH |
 

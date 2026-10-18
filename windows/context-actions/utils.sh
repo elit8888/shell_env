@@ -134,18 +134,35 @@ function elit_scale() {
   read -p "Press Enter to close..."
 }
 
-# 遞迴解壓當前資料夾下所有 zip / rar，各自解到同名資料夾。
-# zip 走 unzip_jp.py（UTF-8 / cp932 檔名偵測、加密檔問密碼），rar 走 7z。
+# 壓縮檔的解壓目的資料夾：去掉副檔名；分卷 7z（x.7z.001）去掉 .7z.001
+function archive_out_dir() {
+  local f="$1" out="${1%.*}"
+  [[ "${f,,}" == *.7z.001 ]] && out="${out%.*}"
+  echo "$out"
+}
+
+# 刪除壓縮檔；分卷 7z（x.7z.001）連同所有分卷（x.7z.NNN）一起刪
+function archive_rm() {
+  local f="$1"
+  if [[ "${f,,}" == *.7z.001 ]]; then
+    rm -- "${f%.*}".[0-9][0-9][0-9]
+  else
+    rm -- "$f"
+  fi
+}
+
+# 遞迴解壓當前資料夾下所有 zip / rar / 7z，各自解到同名資料夾。
+# zip 走 unzip_jp.py（UTF-8 / cp932 檔名偵測、加密檔問密碼），rar / 7z 走 7z。
 # 一旦有檔案解壓失敗就停下來，讓使用者看得到是哪個檔案出問題。
 function unzip_all_recursive() {
   local here
   here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
   local files=()
-  mapfile -d '' files < <(find . -type f \( -iname "*.zip" -o -iname "*.rar" \) -print0 | sort -z)
+  mapfile -d '' files < <(find . -type f \( -iname "*.zip" -o -iname "*.rar" -o -iname "*.7z" -o -iname "*.7z.001" \) -print0 | sort -z)
 
   if [ ${#files[@]} -eq 0 ]; then
-    echo "No .zip or .rar files found."
+    echo "No .zip, .rar or .7z files found."
     return 0
   fi
 
@@ -158,7 +175,7 @@ function unzip_all_recursive() {
       continue
     fi
 
-    out="${f%.*}"
+    out="$(archive_out_dir "$f")"
     [[ "$out" =~ ^(.*)\.[Pp][Aa][Rr][Tt][0-9]+$ ]] && out="${BASH_REMATCH[1]}"
 
     echo "Extracting: $f -> $out/"
@@ -171,9 +188,9 @@ function unzip_all_recursive() {
         fi
         python3 "$here/unzip_jp.py" "$f" "$out" || rc=$?
         ;;
-      *.rar)
+      *.rar|*.7z|*.7z.001)
         if ! command -v 7z > /dev/null 2>&1; then
-          echo "ERROR: 7z not found in PATH (needed for rar)."
+          echo "ERROR: 7z not found in PATH (needed for rar/7z)."
           return 1
         fi
         7z x -y -o"$out" "$f" || rc=$?
@@ -187,7 +204,7 @@ function unzip_all_recursive() {
       return 1
     fi
 
-    [ "$ELIT_DELETE_ORIGINAL" = true ] && rm -- "$f"
+    [ "$ELIT_DELETE_ORIGINAL" = true ] && archive_rm "$f"
     (( count++ )) || true
   done
 

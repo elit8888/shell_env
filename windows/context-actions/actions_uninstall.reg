@@ -32,6 +32,14 @@ Windows Registry Editor Version 5.00
 [-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.zip\shell\elit_actions]
 [-HKEY_CURRENT_USER\Software\Classes\elit_actions.zip]
 
+; === .7z ===
+[-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.7z\shell\elit_actions]
+[-HKEY_CURRENT_USER\Software\Classes\elit_actions.7z]
+
+; === .001 ===
+[-HKEY_CURRENT_USER\Software\Classes\SystemFileAssociations\.001\shell\elit_actions]
+[-HKEY_CURRENT_USER\Software\Classes\elit_actions.001]
+
 ; === Directory ===
 [-HKEY_CURRENT_USER\Software\Classes\Directory\shell\elit_actions]
 [-HKEY_CURRENT_USER\Software\Classes\elit_actions.directory]
