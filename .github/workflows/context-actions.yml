@@ -23,15 +23,18 @@ jobs:
         working-directory: .
         run: git config --global core.autocrlf input
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v10.3.0
+        with:
+          # 只用 uv run --with pytest，沒有 lock 檔可當快取 key
+          enable-cache: false
 
-      - uses: FedericoCarboni/setup-ffmpeg@v3
+      - uses: AnimMouse/setup-ffmpeg@v1
 
       - name: Show tool versions
         run: |
