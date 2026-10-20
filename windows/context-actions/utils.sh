@@ -157,9 +157,14 @@ function archive_rm() {
   fi
 }
 
+# 在 File Explorer 開啟檔案所在資料夾並選取該檔（explorer.exe 結束碼恆非 0，故忽略）
+function open_in_explorer() {
+  explorer.exe /select,"$(cygpath -wa "$1")" || true
+}
+
 # 遞迴解壓當前資料夾下所有 zip / rar / 7z，各自解到同名資料夾。
 # zip 走 unzip_jp.py（UTF-8 / cp932 檔名偵測、加密檔問密碼），rar / 7z 走 7z。
-# 一旦有檔案解壓失敗就停下來，讓使用者看得到是哪個檔案出問題。
+# 一旦有檔案解壓失敗就停下來，問使用者是否在 File Explorer 開啟該檔，之後才結束。
 function unzip_all_recursive() {
   local here
   here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -207,6 +212,10 @@ function unzip_all_recursive() {
       echo
       echo "ERROR: failed to extract: $f"
       echo "Stopped. $count archive(s) extracted before the failure."
+      local ans
+      printf "Open in File Explorer? [y/N] "
+      read -r ans
+      [[ "${ans,,}" == y* ]] && open_in_explorer "$f"
       return 1
     fi
 

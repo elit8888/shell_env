@@ -98,7 +98,7 @@ printf 'not an archive at all' > "$T2/a_broken.rar"
 make_zip "$T2/z_good.zip" "good.txt"
 
 pushd "$T2" > /dev/null
-out="$(unzip_all_recursive 2>&1)"
+out="$(unzip_all_recursive 2>&1 <<< "n")"
 rc=$?
 popd > /dev/null
 
@@ -248,6 +248,37 @@ assert_file_missing "second part deleted"   "$T10/sub/movie.part02.rar"
 assert_file_missing "upper-case part deleted" "$T10/sub/movie.PART10.rar"
 assert_file_exists  "non-volume name kept"  "$T10/sub/movie.part1x.rar"
 assert_file_exists  "other archive kept"    "$T10/sub/other.part02.rar"
+
+# --- Test 11: on failure, answering y opens File Explorer at the failed file ---
+echo ""
+echo "=== Test 11: open explorer on failure (y) ==="
+T11="$TMPDIR/t11"
+mkdir -p "$T11/sub"
+printf 'not an archive at all' > "$T11/sub/broken.rar"
+OPENED=""
+open_in_explorer() { OPENED="$1"; }
+
+pushd "$T11" > /dev/null
+unzip_all_recursive > "$TMPDIR/t11.out" 2>&1 <<< "y"
+rc=$?
+popd > /dev/null
+out="$(cat "$TMPDIR/t11.out")"
+
+assert_eq "returns 1 after opening explorer" "1" "$rc"
+assert_contains "asks whether to open explorer" "Open in File Explorer? [y/N]" "$out"
+assert_eq "explorer opened at failed file" "./sub/broken.rar" "$OPENED"
+
+# --- Test 12: on failure, answering anything else does not open File Explorer ---
+echo ""
+echo "=== Test 12: open explorer on failure (n) ==="
+OPENED=""
+pushd "$T11" > /dev/null
+unzip_all_recursive > /dev/null 2>&1 <<< "n"
+rc=$?
+popd > /dev/null
+
+assert_eq "returns 1 when declined" "1" "$rc"
+assert_eq "explorer not opened" "" "$OPENED"
 
 # --- Summary ---
 echo ""
