@@ -29,6 +29,7 @@ Explorer caches context menus — restart it to see changes:
 The selected path is passed to bash as `$1` (`bash -lc '... "$1"' _ "%1"`), never spliced into the
 command string, so paths containing `'`, `$` or backticks work.
 Test the generated commands with `uv run --no-project --with pytest pytest test_install.py`.
+CI (`.github/workflows/context-actions.yml`, `windows-latest`) runs every `test_*.sh` plus `test_install.py` on changes under `windows/context-actions/`.
 
 (`install.ps1` is the legacy hardcoded installer, superseded by `install.py` + `actions.json`.)
 

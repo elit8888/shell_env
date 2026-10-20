@@ -1,0 +1,54 @@
+name: context-actions tests
+
+on:
+  push:
+    paths:
+      - "windows/context-actions/**"
+      - ".github/workflows/context-actions.yml"
+  pull_request:
+    paths:
+      - "windows/context-actions/**"
+      - ".github/workflows/context-actions.yml"
+
+jobs:
+  test:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: windows/context-actions
+    steps:
+      # Windows runner 預設 autocrlf=true，CRLF 會讓 bash 腳本壞掉
+      - name: Keep LF line endings
+        working-directory: .
+        run: git config --global core.autocrlf input
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: astral-sh/setup-uv@v6
+
+      - uses: FedericoCarboni/setup-ffmpeg@v3
+
+      - name: Show tool versions
+        run: |
+          command -v python3 python 7z ffmpeg
+          python3 --version
+          7z i | head -3
+          ffmpeg -version | head -1
+
+      - name: Shell tests
+        run: |
+          rc=0
+          for t in test_*.sh; do
+            echo "::group::$t"
+            bash "$t" || rc=1
+            echo "::endgroup::"
+          done
+          exit $rc
+
+      - name: install.py tests
+        run: uv run --no-project --with pytest pytest -q test_install.py
