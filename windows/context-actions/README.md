@@ -31,8 +31,6 @@ command string, so paths containing `'`, `$` or backticks work.
 Test the generated commands with `uv run --no-project --with pytest pytest test_install.py`.
 CI (`.github/workflows/context-actions.yml`, `windows-latest`) runs every `test_*.sh` plus `test_install.py` on changes under `windows/context-actions/`.
 
-(`install.ps1` is the legacy hardcoded installer, superseded by `install.py` + `actions.json`.)
-
 ## Uninstall
 
 Double-click `actions_uninstall.reg`.
@@ -61,10 +59,8 @@ cap, see Install). Choosing `more...` opens a console prompt to enter a custom f
 
 | Script | Description |
 |--------|-------------|
-| `mv_files_one_folder_up.sh` | Move files from a subfolder up one level, prefixing filenames with the folder name |
+| `mv_files_one_folder_up.sh` | Move files from a subfolder up one level, prefixing filenames with the folder name; on folder background, applies to all subfolders |
 | `mv_files_one_folder_up_renum.sh` | Same, but files are renumbered (`<folder>-<n>.<ext>`, name order, zero-padded); subfolders keep their own name |
-| `mv_all_files_one_folder_up.sh` | Apply the above to all subfolders |
-| `mv_all_files_one_folder_up_renum.sh` | Same, with renumbering |
 
 ### Other
 
