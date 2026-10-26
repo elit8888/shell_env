@@ -353,15 +353,20 @@ echo "=== Test 16: no uv ==="
 T16="$TMPDIR/t16"
 mkdir -p "$T16"
 make_zip "$T16/plain.zip" "plain.txt"
-NOUV="$TMPDIR/nouv-bin"
-mkdir -p "$NOUV"
-for tool in 7z find sort rm dirname; do ln -s "$(command -v "$tool")" "$NOUV/$tool"; done
+# Drop every PATH entry that holds uv (copying tools into a bare PATH breaks on
+# Git Bash: ln -s copies, and the copies can't find msys-2.0.dll)
+NOUV_PATH=""
+IFS=: read -ra path_dirs <<< "$PATH"
+for d in "${path_dirs[@]}"; do
+  [ -e "$d/uv" ] || [ -e "$d/uv.exe" ] || NOUV_PATH="${NOUV_PATH:+$NOUV_PATH:}$d"
+done
 
 pushd "$T16" > /dev/null
-out="$(PATH="$NOUV" unzip_all_recursive 2>&1)"
+out="$(PATH="$NOUV_PATH"; command -v uv || echo "uv hidden"; unzip_all_recursive 2>&1)"
 rc=$?
 popd > /dev/null
 
+assert_contains "uv hidden from PATH" "uv hidden" "$out"
 assert_eq "returns 0 without uv" "0" "$rc"
 assert_file_exists "zip extracted via 7z" "$T16/plain/plain.txt"
 
