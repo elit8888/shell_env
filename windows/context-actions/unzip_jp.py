@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.11"  # zipfile metadata_encoding
+# ///
 """
 unzip_jp.py - 解壓縮日文檔名的 zip 檔案（自動偵測 UTF-8 / cp932 編碼）
 用法：
-    python unzip_jp.py <zip檔案> [輸出目錄] [-p 密碼]
+    uv run --script unzip_jp.py <zip檔案> [輸出目錄] [-p 密碼]
 
 若省略輸出目錄，則在 zip 檔案所在位置建立同名資料夾。
 若 zip 內含加密項目，會以 -p 指定的密碼解壓；未提供則互動式詢問。

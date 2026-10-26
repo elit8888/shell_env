@@ -160,7 +160,7 @@ popd > /dev/null
 assert_eq "no error when only trailing parts exist" "0" "$rc"
 assert_contains "skips part2" "SKIP" "$out"
 
-# --- Test 6: zip goes through unzip_jp.py, so Shift-JIS names survive ---
+# --- Test 6: zip goes through unzip_jp.py (via uv), so Shift-JIS names survive ---
 echo ""
 echo "=== Test 6: cp932 (Shift-JIS) filenames ==="
 T6="$TMPDIR/t6"
@@ -347,22 +347,22 @@ assert_contains "retried with 7z" "retrying with 7z" "$out"
 assert_file_exists "Deflate64 member extracted" "$T15/d64/d64.txt"
 assert_file_missing "Deflate64 original deleted" "$T15/d64.zip"
 
-# --- Test 16: without python3 in PATH, zip goes through 7z ---
+# --- Test 16: without uv in PATH, zip goes through 7z ---
 echo ""
-echo "=== Test 16: no python3 ==="
+echo "=== Test 16: no uv ==="
 T16="$TMPDIR/t16"
 mkdir -p "$T16"
 make_zip "$T16/plain.zip" "plain.txt"
-NOPY="$TMPDIR/nopy-bin"
-mkdir -p "$NOPY"
-for tool in 7z find sort rm dirname; do ln -s "$(command -v "$tool")" "$NOPY/$tool"; done
+NOUV="$TMPDIR/nouv-bin"
+mkdir -p "$NOUV"
+for tool in 7z find sort rm dirname; do ln -s "$(command -v "$tool")" "$NOUV/$tool"; done
 
 pushd "$T16" > /dev/null
-out="$(PATH="$NOPY" unzip_all_recursive 2>&1)"
+out="$(PATH="$NOUV" unzip_all_recursive 2>&1)"
 rc=$?
 popd > /dev/null
 
-assert_eq "returns 0 without python3" "0" "$rc"
+assert_eq "returns 0 without uv" "0" "$rc"
 assert_file_exists "zip extracted via 7z" "$T16/plain/plain.txt"
 
 # --- Summary ---
