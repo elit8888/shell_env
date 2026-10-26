@@ -43,7 +43,7 @@ Double-click `actions_uninstall.reg`.
 |--------|-------------|
 | `gif2mp4` | GIF → MP4 (H.264, 30fps, even dimensions) |
 | `gif2webm` | GIF → WebM (VP9) |
-| `img2jpg` | PNG / WebP / JPEG → JPG (one menu item; folder batch converts all three) |
+| `img2jpg` | PNG / WebP / JPEG → JPG (one menu item; folder batch converts all three; animated WebP is skipped and kept) |
 
 Single file: right-click the file to convert it.
 Batch: right-click folder background to convert all matching files in that folder.

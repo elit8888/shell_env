@@ -19,9 +19,20 @@ function gif2webm_() {
     -c:v libvpx-vp9 -b:v 0 -crf 32 -pix_fmt yuv420p "${f%.*}.webm"
 }
 
-# png / webp / jpeg -> jpg
+# Animated WebP: "VP8X" chunk at byte 12 with the animation flag (0x02) set at byte 20
+function _is_animated_webp() {
+  local hdr
+  hdr=$(od -An -tx1 -N21 "$1" | tr -d ' \n')
+  [ "${#hdr}" -eq 42 ] && [ "${hdr:24:8}" = 56503858 ] && (( 0x${hdr:40:2} & 0x02 ))
+}
+
+# png / webp / jpeg -> jpg (animated webp is skipped and reported as failure)
 function img2jpg_() {
   local f="$1"
+  if _is_animated_webp "$f"; then
+    echo "skip animated: $f"
+    return 1
+  fi
   ffmpeg -y -v error -i "$f" "${f%.*}.jpg"
 }
 
@@ -48,12 +59,23 @@ function _batch_convert() {
     return 1
   fi
 
+  # Converter output (skips, ffmpeg warnings/errors) is collected and printed
+  # after the progress list so it isn't buried among file names
+  local msgs=() out
   for f in "${files[@]}"; do
     echo "$f"
-    if "$converter" "$f" && [ "$ELIT_DELETE_ORIGINAL" = true ]; then
-      rm "$f"
+    if out=$("$converter" "$f" 2>&1); then
+      [ "$ELIT_DELETE_ORIGINAL" = true ] && rm "$f"
     fi
+    [ -n "$out" ] && msgs+=("[$f]"$'\n'"$out")
   done
+
+  if [ ${#msgs[@]} -gt 0 ]; then
+    echo
+    echo "=== Warnings / errors ==="
+    printf '%s\n\n' "${msgs[@]}"
+  fi
+  return 0
 }
 
 # --- Batch wrappers ---

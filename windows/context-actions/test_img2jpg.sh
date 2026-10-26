@@ -95,6 +95,75 @@ fi
 popd > /dev/null
 [[ "$out" == *"No .png/.webp/.jpeg files found."* ]] && pass "empty: message" || fail "empty: message was '$out'"
 
+# --- Test 5: animated webp is skipped (single + batch) ---
+echo "=== Test 5: animated webp skipped ==="
+make_anim_webp() {
+  ffmpeg -y -v error -f lavfi -i testsrc=size=16x16:rate=5:duration=1 \
+    -c:v libwebp_anim -loop 0 "$1"
+}
+ANIM="$TMPDIR/anim"
+mkdir -p "$ANIM"
+make_anim_webp "$ANIM/one.webp"
+if out=$(img2jpg_ "$ANIM/one.webp" 2>&1); then
+  fail "anim single: expected non-zero exit"
+else
+  pass "anim single: non-zero exit"
+fi
+[[ "$out" == *"skip animated: $ANIM/one.webp"* ]] && pass "anim single: message" || fail "anim single: message was '$out'"
+assert_missing "anim single: no jpg"        "$ANIM/one.jpg"
+assert_exists  "anim single: original kept" "$ANIM/one.webp"
+
+printf 'x' > "$ANIM/tiny.png"
+out=$(img2jpg_ "$ANIM/tiny.png" 2>&1) || true
+[[ "$out" != *"od:"* ]] && pass "tiny file: no od error" || fail "tiny file: output was '$out'"
+
+ANIMB="$TMPDIR/anim_batch"
+mkdir -p "$ANIMB"
+make_anim_webp "$ANIMB/moving.webp"
+make_img "$ANIMB/still.webp"
+ELIT_DELETE_ORIGINAL=true
+pushd "$ANIMB" > /dev/null
+img2jpg > /dev/null
+popd > /dev/null
+assert_missing "anim batch: no jpg"           "$ANIMB/moving.jpg"
+assert_exists  "anim batch: original kept"    "$ANIMB/moving.webp"
+assert_jpg     "anim batch: static converted" "$ANIMB/still.jpg"
+assert_missing "anim batch: static removed"   "$ANIMB/still.webp"
+
+# --- Test 6: batch prints skip / error messages after all progress lines ---
+echo "=== Test 6: batch messages deferred to end ==="
+MSG="$TMPDIR/msg"
+mkdir -p "$MSG"
+make_anim_webp "$MSG/moving.webp"
+echo "not an image" > "$MSG/bad.png"
+make_img "$MSG/a.png"
+make_img "$MSG/b.png"
+ELIT_DELETE_ORIGINAL=true
+pushd "$MSG" > /dev/null
+out=$(img2jpg 2>&1)
+popd > /dev/null
+HEADER="=== Warnings / errors ==="
+before="${out%%"$HEADER"*}"
+after="${out#*"$HEADER"}"
+[[ "$out" == *"$HEADER"* ]] && pass "msg: header printed" || fail "msg: no header in '$out'"
+[[ "$before" != *"skip animated"* ]] && pass "msg: no skip before header" || fail "msg: skip printed early"
+[[ "$before" != *"Invalid data"* ]] && pass "msg: no ffmpeg error before header" || fail "msg: ffmpeg error printed early"
+[[ "$after" == *"skip animated: ./moving.webp"* ]] && pass "msg: skip in summary" || fail "msg: summary was '$after'"
+[[ "$after" == *"./bad.png"* && "$after" == *"Invalid data"* ]] && pass "msg: ffmpeg error in summary" || fail "msg: summary was '$after'"
+[[ "$after" != *"./a.png"* ]] && pass "msg: successes not in summary" || fail "msg: success listed in summary"
+assert_exists "msg: bad original kept" "$MSG/bad.png"
+assert_jpg    "msg: good converted"    "$MSG/a.jpg"
+
+# --- Test 7: clean batch prints no summary header ---
+echo "=== Test 7: clean batch has no summary ==="
+CLEAN="$TMPDIR/clean"
+mkdir -p "$CLEAN"
+make_img "$CLEAN/a.png"
+pushd "$CLEAN" > /dev/null
+out=$(img2jpg 2>&1)
+popd > /dev/null
+[[ "$out" != *"$HEADER"* ]] && pass "clean: no header" || fail "clean: unexpected header in '$out'"
+
 # --- Summary ---
 echo ""
 echo "================================"
