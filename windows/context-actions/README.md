@@ -28,8 +28,8 @@ Explorer caches context menus — restart it to see changes:
 
 The selected path is passed to bash as `$1` (`bash -lc '... "$1"' _ "%1"`), never spliced into the
 command string, so paths containing `'`, `$` or backticks work.
-Test the generated commands with `uv run --no-project --with pytest pytest test_install.py`.
-CI (`.github/workflows/context-actions.yml`, `windows-latest`) runs every `test_*.sh` plus `test_install.py` on changes under `windows/context-actions/`.
+Test the generated commands with `uv run --no-project --with pytest pytest test_install.py` (`test_ext_stats.py` covers `ext_stats.py`).
+CI (`.github/workflows/context-actions.yml`, `windows-latest`) runs every `test_*.sh` plus `test_install.py` and `test_ext_stats.py` on changes under `windows/context-actions/`.
 
 ## Uninstall
 
@@ -71,6 +71,7 @@ cap, see Install). Choosing `more...` opens a console prompt to enter a custom f
 | `unzip_all_files.sh` | Extract all `.zip`/`.7z`/`.7z.001` files in the current directory, each into its own folder, then delete the archives (all volumes for multi-volume 7z) |
 | `unzip_all_recursive.sh` | Recursively extract every `.zip`/`.rar`/`.7z`/`.7z.001` under the current directory, each into a folder named after the archive, deleting the archive on success. `.zip` goes through `unzip_jp.py` (UTF-8/cp932 filename detection, prompts for the password on encrypted entries), `.rar`/`.7z` through 7z (multi-volume 7z deletes every `.7z.NNN` on success); trailing multi-volume `.partN.rar` are skipped and every part is deleted once the first succeeds. Stops at the first failure, prints the offending path and asks `Open in File Explorer? [y/N]` (`y` opens Explorer with the failed archive selected); the console always waits for Enter |
 | `rpgmv_trans.sh` | **translate jp to zh**: runs `bun D:/Documents/unreal/tools/rpgmv-trans/src/cli.ts run <current folder>` (Windows path via `pwd -W`) to translate an RPG Maker MV/MZ game; requires `bun` in PATH |
+| `ext_stats.sh` | **file count by extension** (folder / folder background): runs `ext_stats.py` to recursively count files per extension and browse them in the console — ↑↓ select, → list the files of that extension, ← back, Enter on a file opens Explorer with it selected, Enter on the extension table exits. Runs through `winpty` (bundled with Git for Windows) since mintty is not a Windows console |
 | `rpgview_render.sh` | **render rpg interactive map**: runs `uv run --project D:/Projects/rpg-view python D:/Projects/rpg-view/render_interactive.py <current folder>` to generate the interactive map viewer HTML; requires `uv` in PATH |
 
 ### Shared utilities
