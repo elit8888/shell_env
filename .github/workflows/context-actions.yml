@@ -53,5 +53,5 @@ jobs:
           done
           exit $rc
 
-      - name: install.py tests
-        run: uv run --no-project --with pytest pytest -q test_install.py
+      - name: Python tests
+        run: uv run --no-project --with pytest pytest -q test_install.py test_ext_stats.py
