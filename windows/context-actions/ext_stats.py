@@ -211,7 +211,8 @@ def main(argv: Sequence[str] = ()) -> None:
 
 
 if __name__ == "__main__":
-    sys.stdout.reconfigure(encoding="utf-8")
+    for stream in (sys.stdout, sys.stderr):
+        stream.reconfigure(encoding="utf-8")
     try:
         main(sys.argv[1:])
     except Exception:
