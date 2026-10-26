@@ -50,8 +50,6 @@
       { "label": "rename files with special chars",       "script": "rename_special_chars.sh" },
       { "label": "move all files one folder up",          "script": "mv_files_one_folder_up.sh" },
       { "label": "move all files one folder up renumber", "script": "mv_files_one_folder_up_renum.sh" },
-      { "label": "unzip all zip/7z files",                "script": "unzip_all_files.sh" },
-      { "label": "unzip all files (JP/Shift-JIS)",         "script": "unzip_all_files_jp.sh" },
       { "label": "unzip all zip/rar/7z recursively",      "script": "unzip_all_recursive.sh" },
       { "label": "rename *_large extensions",             "script": "rename_large_ext.sh" },
       { "label": "convert all rpgmvp to png",             "bash": "source $D/utils.sh; elit_call rpgmvp2png_ rpgmvp2png" },

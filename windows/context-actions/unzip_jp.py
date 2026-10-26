@@ -17,6 +17,9 @@ import zipfile
 # 嘗試的檔名編碼順序：先 UTF-8，失敗再退回 cp932 (Shift-JIS)
 FILENAME_ENCODINGS = ("utf-8", "cp932")
 
+# zipfile 能解的壓縮方式
+SUPPORTED_METHODS = {zipfile.ZIP_STORED, zipfile.ZIP_DEFLATED, zipfile.ZIP_BZIP2, zipfile.ZIP_LZMA}
+
 
 def open_zip(zip_path: str) -> zipfile.ZipFile:
     """以可用的編碼開啟 zip。逐一嘗試 FILENAME_ENCODINGS，直到能讀出檔名清單。"""
@@ -63,6 +66,12 @@ def extract(zip_path: str, output_dir: str | None = None, password: str | None =
     with open_zip(zip_path) as z:
         entries = z.infolist()
         total = len(entries)
+
+        # zipfile 不支援 AES 加密（method 99）、Deflate64（method 9）等；問密碼前先擋下，交給呼叫端改用 7z
+        unsupported = {info.compress_type for info in entries} - SUPPORTED_METHODS
+        if unsupported:
+            print(f"錯誤：不支援的壓縮方式 {sorted(unsupported)}", file=sys.stderr)
+            sys.exit(1)
 
         # 偵測是否有加密項目（flag bit 0）
         encrypted = any(info.flag_bits & 0x1 for info in entries)
