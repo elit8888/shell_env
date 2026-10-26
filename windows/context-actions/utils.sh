@@ -184,70 +184,84 @@ function open_in_explorer() {
   explorer.exe /select,"$(cygpath -wa "$1")" || true
 }
 
-# 遞迴解壓當前資料夾下所有 zip / rar / 7z，各自解到同名資料夾。
-# zip 走 unzip_jp.py（UTF-8 / cp932 檔名偵測、加密檔問密碼），rar / 7z 走 7z。
-# 一旦有檔案解壓失敗就停下來，問使用者是否在 File Explorer 開啟該檔，之後才結束。
-function unzip_all_recursive() {
-  local here
+# 解壓單一壓縮檔到 $2。zip 先用 uv 跑 unzip_jp.py（UTF-8 / cp932 檔名偵測、加密檔問密碼），
+# 沒有 uv 或解壓失敗（AES 加密、Deflate64 等 zipfile 不支援的格式）時改用 7z；rar / 7z 直接走 7z。
+function unzip_one_() {
+  local f="$1" out="$2" here
   here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-  local files=()
-  mapfile -d '' files < <(find . -type f \( -iname "*.zip" -o -iname "*.rar" -o -iname "*.7z" -o -iname "*.7z.001" \) -print0 | sort -z)
+  if [[ "${f,,}" == *.zip ]] && command -v uv > /dev/null 2>&1; then
+    uv run --script "$here/unzip_jp.py" "$f" "$out" && return 0
+    echo "unzip_jp.py failed, retrying with 7z: $f"
+  fi
+  if ! command -v 7z > /dev/null 2>&1; then
+    echo "ERROR: 7z not found in PATH."
+    return 1
+  fi
+  7z x -y -o"$out" "$f"
+}
 
-  if [ ${#files[@]} -eq 0 ]; then
+# 遞迴解壓當前資料夾下所有 zip / rar / 7z，各自解到同名資料夾。
+# 解出來的壓縮檔也會繼續解，直到沒有新的壓縮檔為止。
+# 解壓失敗的檔案記下來並跳過；全部處理完後列出失敗清單，問使用者是否在 File Explorer 開啟。
+function unzip_all_recursive() {
+  local -A seen=()
+  local failed=() count=0 found_any=false
+  local files f out
+
+  while true; do
+    files=()
+    mapfile -d '' files < <(find . -type f \( -iname "*.zip" -o -iname "*.rar" -o -iname "*.7z" -o -iname "*.7z.001" \) -print0 | sort -z)
+
+    local new=()
+    for f in "${files[@]}"; do
+      [ -n "${seen[$f]+x}" ] || new+=("$f")
+    done
+    [ ${#new[@]} -eq 0 ] && break
+    found_any=true
+
+    for f in "${new[@]}"; do
+      seen[$f]=1
+
+      # 多分卷 rar 只解第一卷，其餘由 7z 自動接續
+      if [[ "$f" =~ \.[Pp][Aa][Rr][Tt]([0-9]+)\.[Rr][Aa][Rr]$ ]] \
+         && [ "$((10#${BASH_REMATCH[1]}))" -ne 1 ]; then
+        echo "SKIP (multi-volume part): $f"
+        continue
+      fi
+
+      out="$(archive_out_dir "$f")"
+      [[ "$out" =~ ^(.*)\.[Pp][Aa][Rr][Tt][0-9]+$ ]] && out="${BASH_REMATCH[1]}"
+
+      echo "Extracting: $f -> $out/"
+      if unzip_one_ "$f" "$out"; then
+        [ "$ELIT_DELETE_ORIGINAL" = true ] && archive_rm "$f"
+        (( count++ )) || true
+      else
+        echo "ERROR: failed to extract: $f"
+        failed+=("$f")
+      fi
+    done
+  done
+
+  if [ "$found_any" = false ]; then
     echo "No .zip, .rar or .7z files found."
     return 0
   fi
 
-  local count=0 f out
-  for f in "${files[@]}"; do
-    # 多分卷 rar 只解第一卷，其餘由 7z 自動接續
-    if [[ "$f" =~ \.[Pp][Aa][Rr][Tt]([0-9]+)\.[Rr][Aa][Rr]$ ]] \
-       && [ "$((10#${BASH_REMATCH[1]}))" -ne 1 ]; then
-      echo "SKIP (multi-volume part): $f"
-      continue
-    fi
-
-    out="$(archive_out_dir "$f")"
-    [[ "$out" =~ ^(.*)\.[Pp][Aa][Rr][Tt][0-9]+$ ]] && out="${BASH_REMATCH[1]}"
-
-    echo "Extracting: $f -> $out/"
-    local rc=0
-    case "${f,,}" in
-      *.zip)
-        if ! command -v python3 > /dev/null 2>&1; then
-          echo "ERROR: python3 not found in PATH (needed for zip)."
-          return 1
-        fi
-        python3 "$here/unzip_jp.py" "$f" "$out" || rc=$?
-        ;;
-      *.rar|*.7z|*.7z.001)
-        if ! command -v 7z > /dev/null 2>&1; then
-          echo "ERROR: 7z not found in PATH (needed for rar/7z)."
-          return 1
-        fi
-        7z x -y -o"$out" "$f" || rc=$?
-        ;;
-    esac
-
-    if [ "$rc" -ne 0 ]; then
-      echo
-      echo "ERROR: failed to extract: $f"
-      echo "Stopped. $count archive(s) extracted before the failure."
-      local ans
-      printf "Open in File Explorer? [y/N] "
-      read -r ans
-      [[ "${ans,,}" == y* ]] && open_in_explorer "$f"
-      return 1
-    fi
-
-    [ "$ELIT_DELETE_ORIGINAL" = true ] && archive_rm "$f"
-    (( count++ )) || true
-  done
-
   echo
-  echo "Done. $count archive(s) extracted."
-  return 0
+  echo "Done. $count archive(s) extracted, ${#failed[@]} failed."
+  [ ${#failed[@]} -eq 0 ] && return 0
+
+  echo "Failed:"
+  printf '  %s\n' "${failed[@]}"
+  local ans
+  printf "Open failed archive(s) in File Explorer? [y/N] "
+  read -r ans
+  if [[ "${ans,,}" == y* ]]; then
+    for f in "${failed[@]}"; do open_in_explorer "$f"; done
+  fi
+  return 1
 }
 
 function rename_large_ext() {
