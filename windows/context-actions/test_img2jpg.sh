@@ -164,6 +164,31 @@ out=$(img2jpg 2>&1)
 popd > /dev/null
 [[ "$out" != *"$HEADER"* ]] && pass "clean: no header" || fail "clean: unexpected header in '$out'"
 
+# --- Test 8: transparent areas become dark gray ---
+echo "=== Test 8: transparency -> dark gray ==="
+ALPHA="$TMPDIR/alpha"
+mkdir -p "$ALPHA"
+ffmpeg -y -v error -f lavfi -i "color=c=red@0.0:s=8x8,format=rgba" -frames:v 1 "$ALPHA/t.png"
+img2jpg_ "$ALPHA/t.png"
+px=$(ffmpeg -v error -i "$ALPHA/t.jpg" -f rawvideo -pix_fmt rgb24 -frames:v 1 - | head -c3 | od -An -tu1 | tr -s ' ')
+read -r r g b <<< "$px"
+(( r >= 28 && r <= 36 && g >= 28 && g <= 36 && b >= 28 && b <= 36 )) \
+  && pass "alpha: transparent -> gray" || fail "alpha: pixel was '$px'"
+
+# --- Test 9: existing jpg is not overwritten and original is kept ---
+echo "=== Test 9: existing jpg skipped ==="
+EXIST="$TMPDIR/exist"
+mkdir -p "$EXIST"
+make_img "$EXIST/a.png"
+make_img "$EXIST/a.webp"
+ELIT_DELETE_ORIGINAL=true
+pushd "$EXIST" > /dev/null
+out=$(img2jpg 2>&1)
+popd > /dev/null
+assert_jpg "exist: one jpg created" "$EXIST/a.jpg"
+[[ -e "$EXIST/a.png" || -e "$EXIST/a.webp" ]] && pass "exist: skipped original kept" || fail "exist: both originals removed"
+[[ "$out" == *"skip exists: ./a.jpg"* ]] && pass "exist: skip in summary" || fail "exist: output was '$out'"
+
 # --- Summary ---
 echo ""
 echo "================================"

@@ -26,14 +26,22 @@ function _is_animated_webp() {
   [ "${#hdr}" -eq 42 ] && [ "${hdr:24:8}" = 56503858 ] && (( 0x${hdr:40:2} & 0x02 ))
 }
 
-# png / webp / jpeg -> jpg (animated webp is skipped and reported as failure)
+# png / webp / jpeg -> jpg; transparent areas become dark gray (32,32,32).
+# Animated webp and an existing target jpg are skipped and reported as failure
+# so the original is kept.
 function img2jpg_() {
-  local f="$1"
+  local f="$1" out="${1%.*}.jpg"
   if _is_animated_webp "$f"; then
     echo "skip animated: $f"
     return 1
   fi
-  ffmpeg -y -v error -i "$f" "${f%.*}.jpg"
+  if [ -e "$out" ]; then
+    echo "skip exists: $out"
+    return 1
+  fi
+  ffmpeg -nostdin -n -v error -i "$f" \
+    -filter_complex "[0:v]split[fg][bg];[bg]lutrgb=r=32:g=32:b=32,format=rgb24[gray];[gray][fg]overlay=format=auto" \
+    -frames:v 1 "$out"
 }
 
 # --- Generic batch converter ---
