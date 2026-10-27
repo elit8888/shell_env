@@ -210,7 +210,7 @@ function open_in_explorer() {
   explorer.exe /select,"$(cygpath -wa "$1")" || true
 }
 
-# 解壓單一壓縮檔到 $2。zip 先用 uv 跑 unzip_jp.py（UTF-8 / cp932 檔名偵測、加密檔問密碼），
+# 解壓單一壓縮檔到 $2。zip 先用 uv 跑 unzip_jp.py（UTF-8 / cp932 / cp949 檔名偵測、加密檔問密碼），
 # 沒有 uv 或解壓失敗（AES 加密、Deflate64 等 zipfile 不支援的格式）時改用 7z；rar / 7z 直接走 7z。
 function unzip_one_() {
   local f="$1" out="$2" here

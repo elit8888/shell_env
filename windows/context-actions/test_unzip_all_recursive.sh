@@ -52,15 +52,14 @@ make_zip() {
   rm -rf "$stage"
 }
 
-# Build a zip whose member name is raw cp932 (Shift-JIS) bytes with no UTF-8 flag,
-# i.e. what a Japanese Windows tool produces. Written with an ASCII placeholder of
-# identical byte length, then patched in place so sizes/CRCs stay valid.
-make_cp932_zip() {
-  python3 - "$1" <<'PY'
+# Build a zip whose member name ($3) is raw $2-encoded bytes with no UTF-8 flag,
+# i.e. what a Japanese (cp932) / Korean (cp949) Windows tool produces. Written with
+# an ASCII placeholder of identical byte length, then patched in place so sizes/CRCs stay valid.
+make_legacy_zip() {
+  python3 - "$1" "$2" "$3" <<'PY'
 import sys, zipfile
-zip_path = sys.argv[1]
-name = "テスト.txt"
-raw = name.encode("cp932")                     # 6 bytes for テスト + ".txt"
+zip_path, encoding, name = sys.argv[1:4]
+raw = name.encode(encoding)
 placeholder = "A" * (len(raw) - 4) + ".txt"    # same byte length, so offsets hold
 with zipfile.ZipFile(zip_path, "w") as z:
     z.writestr(placeholder, "hello")
@@ -165,7 +164,7 @@ echo ""
 echo "=== Test 6: cp932 (Shift-JIS) filenames ==="
 T6="$TMPDIR/t6"
 mkdir -p "$T6/nested"
-make_cp932_zip "$T6/nested/jp.zip"
+make_legacy_zip "$T6/nested/jp.zip" cp932 "テスト.txt"
 
 pushd "$T6" > /dev/null
 out="$(unzip_all_recursive 2>&1)"
@@ -175,6 +174,22 @@ popd > /dev/null
 assert_eq "returns 0 on cp932 zip" "0" "$rc"
 assert_contains "fell back to cp932 decoding" "cp932" "$out"
 assert_file_exists "Shift-JIS member extracted with correct name" "$T6/nested/jp/テスト.txt"
+
+# --- Test 6b: cp949 (Korean) names; cp932 also decodes these bytes (as half-width kana) ---
+echo ""
+echo "=== Test 6b: cp949 (Korean) filenames ==="
+T6B="$TMPDIR/t6b"
+mkdir -p "$T6B"
+make_legacy_zip "$T6B/kr.zip" cp949 "수영복.txt"
+
+pushd "$T6B" > /dev/null
+out="$(unzip_all_recursive 2>&1)"
+rc=$?
+popd > /dev/null
+
+assert_eq "returns 0 on cp949 zip" "0" "$rc"
+assert_contains "picked cp949 decoding" "cp949" "$out"
+assert_file_exists "Korean member extracted with correct name" "$T6B/kr/수영복.txt"
 
 # --- Test 7: extracted paths longer than Windows MAX_PATH (260) ---
 echo ""

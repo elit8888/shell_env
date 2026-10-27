@@ -3,7 +3,7 @@
 # requires-python = ">=3.11"  # zipfile metadata_encoding
 # ///
 """
-unzip_jp.py - 解壓縮日文檔名的 zip 檔案（自動偵測 UTF-8 / cp932 編碼）
+unzip_jp.py - 解壓縮日文檔名的 zip 檔案（自動偵測 UTF-8 / cp932 / cp949 編碼）
 用法：
     uv run --script unzip_jp.py <zip檔案> [輸出目錄] [-p 密碼]
 
@@ -17,28 +17,53 @@ import getpass
 import argparse
 import zipfile
 
-# 嘗試的檔名編碼順序：先 UTF-8，失敗再退回 cp932 (Shift-JIS)
-FILENAME_ENCODINGS = ("utf-8", "cp932")
+# 嘗試的檔名編碼：UTF-8 能解就直接用；否則在 cp932 (Shift-JIS) / cp949 (韓文) 中挑較合理者
+FILENAME_ENCODINGS = ("utf-8", "cp932", "cp949")
 
 # zipfile 能解的壓縮方式
 SUPPORTED_METHODS = {zipfile.ZIP_STORED, zipfile.ZIP_DEFLATED, zipfile.ZIP_BZIP2, zipfile.ZIP_LZMA}
 
 
+def suspicious_chars(name: str) -> int:
+    """計算「看起來是用錯編碼解出來」的字元數。
+    韓文 cp949 位元組被 cp932 解碼時多半變成半形片假名；日文 cp932 位元組被 cp949 解碼時
+    多半落在 KS X 1001 以外的 UHC 擴充韓文字。兩者都視為可疑。"""
+    count = 0
+    for ch in name:
+        if "\uff61" <= ch <= "\uff9f":  # 半形片假名
+            count += 1
+        elif "\uac00" <= ch <= "\ud7a3":  # 韓文音節：不在 EUC-KR (KS X 1001) 常用字內即可疑
+            try:
+                ch.encode("euc_kr")
+            except UnicodeEncodeError:
+                count += 1
+    return count
+
+
 def open_zip(zip_path: str) -> zipfile.ZipFile:
-    """以可用的編碼開啟 zip。逐一嘗試 FILENAME_ENCODINGS，直到能讀出檔名清單。"""
+    """以可用的編碼開啟 zip。UTF-8 能解就用；否則在其餘能解的編碼中挑可疑字元最少者（同分取先列者）。"""
+    best: tuple[int, str] | None = None
     last_error: Exception | None = None
     for encoding in FILENAME_ENCODINGS:
         try:
-            z = zipfile.ZipFile(zip_path, "r", metadata_encoding=encoding)
-            z.infolist()  # 觸發檔名解碼；編碼不符會在此丟出 UnicodeDecodeError
-            print(f"檔名編碼：{encoding}")
-            return z
+            with zipfile.ZipFile(zip_path, "r", metadata_encoding=encoding) as z:
+                names = z.namelist()  # 編碼不符會在此丟出 UnicodeDecodeError
         except UnicodeDecodeError as e:
             last_error = e
             continue
-    raise RuntimeError(
-        f"無法以 {FILENAME_ENCODINGS} 任一編碼解析檔名：{last_error}"
-    )
+        if encoding == "utf-8":
+            best = (0, encoding)
+            break
+        score = sum(suspicious_chars(n) for n in names)
+        if best is None or score < best[0]:
+            best = (score, encoding)
+    if best is None:
+        raise RuntimeError(
+            f"無法以 {FILENAME_ENCODINGS} 任一編碼解析檔名：{last_error}"
+        )
+    encoding = best[1]
+    print(f"檔名編碼：{encoding}")
+    return zipfile.ZipFile(zip_path, "r", metadata_encoding=encoding)
 
 
 def long_path(path: str) -> str:
@@ -106,7 +131,7 @@ if __name__ == "__main__":
     sys.stderr.reconfigure(encoding="utf-8")
 
     parser = argparse.ArgumentParser(
-        description="解壓縮日文檔名的 zip 檔案（自動偵測 UTF-8 / cp932 編碼）"
+        description="解壓縮日文檔名的 zip 檔案（自動偵測 UTF-8 / cp932 / cp949 編碼）"
     )
     parser.add_argument("zip_file", help="要解壓的 zip 檔案")
     parser.add_argument("output_dir", nargs="?", default=None, help="輸出目錄（預設為同名資料夾）")
