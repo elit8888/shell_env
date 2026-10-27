@@ -55,6 +55,9 @@ Nested submenu **scale image** (single file, factors `1`, `1.5`, `2`, `3`, `4`, 
 **scale all jpg** (folder background, `2` and `more...` only — that menu is near the 16-item
 cap, see Install). Choosing `more...` opens a console prompt to enter a custom factor. Output is written to a `by<factor>/` subfolder
 (e.g. `by2/`), downscaling via `ffmpeg -vf scale=iw/f:ih/f`.
+For **scale all jpg**, if the folder has subfolders the console asks `Include subfolders? [y/N]`;
+answering `y` scales every `*.jpg` recursively into the top-level `by<factor>/`, keeping the
+directory structure (`sub/a.jpg` → `by2/sub/a.jpg`). Existing `by<number>/` folders are skipped.
 
 ### Directory management (folder right-click / folder background right-click)
 
