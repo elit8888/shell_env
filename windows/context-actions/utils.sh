@@ -128,23 +128,36 @@ function scale_() {
   ffmpeg -y -v error -i "$f" -vf "scale=iw/${fac}:ih/${fac}" "$dir/by${fac}/$base"
 }
 
+# Previous scale output folders (by2/, by1.5/, ...) are never treated as input
+_SCALE_OUT_RE='.*/by[0-9.]+'
+
+function _has_subdirs() {
+  [ -n "$(find . -mindepth 1 -maxdepth 1 -regextype posix-extended -type d ! -regex "$_SCALE_OUT_RE" -print -quit)" ]
+}
+
+# Scale every *.jpg into by<fac>/; with recursive=true subfolders are included
+# and their structure is kept under by<fac>/.
 function scale_all() {
-  local fac="${1:-1}"
-  mkdir -p "by${fac}"
-  local found=false
-  for f in *.jpg; do
-    [ -e "$f" ] || continue
+  local fac="${1:-1}" recursive="${2:-false}"
+  local depth=(-maxdepth 1)
+  [ "$recursive" = true ] && depth=()
+  local found=false f out
+  while IFS= read -r -d '' f; do
     found=true
+    f="${f#./}"
     echo "$f"
-    ffmpeg -y -v error -i "$f" -vf "scale=iw/${fac}:ih/${fac}" "by${fac}/$f"
-  done
+    out="by${fac}/$f"
+    mkdir -p "$(dirname "$out")"
+    ffmpeg -y -v error -i "$f" -vf "scale=iw/${fac}:ih/${fac}" "$out" < /dev/null
+  done < <(find . -mindepth 1 "${depth[@]}" -regextype posix-extended \
+             \( -type d -regex "$_SCALE_OUT_RE" -prune \) -o -type f -name '*.jpg' -print0 | sort -z)
   [ "$found" = true ] || echo "No .jpg files found."
 }
 
 # Entry point for the scale action: <factor|more> [file]
 function elit_scale() {
   local fac="$1"
-  local file="$2"
+  local file="${2:-}"
 
   if [ "$fac" = "more" ]; then
     read -p "Enter scale factor (e.g. 2.5): " fac
@@ -156,8 +169,13 @@ function elit_scale() {
     echo "Scaling single by $fac - $file"
     scale_ "$fac" "$file"
   else
-    echo "Scaling all by $fac"
-    scale_all "$fac"
+    local recursive=false ans
+    if _has_subdirs; then
+      read -p "Include subfolders? [y/N]: " ans
+      [[ "$ans" == [Yy]* ]] && recursive=true
+    fi
+    echo "Scaling all by $fac (recursive: $recursive)"
+    scale_all "$fac" "$recursive"
   fi
 
   echo
