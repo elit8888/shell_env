@@ -7,13 +7,14 @@
 import argparse
 import os
 import shutil
-import subprocess
 import sys
 import traceback
 import unicodedata
 from collections.abc import Sequence
 from dataclasses import dataclass, replace
 from pathlib import Path
+
+from fsops import long_path, reveal
 
 NO_EXT = "(無副檔名)"
 
@@ -23,17 +24,6 @@ ARROW_KEYS = {"H": UP, "P": DOWN, "K": LEFT, "M": RIGHT}
 HIGHLIGHT = "\x1b[7m"
 RESET = "\x1b[0m"
 HEADER_LINES = 4
-
-
-def long_path(path: str) -> str:
-    r"""Windows 未啟用 LongPathsEnabled 時，超過 MAX_PATH (260) 的路徑會失敗；
-    轉成絕對路徑並加上 \\?\ 前綴改走延伸長度路徑。非 Windows 只回傳絕對路徑。"""
-    path = os.path.abspath(path)
-    if os.name != "nt" or path.startswith("\\\\?\\"):
-        return path
-    if path.startswith("\\\\"):  # UNC：\\server\share -> \\?\UNC\server\share
-        return "\\\\?\\UNC\\" + path[2:]
-    return "\\\\?\\" + path
 
 
 def scan_exts(root: Path) -> dict[str, list[Path]]:
@@ -171,11 +161,6 @@ def enable_ansi() -> None:
     if not kernel32.GetConsoleMode(handle, ctypes.byref(mode)):
         raise OSError("無法取得 console mode，請在 console 中執行")
     kernel32.SetConsoleMode(handle, mode.value | 0x0004)
-
-
-def reveal(path: Path) -> None:
-    """在檔案總管開啟檔案所在資料夾並選取該檔案"""
-    subprocess.Popen(f'explorer /select,"{os.path.normpath(path)}"')
 
 
 def parse_args(argv: Sequence[str]) -> argparse.Namespace:

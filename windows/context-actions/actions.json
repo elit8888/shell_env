@@ -1,66 +1,66 @@
 {
   "file_types": {
     ".gif": [
-      { "label": "convert gif to mp4",  "bash": "source $D/utils.sh; elit_call gif2mp4_ gif2mp4" },
-      { "label": "convert gif to webm", "bash": "source $D/utils.sh; elit_call gif2webm_ gif2webm" }
+      { "label": "convert gif to mp4",  "args": ["convert", "gif2mp4"] },
+      { "label": "convert gif to webm", "args": ["convert", "gif2webm"] }
     ],
     ".png": [
-      { "label": "convert to jpg", "bash": "source $D/utils.sh; elit_call img2jpg_ img2jpg" }
+      { "label": "convert to jpg", "args": ["convert", "img2jpg"] }
     ],
     ".webp": [
-      { "label": "convert to jpg", "bash": "source $D/utils.sh; elit_call img2jpg_ img2jpg" }
+      { "label": "convert to jpg", "args": ["convert", "img2jpg"] }
     ],
     ".jpeg": [
-      { "label": "convert to jpg", "bash": "source $D/utils.sh; elit_call img2jpg_ img2jpg" }
+      { "label": "convert to jpg", "args": ["convert", "img2jpg"] }
     ],
     ".jpg": [
       { "label": "scale image", "children": [
-        { "label": "by 1",    "bash": "source $D/utils.sh; elit_scale 1" },
-        { "label": "by 1.5",  "bash": "source $D/utils.sh; elit_scale 1.5" },
-        { "label": "by 2",    "bash": "source $D/utils.sh; elit_scale 2" },
-        { "label": "by 3",    "bash": "source $D/utils.sh; elit_scale 3" },
-        { "label": "by 4",    "bash": "source $D/utils.sh; elit_scale 4" },
-        { "label": "more...", "bash": "source $D/utils.sh; elit_scale more" }
+        { "label": "by 1",    "args": ["scale", "1"] },
+        { "label": "by 1.5",  "args": ["scale", "1.5"] },
+        { "label": "by 2",    "args": ["scale", "2"] },
+        { "label": "by 3",    "args": ["scale", "3"] },
+        { "label": "by 4",    "args": ["scale", "4"] },
+        { "label": "more...", "args": ["scale", "more"] }
       ] }
     ],
     ".rpgmvp": [
-      { "label": "convert rpgmvp to png", "bash": "source $D/utils.sh; elit_call rpgmvp2png_ rpgmvp2png" }
+      { "label": "convert rpgmvp to png", "args": ["convert", "rpgmvp2png"] }
     ],
     ".png_": [
-      { "label": "convert png_ to png", "bash": "source $D/utils.sh; elit_call rpgmvp2png_ rpgmvp2png" }
+      { "label": "convert png_ to png", "args": ["convert", "rpgmvp2png"] }
     ],
     ".zip": [
-      { "label": "unzip (JP/Shift-JIS)", "script": "unzip_jp.sh" }
+      { "label": "unzip (JP/Shift-JIS)", "args": ["unzip-jp"] }
     ],
     ".7z": [
-      { "label": "unzip", "script": "unzip_7z.sh" }
+      { "label": "unzip", "args": ["unzip-7z"] }
     ],
     ".001": [
-      { "label": "unzip (7z multi-volume)", "script": "unzip_7z.sh" }
+      { "label": "unzip (7z multi-volume)", "args": ["unzip-7z"] }
     ],
     "Directory": [
-      { "label": "move files one folder up",          "script": "mv_files_one_folder_up.sh" },
-      { "label": "move files one folder up renumber", "script": "mv_files_one_folder_up_renum.sh" },
-      { "label": "rename *_large extensions",         "script": "rename_large_ext.sh" },
-      { "label": "convert all rpgmvp to png",         "bash": "source $D/utils.sh; elit_call rpgmvp2png_ rpgmvp2png" },
-      { "label": "file count by extension",           "script": "ext_stats.sh" }
+      { "label": "move files one folder up",          "args": ["mv-up"] },
+      { "label": "move files one folder up renumber", "args": ["mv-up-renum"] },
+      { "label": "rename *_large extensions",         "args": ["rename-large"] },
+      { "label": "convert all rpgmvp to png",         "args": ["convert", "rpgmvp2png"] },
+      { "label": "file count by extension",           "args": ["ext-stats"] }
     ],
     "Directory\\Background": [
-      { "label": "convert all png/webp/jpeg to jpg",      "bash": "source $D/utils.sh; elit_call img2jpg_ img2jpg" },
-      { "label": "convert all gif to mp4",                "bash": "source $D/utils.sh; elit_call gif2mp4_ gif2mp4" },
-      { "label": "rename files with special chars",       "script": "rename_special_chars.sh" },
-      { "label": "move all files one folder up",          "script": "mv_files_one_folder_up.sh" },
-      { "label": "move all files one folder up renumber", "script": "mv_files_one_folder_up_renum.sh" },
-      { "label": "unzip all zip/rar/7z recursively",      "script": "unzip_all_recursive.sh" },
-      { "label": "rename *_large extensions",             "script": "rename_large_ext.sh" },
-      { "label": "convert all rpgmvp to png",             "bash": "source $D/utils.sh; elit_call rpgmvp2png_ rpgmvp2png" },
-      { "label": "move videos to video/ folder",          "script": "move_videos_to_subfolder.sh" },
-      { "label": "translate jp to zh",                    "script": "rpgmv_trans.sh" },
-      { "label": "render rpg interactive map",            "script": "rpgview_render.sh" },
-      { "label": "file count by extension",               "script": "ext_stats.sh" },
+      { "label": "convert all png/webp/jpeg to jpg",      "args": ["convert", "img2jpg"] },
+      { "label": "convert all gif to mp4",                "args": ["convert", "gif2mp4"] },
+      { "label": "rename files with special chars",       "args": ["rename-special"] },
+      { "label": "move all files one folder up",          "args": ["mv-up"] },
+      { "label": "move all files one folder up renumber", "args": ["mv-up-renum"] },
+      { "label": "unzip all zip/rar/7z recursively",      "args": ["unzip-all"] },
+      { "label": "rename *_large extensions",             "args": ["rename-large"] },
+      { "label": "convert all rpgmvp to png",             "args": ["convert", "rpgmvp2png"] },
+      { "label": "move videos to video/ folder",          "args": ["move-videos"] },
+      { "label": "translate jp to zh",                    "args": ["rpgmv-trans"] },
+      { "label": "render rpg interactive map",            "args": ["rpgview-render"] },
+      { "label": "file count by extension",               "args": ["ext-stats"] },
       { "label": "scale all jpg", "children": [
-        { "label": "by 2",    "bash": "source $D/utils.sh; elit_scale 2" },
-        { "label": "more...", "bash": "source $D/utils.sh; elit_scale more" }
+        { "label": "by 2",    "args": ["scale", "2"] },
+        { "label": "more...", "args": ["scale", "more"] }
       ] }
     ]
   }

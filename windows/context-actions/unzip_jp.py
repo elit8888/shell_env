@@ -17,6 +17,8 @@ import getpass
 import argparse
 import zipfile
 
+from fsops import long_path
+
 # 嘗試的檔名編碼順序：先 UTF-8，失敗再退回 cp932 (Shift-JIS)
 FILENAME_ENCODINGS = ("utf-8", "cp932")
 
@@ -39,17 +41,6 @@ def open_zip(zip_path: str) -> zipfile.ZipFile:
     raise RuntimeError(
         f"無法以 {FILENAME_ENCODINGS} 任一編碼解析檔名：{last_error}"
     )
-
-
-def long_path(path: str) -> str:
-    r"""Windows 未啟用 LongPathsEnabled 時，超過 MAX_PATH (260) 的路徑會失敗；
-    轉成絕對路徑並加上 \\?\ 前綴改走延伸長度路徑。非 Windows 只回傳絕對路徑。"""
-    path = os.path.abspath(path)
-    if os.name != "nt" or path.startswith("\\\\?\\"):
-        return path
-    if path.startswith("\\\\"):  # UNC：\\server\share -> \\?\UNC\server\share
-        return "\\\\?\\UNC\\" + path[2:]
-    return "\\\\?\\" + path
 
 
 def extract(zip_path: str, output_dir: str | None = None, password: str | None = None) -> None:

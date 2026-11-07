@@ -8,37 +8,11 @@ from pathlib import Path
 from shutil import which
 
 
-def find_mintty() -> str:
-    m = which("mintty")
-    if m:
-        return m
-
-    git = which("git")
-    if git:
-        for levels_up in (1, 2):
-            root = git
-            for _ in range(levels_up):
-                root = os.path.dirname(root)
-            c = os.path.join(root, "usr", "bin", "mintty.exe")
-            if os.path.isfile(c):
-                return c
-
-    for loc in [
-        os.path.join(os.environ.get("ProgramFiles", ""), "Git", "usr", "bin", "mintty.exe"),
-        os.path.join(os.environ.get("LOCALAPPDATA", ""), "Programs", "Git", "usr", "bin", "mintty.exe"),
-        os.path.join(os.environ.get("USERPROFILE", ""), "scoop", "apps", "git", "current", "usr", "bin", "mintty.exe"),
-    ]:
-        if os.path.isfile(loc):
-            return loc
-
-    raise RuntimeError("Cannot find mintty.exe. Ensure Git for Windows is installed and 'git' is in PATH.")
-
-
-def to_bash_path(path: str) -> str:
-    m = re.match(r"^([A-Za-z]):\\?(.*)$", path)
-    if m:
-        return "/" + m.group(1).lower() + "/" + m.group(2).replace("\\", "/")
-    return path.replace("\\", "/")
+def find_uv() -> str:
+    uv = which("uv")
+    if uv is None:
+        raise RuntimeError("Cannot find uv in PATH. Install it from https://docs.astral.sh/uv/.")
+    return uv
 
 
 def escape_reg(s: str) -> str:
@@ -80,21 +54,18 @@ def is_single(file_type: str) -> bool:
     return file_type != "Directory\\Background"
 
 
-def build_command(action: dict, mintty: str, bash_dir: str, single: bool) -> str:
-    # Pass the path as bash's $1 rather than splicing it into the -c string,
-    # so quotes or $ in the path are never parsed as shell syntax.
-    arg = ' \\"$1\\"' if single else ""
-    if "bash" in action:
-        inner = f"D={bash_dir}; {action['bash']}{arg}"
-    else:
-        inner = f"{bash_dir}/{action['script']}{arg}"
-    raw = f'"{mintty}" --exec "/usr/bin/bash" -lc "{inner}"'
+def build_command(action: dict, uv: str, script_dir: str, single: bool) -> str:
+    # Explorer starts a native console process: no mintty / Git Bash in between, whose
+    # 255-byte name limit breaks on long folder names. Background verbs get the clicked
+    # folder as their working directory; single-item verbs also get the item as %1.
+    elit = os.path.join(script_dir, "elit.py")
+    raw = f'"{uv}" run --script "{elit}" {subprocess.list2cmdline(action["args"])}'
     if single:
-        raw += ' _ "%1"'
+        raw += ' "%1"'
     return escape_reg(raw)
 
 
-def emit_actions(lines: list, store: str, entries: list, mintty: str, bash_dir: str, single: bool) -> None:
+def emit_actions(lines: list, store: str, entries: list, uv: str, script_dir: str, single: bool) -> None:
     base = store_base(store)
     for action in entries:
         action_id = make_id(action["label"])
@@ -108,9 +79,9 @@ def emit_actions(lines: list, store: str, entries: list, mintty: str, bash_dir: 
                 f'"ExtendedSubCommandsKey"="{escape_reg(sub)}"',
                 "",
             ]
-            emit_actions(lines, sub, action["children"], mintty, bash_dir, single)
+            emit_actions(lines, sub, action["children"], uv, script_dir, single)
         else:
-            cmd = build_command(action, mintty, bash_dir, single)
+            cmd = build_command(action, uv, script_dir, single)
             lines += [
                 f"[{node}]",
                 f'"MUIVerb"="{escape_reg(action["label"])}"',
@@ -145,7 +116,7 @@ def check_limits(data: dict) -> None:
         print(f"{file_type}: {n}/{MENU_ITEM_LIMIT} commands")
 
 
-def generate_reg(mintty: str, bash_dir: str, data: dict) -> str:
+def generate_reg(uv: str, script_dir: str, data: dict) -> str:
     lines = ["Windows Registry Editor Version 5.00", ""]
 
     # Wipe first: reg import merges, so stale values (e.g. SubCommands) would survive.
@@ -165,7 +136,7 @@ def generate_reg(mintty: str, bash_dir: str, data: dict) -> str:
             "",
         ]
 
-        emit_actions(lines, store, entries, mintty, bash_dir, is_single(file_type))
+        emit_actions(lines, store, entries, uv, script_dir, is_single(file_type))
 
     return "\r\n".join(lines)
 
@@ -184,11 +155,10 @@ def generate_uninstall_reg(data: dict) -> str:
 
 def main() -> None:
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    mintty = find_mintty()
-    bash_dir = to_bash_path(script_dir)
+    uv = find_uv()
 
-    print(f"mintty : {mintty}")
-    print(f"scripts: {bash_dir}")
+    print(f"uv     : {uv}")
+    print(f"scripts: {script_dir}")
     print()
 
     with open(os.path.join(script_dir, "actions.json"), encoding="utf-8") as f:
@@ -197,7 +167,7 @@ def main() -> None:
     check_limits(data)
     print()
 
-    reg_content = generate_reg(mintty, bash_dir, data)
+    reg_content = generate_reg(uv, script_dir, data)
 
     # Keep the uninstall file in sync with whatever we just registered.
     with open(os.path.join(script_dir, "actions_uninstall.reg"), "w", encoding="ascii", newline="") as f:
