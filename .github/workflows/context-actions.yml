@@ -39,4 +39,4 @@ jobs:
           ffmpeg -version | head -1
 
       - name: Python tests
-        run: uv run --no-project --with pytest --with pytest-cov pytest -q --cov=. --cov-report=term test_*.py
+        run: uv run --no-project --with pytest --with pytest-cov pytest -q -rs --cov=. --cov-report=term test_*.py

@@ -40,8 +40,12 @@ def probe_new_console(tmp_path, font: str) -> dict:
 
 
 @pytest.mark.skipif(not console.font_installed(console.CJK_FONT),
-                    reason=f"{console.CJK_FONT} is not installed (e.g. GitHub runner)")
+                    reason=f"{console.CJK_FONT} is not installed")
 def test_sets_cjk_font_in_new_console(tmp_path):
+    # Hosted CI runners' consoles ignore font changes altogether (even MingLiU, installed there,
+    # stays Consolas); tell that apart from a real failure with a font every Windows ships.
+    if probe_new_console(tmp_path, "Lucida Console")["error"]:
+        pytest.skip("this console host cannot switch fonts at all (e.g. headless CI runner)")
     got = probe_new_console(tmp_path, console.CJK_FONT)
     assert got["error"] == ""
     assert got["face"] == console.CJK_FONT
